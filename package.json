@@ -35,11 +35,11 @@
         "babel-register": "~6.26.0",
         "chai": "~4.1.2",
         "wdio-cucumber-framework": "~1.1.0",
+        "wdio-selenium-standalone-service": "0.0.9",
         "wdio-spec-reporter": "~0.1.2",
         "webdriverio": "4.10.2"
     },
     "devDependencies": {
-        "commander": "^2.14.1",
-        "wdio-selenium-standalone-service": "0.0.9"
+        "commander": "^2.14.1"
     }
 }
