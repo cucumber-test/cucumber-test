@@ -3,7 +3,7 @@ const { Launcher } = require('webdriverio');
 
 console.log('Loading...');
 
-program.version('1.0.5');
+program.version('1.0.6');
 program.on('-h, --help', function() {
     console.log('  Examples:');
     console.log('');
@@ -13,6 +13,7 @@ program.on('-h, --help', function() {
 });
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --souce', 'Run in Souce labs cloud service');
+program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
 
 program.parse(process.argv);
@@ -27,8 +28,10 @@ const options = {
     }
 };
 
+const instances = +(program.instances || 1);
 const browser = program.browser || 'chrome';
 console.log('Browser:', browser);
+options.maxInstances = instances;
 options.capabilities = browser.split(',').map(x => {
     return {
         maxInstances: 5,
