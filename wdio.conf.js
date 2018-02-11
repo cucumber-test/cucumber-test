@@ -231,7 +231,11 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         global.should = chai.should();
-    },
+        if (process.argv.indexOf('--iphone')!==-1) {
+            console.log('setViewportSize: { width: 480, height: 760 }');
+            global.browser.setViewportSize({ width: 480, height: 760 });
+        }
+},
     //
     // Hook that gets executed before the suite starts
     // beforeSuite: function beforeSuite(suite) {},
