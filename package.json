@@ -1,6 +1,6 @@
 {
     "name": "cucumber-test",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
@@ -18,12 +18,16 @@
     "bugs": {
         "url": "https://github.com/cucumber-test/cucumber-test/issues"
     },
-    "keywords": ["cucumber", "selenium", "webdriver", "webdriver.io"],
+    "keywords": [
+        "cucumber",
+        "selenium",
+        "webdriver",
+        "webdriver.io"
+    ],
     "author": "Widi Harsojo",
     "contributors": [
         {
-            "name":
-                "List of cucumber-tesr contributors. Updated before every release."
+            "name": "List of cucumber-tesr contributors. Updated before every release."
         },
         {
             "name": "Widi Harsojo"
@@ -35,6 +39,7 @@
         "babel-register": "~6.26.0",
         "chai": "~4.1.2",
         "wdio-cucumber-framework": "~1.1.0",
+        "wdio-firefox-profile-service": "^0.1.1",
         "wdio-sauce-service": "^0.4.8",
         "wdio-selenium-standalone-service": "0.0.9",
         "wdio-spec-reporter": "~0.1.2",

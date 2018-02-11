@@ -11,7 +11,7 @@ of your product development. `cucumber-test` is a fork of
 1. npm install -g cucumber-test
 2. create folder `features`
 3. add file `features/simple.feature`
-4. run `cct`
+4. run `cct` (or `cct -b chrome,firefox,safari`)
 
 ```cucumber
 @simple

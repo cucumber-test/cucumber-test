@@ -3,7 +3,7 @@ const { Launcher } = require('webdriverio');
 
 console.log('Loading...');
 
-program.version('1.0.3');
+program.version('1.0.5');
 program.on('-h, --help', function() {
     console.log('  Examples:');
     console.log('');
@@ -12,7 +12,8 @@ program.on('-h, --help', function() {
     console.log('');
 });
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
-program.option('-s, --souce', 'Run in Souce lab cloud service');
+program.option('-s, --souce', 'Run in Souce labs cloud service');
+program.option('-b, --browser [browser]', 'Target Browser');
 
 program.parse(process.argv);
 
@@ -26,9 +27,17 @@ const options = {
     }
 };
 
+const browser = program.browser || 'chrome';
+console.log('Browser:', browser);
+options.capabilities = browser.split(',').map(x => {
+    return {
+        maxInstances: 5,
+        browserName: x
+    }
+})
+
 if (program.souce) {
     options.sauceConnect = true;
-    options.services = ['selenium-standalone', 'sauce'];
     options.user = process.env.SAUCE_USERNAME;
     options.key = process.env.SAUCE_ACCESS_KEY;
     console.log('Run from Sauce Labs Cloud');

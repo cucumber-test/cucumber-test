@@ -75,16 +75,16 @@ exports.config = {
     // out the Sauce Labs platform configurator - a great tool to configure your
     // capabilities: https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [
-        {
-            // maxInstances can get overwritten per capability. So if you have an
-            // in-house Selenium grid with only 5 firefox instance available you can
-            // make sure that not more than 5 instance gets started at a time.
-            maxInstances: 5,
-            //
-            browserName: 'chrome'
-        }
-    ],
+    capabilities: [],
+    //     {
+    //         // maxInstances can get overwritten per capability. So if you have an
+    //         // in-house Selenium grid with only 5 firefox instance available you can
+    //         // make sure that not more than 5 instance gets started at a time.
+    //         maxInstances: 5,
+    //         //
+    //         browserName: 'chrome'
+    //     }
+    // ],
     //
     // ===================
     // Test Configurations
@@ -142,7 +142,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They
     // enhance your test setup with almost no effort. Unlike plugins, they don't
     // add new commands. Instead, they hook themselves up into the test process.
-    services: ['selenium-standalone'],
+    services: ['selenium-standalone', 'firefox-profile', 'sauce'],
     // services: ['sauce'],
     // user: process.env.SAUCE_USERNAME,
     // key: process.env.SAUCE_ACCESS_KEY,
