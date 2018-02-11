@@ -1,16 +1,17 @@
 # Cucumber Test
 
-Made easy - Cucumber testing using webdriver.io Instead of writing complicated
+Made easy - Cucumber testing using webdriver.io, instead of writing complicated
 test code that only developers can understand, Cucumber maps an ordinary
 language to code and allows to start with the test process in the early stages
-of your product development.
+of your product development. `cucumber-test` is a fork of
+`cucumber-boilerplate`.
 
 ## Quick start
 
-1. npm i -g cucumber-test
-2. create folder "features"
-3. add new file "simple.feature" inside "features" folder
-4. run cucumber-test: "cct"
+1. npm install -g cucumber-test
+2. create folder `features`
+3. add file `features/simple.feature`
+4. run `cct`
 
 ```cucumber
 @simple
@@ -37,14 +38,13 @@ cct -s
 
 ![alt #D Saucelabs](docs/saucelabs.png)
 
-Behind Proxy / VPN:
+## Behind Proxy / VPN:
 
 ```bash
-# https://github.com/vvo/selenium-standalone/issues/8
 npm install -g selenium-standalone@latest
 NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone install
 NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone start
-NODE_TLS_REJECT_UNAUTHORIZED=0 cct -t '@simple or @lol'
+NODE_TLS_REJECT_UNAUTHORIZED=0 cct -t '@simple or @smoke'
 ```
 
 ## Dev Mode
