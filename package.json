@@ -1,12 +1,12 @@
 {
     "name": "cucumber-test",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
     "scripts": {
         "start": "node src/cct",
-        "build": "webpack --config webpack.config.js"
+        "build": "babel src -d lib"
     },
     "bin": {
         "cct": "bin/cct.js"
@@ -40,6 +40,7 @@
         "webdriverio": "4.10.2"
     },
     "devDependencies": {
+        "babel-cli": "^6.26.0",
         "commander": "^2.14.1"
     }
 }

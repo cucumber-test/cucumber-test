@@ -5,19 +5,19 @@ const seleniumArgs = {
         chrome: {
             version: '2.33',
             arch: process.arch,
-            baseURL: 'https://chromedriver.storage.googleapis.com',
+            baseURL: 'https://chromedriver.storage.googleapis.com'
         },
         firefox: {
             version: '0.19.1',
             arch: process.arch,
-            baseURL: 'https://github.com/mozilla/geckodriver/releases/download',
+            baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
         },
         safari: {
             version: '2.48',
             arch: process.arch,
-            baseURL: 'https://selenium-release.storage.googleapis.com',
-        },
-    },
+            baseURL: 'https://selenium-release.storage.googleapis.com'
+        }
+    }
 };
 
 exports.config = {
@@ -46,9 +46,7 @@ exports.config = {
     // then the current working directory is where your package.json resides, so
     // `wdio` will be called from there.
     //
-    specs: [
-        './features/**/*.feature',
-    ],
+    specs: ['./features/**/*.feature'],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -77,14 +75,16 @@ exports.config = {
     // out the Sauce Labs platform configurator - a great tool to configure your
     // capabilities: https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
-        // maxInstances can get overwritten per capability. So if you have an
-        // in-house Selenium grid with only 5 firefox instance available you can
-        // make sure that not more than 5 instance gets started at a time.
-        maxInstances: 5,
-        //
-        browserName: 'chrome',
-    }],
+    capabilities: [
+        {
+            // maxInstances can get overwritten per capability. So if you have an
+            // in-house Selenium grid with only 5 firefox instance available you can
+            // make sure that not more than 5 instance gets started at a time.
+            maxInstances: 5,
+            //
+            browserName: 'chrome'
+        }
+    ],
     //
     // ===================
     // Test Configurations
@@ -163,9 +163,7 @@ exports.config = {
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> filetype:compiler used for processing required features
-        compiler: [
-            'js:babel-register',
-        ],
+        compiler: ['js:babel-register'],
         // <boolean< Treat ambiguous definitions as errors
         failAmbiguousDefinitions: true,
         // <boolean> invoke formatters without executing steps
@@ -186,9 +184,9 @@ exports.config = {
         profile: [],
         // <string[]> (file/dir) require files before executing features
         require: [
-            `${__dirname}/src/steps/given.js`,
-            `${__dirname}/src/steps/then.js`,
-            `${__dirname}/src/steps/when.js`,
+            `${__dirname}/lib/steps/given.js`,
+            `${__dirname}/lib/steps/then.js`,
+            `${__dirname}/lib/steps/when.js`
         ],
         // <string> specify a custom snippet syntax
         snippetSyntax: undefined,
@@ -201,7 +199,7 @@ exports.config = {
         // <boolean> add cucumber tags to feature or scenario name
         tagsInTitle: true,
         // <number> timeout for step definitions
-        timeout: 20000,
+        timeout: 20000
     },
 
     //
@@ -251,14 +249,14 @@ exports.config = {
     //
     // Runs before a WebdriverIO command gets executed.
     beforeCommand: function beforeCommand(commandName, args) {
-        if (args[1]!=='*internal*') {
-            var arg = args[0]===undefined ? '' : args[0];
-            if (commandName==='frame') {
+        if (args[1] !== '*internal*') {
+            var arg = args[0] === undefined ? '' : args[0];
+            if (commandName === 'frame') {
                 arg = Object.keys(arg);
             }
             console.log('commandName:', commandName, arg);
         }
-    },
+    }
     //
     // Runs after a WebdriverIO command gets executed
     // afterCommand: function afterCommand(commandName, args, result, error) {
