@@ -22,5 +22,6 @@ module.exports = (method, value, element) => {
         checkValue = '';
     }
 
+    browser.pause(1000, '*internal*');
     browser[command](element, checkValue);
 };

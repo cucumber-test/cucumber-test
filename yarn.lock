@@ -2703,6 +2703,12 @@ wdio-appium-service@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/wdio-appium-service/-/wdio-appium-service-0.2.3.tgz#988c5c545b06ba184e6245f49ae8420071fa4009"
 
+wdio-chromedriver-service@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/wdio-chromedriver-service/-/wdio-chromedriver-service-0.1.2.tgz#e9a70dce9258740280dc9193bebd15cad43e639b"
+  dependencies:
+    fs-extra "^0.30.0"
+
 wdio-cucumber-framework@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/wdio-cucumber-framework/-/wdio-cucumber-framework-1.1.0.tgz#b817cc15fb91a60ff537db55354a024b004cd9d4"
