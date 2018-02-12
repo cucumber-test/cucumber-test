@@ -17,6 +17,7 @@ import setCookie from '../support/action/setCookie';
 import setInputField from '../support/action/setInputField';
 import setPromptText from '../support/action/setPromptText';
 import submitForm from '../support/action/submitForm';
+import switchToTab from '../support/action2/switchToTab';
 import switchIframe from '../support/action2/switchToIframe';
 import changeViewPort from '../support/action2/changeViewPort';
 import switchToWindow from '../support/action2/switchToWindow';
@@ -120,5 +121,10 @@ defineSupportCode(({ When }) => {
     When(
         /^I switch to Main Window$/,
         switchToWindow
+    );
+
+    When(
+        /^I switch to Tab$/,
+        switchToTab
     );
 });
