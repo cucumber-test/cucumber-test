@@ -20,7 +20,8 @@ import submitForm from '../support/action/submitForm';
 import switchToTab from '../support/action2/switchToTab';
 import switchIframe from '../support/action2/switchToIframe';
 import changeViewPort from '../support/action2/changeViewPort';
-import switchToWindow from '../support/action2/switchToWindow';
+import switchToParent from '../support/action2/switchToParent';
+import switchToPopup from '../support/action2/switchToPopup';
 
 defineSupportCode(({ When }) => {
     When(
@@ -109,7 +110,12 @@ defineSupportCode(({ When }) => {
     );
 
     When(
-        /^I switch to IFrame "([^"]*)?"$/,
+        /^I switch to popup$/,
+        switchToPopup
+    );
+
+    When(
+        /^I switch to iframe "([^"]*)?"$/,
         switchIframe
     );
 
@@ -119,12 +125,12 @@ defineSupportCode(({ When }) => {
     );
 
     When(
-        /^I switch to Main Window$/,
-        switchToWindow
+        /^I switch back parent window$/,
+        switchToParent
     );
 
     When(
-        /^I switch to Tab$/,
+        /^I switch to tab$/,
         switchToTab
     );
 });
