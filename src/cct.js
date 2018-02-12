@@ -3,7 +3,7 @@ const { Launcher, remote } = require('webdriverio');
 
 console.log('Loading...');
 
-program.version('1.0.13');
+program.version('1.0.14');
 program.on('-h, --help', function() {
     console.log('  Examples:');
     console.log('');

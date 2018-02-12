@@ -125,7 +125,7 @@ defineSupportCode(({ When }) => {
     );
 
     When(
-        /^I switch back parent window$/,
+        /^I switch back to parent window$/,
         switchToParent
     );
 
