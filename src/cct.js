@@ -1,25 +1,17 @@
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-console.log('Loading...');
-
-program.version('1.0.15');
-program.on('-h, --help', function() {
-    console.log('  Examples:');
-    console.log('');
-    console.log('    $ custom-help --help');
-    console.log('    $ custom-help -h');
-    console.log('');
-});
+program.version('1.0.16');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
-program.option('-s, --souce', 'Run in Souce labs cloud service');
+program.option('-s, --sauce', 'Run in Saucelabs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
-program.option('--android [android]', 'Android');
+program.option('--android [android]', 'Run on android device');
 program.option('--uaIphone', 'Chrome w/ user agent of iPhone');
 program.option('--uaGalaxy', 'Chrome w/ user agent of Samsung Galaxy');
 
 program.parse(process.argv);
+console.log('Loading...');
 
 const tagExpression = program.tags || '@simple';
 
@@ -90,7 +82,7 @@ if (program.souce) {
     options.sauceConnect = true;
     options.user = process.env.SAUCE_USERNAME;
     options.key = process.env.SAUCE_ACCESS_KEY;
-    console.log('Run from Sauce Labs Cloud');
+    console.log('Run from Saucelabs cloud service');
 }
 
 const wdio = new Launcher(`${__dirname}/../wdio.conf.js`, options);
