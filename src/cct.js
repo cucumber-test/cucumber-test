@@ -1,11 +1,12 @@
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.16');
+program.version('1.0.17');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
+program.option('--timeout [timeout]', 'Timeout [20000]');
 program.option('--android [android]', 'Run on android device');
 program.option('--uaIphone', 'Chrome w/ user agent of iPhone');
 program.option('--uaGalaxy', 'Chrome w/ user agent of Samsung Galaxy');
@@ -13,13 +14,15 @@ program.option('--uaGalaxy', 'Chrome w/ user agent of Samsung Galaxy');
 program.parse(process.argv);
 console.log('Loading...');
 
+const timeout = program.timeout || 20000;
 const tagExpression = program.tags || '@simple';
 
 console.log('Tags:', tagExpression);
 
 const options = {
     cucumberOpts: {
-        tagExpression
+        tagExpression,
+        timeout
     }
 };
 
