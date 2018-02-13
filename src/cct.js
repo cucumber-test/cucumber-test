@@ -3,7 +3,7 @@ const { Launcher, remote } = require('webdriverio');
 
 console.log('Loading...');
 
-program.version('1.0.14');
+program.version('1.0.15');
 program.on('-h, --help', function() {
     console.log('  Examples:');
     console.log('');
@@ -15,8 +15,9 @@ program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --souce', 'Run in Souce labs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
-program.option('--iphone', 'Chrome simulate iPhone');
 program.option('--android [android]', 'Android');
+program.option('--uaIphone', 'Chrome w/ user agent of iPhone');
+program.option('--uaGalaxy', 'Chrome w/ user agent of Samsung Galaxy');
 
 program.parse(process.argv);
 
@@ -33,6 +34,13 @@ const options = {
 let browser = 'chrome';
 options.maxInstances = +(program.instances || 1);
 if (program.android) {
+    if (program.android===true) {
+        console.log(`
+deviceName & platformVersion are required!
+cct --android [deviceName:platformVersion]
+        `);
+        process.exit(0);
+    }
     const android = program.android.split(':');
     options.port = '4723';
     options.services = ['appium'];
@@ -57,9 +65,15 @@ if (program.android) {
             maxInstances: 5,
             browserName: x
         };
-        if (x==='chrome' && program.iphone) {
-            bconfig.chromeOptions = {
-                args: ['use-mobile-user-agent', 'user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3']
+        if (x==='chrome') {
+            if (program.uaIphone) {
+                bconfig.chromeOptions = {
+                    args: ['use-mobile-user-agent', 'user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3']
+                }
+            } else if (program.uaGalaxy) {
+                bconfig.chromeOptions = {
+                    args: ['use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36']
+                }
             }
         }
         return bconfig;
@@ -67,8 +81,9 @@ if (program.android) {
 }
 
 console.log('Browser:', browser,
-program.iphone ? '--iphone' : '',
-program.android ? '--android' : '',
+program.uaIphone ? '--uaIphone' : '',
+program.uaGalaxy ? '--uaGalaxy' : '',
+program.android  ? '--android' : '',
 );
 
 if (program.souce) {

@@ -8,10 +8,14 @@ of your product development. `cucumber-test` is a fork of
 
 ## Quick start
 
-1. npm install -g cucumber-test
-2. create folder `features`
-3. add file `features/simple.feature`
-4. run `cct` (or `cct -b chrome,firefox,safari`)
+1. npm install -g cucumber-test selenium-standalone
+2. selenium-standalone install
+3. selenium-standalone start
+4. create folder `features`
+5. add file `features/simple.feature`
+6. run `cct` (or `cct -b chrome,firefox,safari`)
+
+if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind Proxy / VPN:` below.
 
 ```cucumber
 @simple
@@ -24,7 +28,8 @@ Scenario: Navigate to Google
 
 Scenario: Search cucumber-test
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I press "Enter"
+    And I expect that element "[name=q]" becomes visible
+    When I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 ## Appium
@@ -50,7 +55,7 @@ Scenario: Search cucumber-test
     When I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
-@iphone
+@mobile
 Scenario: Search cucumber-test
     When I set "cucumber-test" to the inputfield "[name=q]"
     And I expect that element "[name=q]" becomes visible
@@ -67,7 +72,7 @@ cct -t '@simple and not @chrome' --android f344ee26:7.0
 ```
 
 ## Integration with: Sauce Labs
-
+Add these env variables, your SauceLabs user & key:
 ```bash
 export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export SAUCE_USERNAME=cucumber-test

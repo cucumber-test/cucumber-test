@@ -231,9 +231,12 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         global.should = chai.should();
-        if (process.argv.indexOf('--iphone')!==-1) {
-            console.log('setViewportSize: { width: 480, height: 760 }');
-            global.browser.setViewportSize({ width: 480, height: 760 });
+        if (process.argv.indexOf('--uaIphone')!==-1) {
+            console.log('setViewportSize: { width: 414, height: 736 }');
+            global.browser.setViewportSize({ width: 414, height: 736 });
+        } else if (process.argv.indexOf('--uaGalaxy')!==-1) {
+            console.log('setViewportSize: { width: 414, height: 736 }');
+            global.browser.setViewportSize({ width: 414, height: 736 });
         }
 },
     //
