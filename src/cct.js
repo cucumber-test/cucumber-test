@@ -1,7 +1,10 @@
+
+const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.17');
+program.version('1.0.18');
+program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
@@ -25,6 +28,14 @@ const options = {
         timeout
     }
 };
+
+if (program.remote) {
+    const myURL = url.parse(program.remote);
+    console.log('Remote:', program.remote);
+    options.protocol = myURL.protocol.replace(':', '') || 'http';
+    options.port = myURL.port || 4444;
+    options.host = myURL.hostname;
+}
 
 let browser = 'chrome';
 options.maxInstances = +(program.instances || 1);
