@@ -238,7 +238,34 @@ exports.config = {
             console.log('setViewportSize: { width: 414, height: 736 }');
             global.browser.setViewportSize({ width: 414, height: 736 });
         }
-},
+    },
+    beforeFeature: function(event) {
+        const {browserName} = global.browser.desiredCapabilities;
+        console.log('>>>>>',`@__${browserName}`);
+        function isBrowserTag(tagName) {
+            let browserTags = [
+                '@__firefox',
+                '@__chrome',
+                '@__safari',
+                '@__MicrosoftEdge',
+                '@__internet explorer'
+            ];
+            if (browserTags.indexOf(tagName)>-1) {
+                return tagName===`@__${browserName}` ? 1 : 0;
+            }
+            return 1;
+        }
+
+        event.scenarios = event.scenarios.filter(x=>{
+            if (x.tags) {
+                const chk = x.tags.map(y => isBrowserTag(y.name)).sort();
+                return chk[0]!==0;
+            }
+            return true;
+        });
+    },
+    // beforeStep: function(event) {
+    // },
     //
     // Hook that gets executed before the suite starts
     // beforeSuite: function beforeSuite(suite) {},

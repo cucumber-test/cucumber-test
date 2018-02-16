@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.18');
+program.version('1.0.19');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
@@ -18,13 +18,11 @@ program.parse(process.argv);
 console.log('Loading...');
 
 const timeout = program.timeout || 20000;
-const tagExpression = program.tags || '@simple';
-
-console.log('Tags:', tagExpression);
+const _originalTags = (program.tags || '@simple') + ' and (not @Pending)';
 
 const options = {
     cucumberOpts: {
-        tagExpression,
+        _originalTags,
         timeout
     }
 };
@@ -91,6 +89,19 @@ program.uaIphone ? '--uaIphone' : '',
 program.uaGalaxy ? '--uaGalaxy' : '',
 program.android  ? '--android' : '',
 );
+
+// const browserTag = `@__${browser}`;
+// let browserTags = [
+//     '@__firefox',
+//     '@__chrome',
+//     '@__safari',
+//     '@__edge',
+//     '@__ie'
+// ].filter(x=> x!==browserTag).join(' or ');
+// const tagExpression = `${_originalTags} and not (${browserTags})`;
+const tagExpression = _originalTags;
+options.cucumberOpts.tagExpression = tagExpression;
+console.log('Tags:', tagExpression);
 
 if (program.souce) {
     options.sauceConnect = true;
