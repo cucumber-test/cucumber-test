@@ -1,3 +1,64 @@
+const browserTags = [
+    '@__firefox',
+    '@__chrome',
+    '@__safari',
+    '@__microsoftedge',
+    '@__internetexplorer'
+];
+const nonBrowserTags = [
+    '@__non_firefox',
+    '@__non_chrome',
+    '@__non_safari',
+    '@__non_microsoftedge',
+    '@__non_internetexplorer'
+];
+const mobileTags = [
+    '@__android',
+    '@__mobile',
+    '@__ios'
+];
+const nonMobileTags = [
+    '@__non_android',
+    '@__non_mobile',
+    '@__non_ios'
+];
+
+function browserName() {
+    const {browserName} = global.browser.desiredCapabilities;
+    return browserName.toLowerCase().replace(/ /g,'');
+}
+
+function isBrowserTag(tagName) {
+    const browserId = browserName();
+    if (browserTags.indexOf(tagName)>-1) {
+        return tagName===`@__${browserId}` ? 1 : 0;
+    }
+    if (nonBrowserTags.indexOf(tagName)>-1) {
+        return tagName===`@__non_${browserId}` ? 0 : 1;
+    }
+    return 1;
+}
+
+function isMobileTag(tagName) {
+    const chkMobiles = {
+        '@__android': global.browser.isAndroid,
+        '@__mobile': global.browser.isMobile,
+        '@__ios': global.browser.isIOS
+    }
+    const chkNonMobiles = {
+        '@__non_android': !global.browser.isAndroid,
+        '@__non_mobile': !global.browser.isMobile,
+        '@__non_ios': !global.browser.isIOS
+    }
+    if (mobileTags.indexOf(tagName)>-1) {
+        return chkMobiles[tagName] ? 1 : 0;
+    }
+    if (nonMobileTags.indexOf(tagName)>-1) {
+        return chkNonMobiles[tagName] ? 1 : 0;
+    }
+    return 1;
+}
+
 const seleniumArgs = {
     // baseURL: 'https://selenium-release.storage.googleapis.com',
     // version: '3.7.1',
@@ -231,6 +292,7 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         global.should = chai.should();
+
         if (process.argv.indexOf('--uaIphone')!==-1) {
             console.log('setViewportSize: { width: 414, height: 736 }');
             global.browser.setViewportSize({ width: 414, height: 736 });
@@ -240,26 +302,13 @@ exports.config = {
         }
     },
     beforeFeature: function(event) {
-        const {browserName} = global.browser.desiredCapabilities;
-        console.log('>>>>>',`@__${browserName}`);
-        function isBrowserTag(tagName) {
-            let browserTags = [
-                '@__firefox',
-                '@__chrome',
-                '@__safari',
-                '@__MicrosoftEdge',
-                '@__internet explorer'
-            ];
-            if (browserTags.indexOf(tagName)>-1) {
-                return tagName===`@__${browserName}` ? 1 : 0;
-            }
-            return 1;
-        }
+        console.log('>>>>>',`@__${browserName()}`);
 
         event.scenarios = event.scenarios.filter(x=>{
             if (x.tags) {
-                const chk = x.tags.map(y => isBrowserTag(y.name)).sort();
-                return chk[0]!==0;
+                const isBrowserTags = x.tags.map(y => isBrowserTag(y.name)).sort();
+                const isMobileTags = x.tags.map(y => isMobileTag(y.name)).sort();
+                return (isBrowserTags[0] + isMobileTags[0])===2
             }
             return true;
         });
