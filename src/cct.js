@@ -3,12 +3,13 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.22');
+program.version('1.0.23');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
+program.option('--retry [retry]', 'Connection retry [3]');
 program.option('--timeout [timeout]', 'Timeout [20000]');
 program.option('--android [android]', 'Run on android device');
 program.option('--uaIphone', 'Chrome w/ user agent of iPhone');
@@ -18,9 +19,12 @@ program.parse(process.argv);
 console.log('Loading...');
 
 const timeout = program.timeout || 20000;
+const connectionRetryCount = program.retry || 3;
 const _originalTags = (program.tags || '@simple') + ' and (not @Pending)';
 
 const options = {
+    waitforTimeout: timeout - 10000,
+    connectionRetryCount,
     cucumberOpts: {
         _originalTags,
         timeout
