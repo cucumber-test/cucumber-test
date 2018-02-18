@@ -20,7 +20,7 @@ module.exports = (method, value, element) => {
         checkValue = '';
     }
 
-    browser.pause(1000, '*internal*');
+    browser.pause(2000, '*internal*');
     if (browserName==='safari') {
         browser.execute(function(element, checkValue) {
              document.querySelector(element).value = checkValue;
