@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.20');
+program.version('1.0.21');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
@@ -78,6 +78,13 @@ cct --android [deviceName:platformVersion]
                 bconfig.chromeOptions = {
                     args: ['use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36']
                 }
+            }
+        }
+        if (x==='safari') {
+            // bconfig.technologyPreview = true;
+            bconfig['safari.options'] = {
+                technologyPreview: true,
+                handlesAlerts: true,
             }
         }
         return bconfig;

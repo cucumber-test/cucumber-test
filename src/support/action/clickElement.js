@@ -21,5 +21,6 @@ module.exports = (action, type, element) => {
 
     checkIfElementExists(elem);
 
+    browser.pause(1000, '*internal*');
     browser[method](elem);
 };

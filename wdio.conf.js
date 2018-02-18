@@ -30,11 +30,18 @@ function browserName() {
 
 function isBrowserTag(tagName) {
     const browserId = browserName();
-    if (browserTags.indexOf(tagName)>-1) {
-        return tagName===`@__${browserId}` ? 1 : 0;
+    const arr = tagName.split('||');
+    if (browserTags.indexOf(arr[0])>-1) {
+        if (arr[0]===`@__${browserId}`) {
+            return 1;
+        } else if (arr.length>1){
+            return isMobileTag(`@__${arr[1]}`)
+        } else {
+            return 0;
+        }
     }
-    if (nonBrowserTags.indexOf(tagName)>-1) {
-        return tagName===`@__non_${browserId}` ? 0 : 1;
+    if (nonBrowserTags.indexOf(arr[0])>-1) {
+        return arr[0]===`@__non_${browserId}` ? 0 : 1;
     }
     return 1;
 }
@@ -299,6 +306,8 @@ exports.config = {
         } else if (process.argv.indexOf('--uaGalaxy')!==-1) {
             console.log('setViewportSize: { width: 414, height: 736 }');
             global.browser.setViewportSize({ width: 414, height: 736 });
+        } else if (!global.browser.isMobile) {
+            global.browser.windowHandleSize({width: 1240, height: 768});
         }
     },
     beforeFeature: function(event) {

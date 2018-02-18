@@ -22,6 +22,7 @@ import switchIframe from '../support/action2/switchToIframe';
 import changeViewPort from '../support/action2/changeViewPort';
 import switchToParent from '../support/action2/switchToParent';
 import switchToPopup from '../support/action2/switchToPopup';
+import switchToMain from '../support/action2/switchToMain';
 
 defineSupportCode(({ When }) => {
     When(
@@ -127,6 +128,11 @@ defineSupportCode(({ When }) => {
     When(
         /^I switch back to parent window$/,
         switchToParent
+    );
+
+    When(
+        /^I switch back to main window$/,
+        switchToMain
     );
 
     When(
