@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.24');
+program.version('1.0.25');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
