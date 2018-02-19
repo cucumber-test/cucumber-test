@@ -11,7 +11,7 @@ module.exports = (elem, falseCase) => {
      * Maximum number of milliseconds to wait for
      * @type {Int}
      */
-    const ms = 10000;
+    const ms = browser.options.waitforTimeout || 10000;
     browser.pause(1000, '*internal*');
     browser.waitForVisible(elem, ms, !!falseCase);
 };
