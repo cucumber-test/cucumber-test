@@ -3,12 +3,13 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.25');
+program.version('1.0.26');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
-program.option('-t, --tags [tags]', 'Run Featurs filtered by tags');
+program.option('-t, --tags [tags]', 'Run Features filtered by tags');
 program.option('-s, --sauce', 'Run in Saucelabs cloud service');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
+program.option('--browserConfig [fpath]', 'Browser config [file/path.js]');
 program.option('--retry [retry]', 'Connection retry [3]');
 program.option('--timeout [timeout]', 'Timeout [20000]');
 program.option('--android [android]', 'Run on android device');
@@ -73,26 +74,39 @@ cct --android [deviceName:platformVersion]
             maxInstances: 5,
             browserName: x
         };
-        if (x==='chrome') {
+        if (x === 'chrome') {
+        	// bconfig.proxy = {
+            //     proxyType: 'MANUAL',
+            //     httpProxy: 'domain:80',
+            //     sslProxy: 'domain:443'
+            // };
+        	const args = ['disable-web-security'];
+	        bconfig.chromeOptions = {args}
             if (program.uaIphone) {
-                bconfig.chromeOptions = {
-                    args: ['use-mobile-user-agent', 'user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3']
-                }
+                args.push('use-mobile-user-agent', 'user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3')
             } else if (program.uaGalaxy) {
-                bconfig.chromeOptions = {
-                    args: ['use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36']
-                }
+                args.push('use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36')
             }
         }
         if (x==='safari') {
-            // bconfig.technologyPreview = true;
             bconfig['safari.options'] = {
-                technologyPreview: true,
-                handlesAlerts: true,
+                // technologyPreview: true,
             }
         }
         return bconfig;
     });
+}
+
+if (program.browserConfig) {
+    const browserConfig = require(process.cwd()+'/'+program.browserConfig);
+    Object.keys(browserConfig).forEach((browserId) => {
+        const idx = options.capabilities.findIndex(x => x.browserName===browserId);
+        if (idx!==-1) {
+            options.capabilities[idx] = Object.assign(options.capabilities[idx],browserConfig[browserId]);
+        } else {
+            options.capabilities.push(browserConfig[browserId])
+        }
+    })
 }
 
 console.log('Browser:', browser,
