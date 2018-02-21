@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.30');
+program.version('1.0.31');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Features filtered by tags');
 program.option('-i, --instances [instances]', 'Max Instances');
@@ -104,8 +104,6 @@ if (program.browserConfig) {
         const idx = options.capabilities.findIndex(x => x.browserName===browserId);
         if (idx!==-1) {
             options.capabilities[idx] = Object.assign(options.capabilities[idx],browserConfig[browserId]);
-        } else {
-            options.capabilities.push(browserConfig[browserId])
         }
     })
 }

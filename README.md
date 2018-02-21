@@ -13,7 +13,7 @@ of your product development. `cucumber-test` is a fork of
 3. selenium-standalone start
 4. create folder `features`
 5. add file `features/simple.feature`
-6. run `cct` (or `cct -b chrome,firefox,safari`)
+6. run `cct` (or `cct -b chrome,firefox,safari --timeout 40000 -i 3`)
 
 if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind Proxy / VPN:` below.
 

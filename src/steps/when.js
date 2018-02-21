@@ -20,9 +20,10 @@ import submitForm from '../support/action/submitForm';
 import switchToTab from '../support/action2/switchToTab';
 import switchIframe from '../support/action2/switchToIframe';
 import changeViewPort from '../support/action2/changeViewPort';
-import switchToParent from '../support/action2/switchToParent';
 import switchToPopup from '../support/action2/switchToPopup';
 import switchToMain from '../support/action2/switchToMain';
+import switchToParent from '../support/action2/switchToParent';
+import deleteAllCookies from '../support/action2/deleteAllCookies';
 
 defineSupportCode(({ When }) => {
     When(
@@ -63,6 +64,11 @@ defineSupportCode(({ When }) => {
     When(
         /^I delete the cookie "([^"]*)?"$/,
         deleteCookie
+    );
+
+    When(
+        /^I delete all cookies$/,
+        deleteAllCookies
     );
 
     When(
