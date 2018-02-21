@@ -76,7 +76,7 @@ Add these env variables, your SauceLabs user & key:
 ```bash
 export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export SAUCE_USERNAME=cucumber-test
-cct -c saucelabs:tunnelling
+cct -c saucelabs:connect
 cct -c saucelabs
 ```
 

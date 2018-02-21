@@ -3,12 +3,12 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.28');
+program.version('1.0.29');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Features filtered by tags');
 program.option('-i, --instances [instances]', 'Max Instances');
 program.option('-b, --browser [browser]', 'Target Browser');
-program.option('-c, --cloud [provider]', 'Cloude saucelabs:tunnelling');
+program.option('-c, --cloud [provider]', 'Cloude saucelabs:connect');
 program.option('--browserConfig [fpath]', 'Browser config [file/path.js]');
 program.option('--retry [retry]', 'Connection retry [3]');
 program.option('--timeout [timeout]', 'Timeout [20000]');
@@ -69,13 +69,18 @@ cct --android [deviceName:platformVersion]
 } else {
     browser = program.browser || 'chrome';
     options.services = ['selenium-standalone', 'sauce'];  // 'firefox-profile'
-    options.capabilities = browser.split(',').map(x => {
+    options.capabilities = browser.split(',').map(browserIds => {
+        const browserCfg = browserIds.split(':');
+        const browserName = browserCfg[0];
         const bconfig = {
             acceptInsecureCerts: true,
             maxInstances: 5,
-            browserName: x
+            browserName
         };
-        if (x === 'chrome') {
+        if (browserCfg[1]) {
+            bconfig.browserVersion = browserCfg[1];
+        };
+        if (browserName === 'chrome') {
         	const args = ['disable-web-security'];
 	        bconfig.chromeOptions = {args}
             if (program.uaIphone) {
@@ -84,7 +89,7 @@ cct --android [deviceName:platformVersion]
                 args.push('use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36')
             }
         }
-        if (x==='safari') {
+        if (browserName==='safari') {
             bconfig['safari.options'] = {
                 // technologyPreview: true,
             }
@@ -119,7 +124,7 @@ if (program.cloud) {
     console.log('Run from ', program.cloud);
     const provider = program.cloud.split(':');
     if (provider[0]==='saucelabs') {
-        if (provider[1]==='tunnelling') {
+        if (provider[1]==='connect') {
             options.sauceConnect = true;
         }
         options.user = process.env.SAUCE_USERNAME;
