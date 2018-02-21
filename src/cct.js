@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.29');
+program.version('1.0.30');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Features filtered by tags');
 program.option('-i, --instances [instances]', 'Max Instances');
@@ -78,7 +78,7 @@ cct --android [deviceName:platformVersion]
             browserName
         };
         if (browserCfg[1]) {
-            bconfig.browserVersion = browserCfg[1];
+            bconfig.version = browserCfg[1];
         };
         if (browserName === 'chrome') {
         	const args = ['disable-web-security'];
