@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.27');
+program.version('1.0.28');
 program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
 program.option('-t, --tags [tags]', 'Run Features filtered by tags');
 program.option('-i, --instances [instances]', 'Max Instances');
@@ -71,6 +71,7 @@ cct --android [deviceName:platformVersion]
     options.services = ['selenium-standalone', 'sauce'];  // 'firefox-profile'
     options.capabilities = browser.split(',').map(x => {
         const bconfig = {
+            acceptInsecureCerts: true,
             maxInstances: 5,
             browserName: x
         };
