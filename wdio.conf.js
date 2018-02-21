@@ -1,14 +1,14 @@
 const browserTags = [
-    '@__firefox',
     '@__chrome',
     '@__safari',
+    '@__firefox',
     '@__microsoftedge',
     '@__internetexplorer'
 ];
 const nonBrowserTags = [
-    '@__non_firefox',
     '@__non_chrome',
     '@__non_safari',
+    '@__non_firefox',
     '@__non_microsoftedge',
     '@__non_internetexplorer'
 ];
@@ -114,7 +114,7 @@ exports.config = {
     // then the current working directory is where your package.json resides, so
     // `wdio` will be called from there.
     //
-    specs: ['./features/**/*.feature'],
+    // specs: ['./features/**/*.feature'],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'

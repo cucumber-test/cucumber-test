@@ -3,25 +3,35 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.31');
-program.option('-r, --remote [host]', 'Remote server url [http://ex.com:4444]');
-program.option('-t, --tags [tags]', 'Run Features filtered by tags');
-program.option('-i, --instances [instances]', 'Max Instances');
-program.option('-b, --browser [browser]', 'Target Browser');
-program.option('-c, --cloud [provider]', 'Cloude saucelabs:connect');
-program.option('--browserConfig [fpath]', 'Browser config [file/path.js]');
-program.option('--retry [retry]', 'Connection retry [3]');
-program.option('--timeout [timeout]', 'Timeout [20000]');
-program.option('--android [android]', 'Run on android device');
-program.option('--uaIphone', 'Chrome w/ user agent of iPhone');
-program.option('--uaGalaxy', 'Chrome w/ user agent of Samsung Galaxy');
+program.version('1.0.32');
+program.option('-f, --features [path]', 'location of features/[path]');
+program.option('-t, --tags [tags]', 'run features filtered by tags');
+program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
+program.option('-i, --instances [instances]', 'max instances');
+program.option('-b, --browser [browser]', 'target browser');
+program.option('-c, --cloud [provider]', 'cloud saucelabs:connect');
+program.option('--browserConfig [fpath]', 'browser config [file/path.js]');
+program.option('--timeout [timeout]', 'timeout [20000]');
+program.option('--retry [retry]', 'connection retry [3]');
+program.option('--android [android]', 'run on android device');
+program.option('--uaIphone', 'chrome w/ user agent of iPhone');
+program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
 
 program.parse(process.argv);
 console.log('Loading...');
 
 const timeout = program.timeout || 20000;
 const connectionRetryCount = program.retry || 3;
-const _originalTags = (program.tags || '@simple') + ' and (not @Pending)';
+
+let _originalTags = 'not @Pending';
+if (program.tags) {
+    _originalTags = `${program.tags} and (not @Pending)`;
+}
+
+let specs = ['./features/**/*.feature'];
+if (program.features) {
+    specs = [`./features/${program.features}/**/*.feature`];
+}
 
 const options = {
     waitforTimeout: timeout - 10000,
@@ -29,7 +39,8 @@ const options = {
     cucumberOpts: {
         _originalTags,
         timeout
-    }
+    },
+    specs
 };
 
 if (program.remote) {

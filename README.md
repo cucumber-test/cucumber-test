@@ -32,6 +32,28 @@ Scenario: Search cucumber-test
     When I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
+
+## Extended tags
+Extended tags will simplify how to write cucumber with different browser & environment, those information are available on the browser object, utilize during execution of the cucumber file:
+```js
+// Browsers
+@__chrome            ><  @__non_chrome
+@__safari            ><  @__non_safari
+@__firefox           ><  @__non_firefox
+@__microsoftedge     ><  @__non_microsoftedge
+@__internetexplorer  ><  @__non_internetexplorer
+
+// Mobile specific
+@__android           ><  @__non_android
+@__mobile            ><  @__non_mobile
+@__ios               ><  @__non_ios
+```
+Sample usage can be seen on the example below `Search on Google`, when it get executed on the desktop browser like chrome, firefox or IE, it will pickup scenario with:
+
+`@__non_safari @__non_mobile` and the `@__mobile` will be filtered
+
+and viceversa will happened when it get executed on mobile.
+
 ## Appium
 ### Android Device
 please check the developer tools security options, ensure them to be checked.
@@ -48,15 +70,15 @@ Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
     Then I expect that the title is "Google"
 
-@chrome
-Scenario: Search cucumber-test
+@__non_safari @__non_mobile
+Scenario: Search cucumber-test on desktop browser
     When I set "cucumber-test" to the inputfield "[name=q]"
     And I expect that element "[name=q]" becomes visible
     When I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
-@mobile
-Scenario: Search cucumber-test
+@__mobile
+Scenario: Search cucumber-test on mobile browser
     When I set "cucumber-test" to the inputfield "[name=q]"
     And I expect that element "[name=q]" becomes visible
     When I click on the button "[name=btnG]"
@@ -68,7 +90,7 @@ npm install -g appium appium-doctor
 # run appium & connect your android device using USB
 appium
 # check deviceName - adb devices & pass to deviceName:android version
-cct -t '@simple and not @chrome' --android f344ee26:7.0
+cct --android f344ee26:7.0
 ```
 
 ## Integration with: Sauce Labs
