@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.32');
+program.version('1.0.33');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -78,6 +78,10 @@ cct --android [deviceName:platformVersion]
         // appActivity: 'com.android.calculator2.Calculator', // App activity of the app
     }];
 } else {
+    if (program.browser.match(/\:[a-zA-Z]+\d+/) && program.browserConfig===undefined) {
+        console.log(`Browser: ${program.browser} need to have option --browserConfig`);
+        process.exit(0);
+    }
     browser = program.browser || 'chrome';
     options.services = ['selenium-standalone', 'sauce'];  // 'firefox-profile'
     options.capabilities = browser.split(',').map(browserIds => {
@@ -109,21 +113,26 @@ cct --android [deviceName:platformVersion]
     });
 }
 
-if (program.browserConfig) {
-    const browserConfig = require(process.cwd()+'/'+program.browserConfig);
-    Object.keys(browserConfig).forEach((browserId) => {
-        const idx = options.capabilities.findIndex(x => x.browserName===browserId);
-        if (idx!==-1) {
-            options.capabilities[idx] = Object.assign(options.capabilities[idx],browserConfig[browserId]);
-        }
-    })
-}
-
 console.log('Browser:', browser,
 program.uaIphone ? '--uaIphone' : '',
 program.uaGalaxy ? '--uaGalaxy' : '',
 program.android  ? '--android' : '',
 );
+
+if (program.browserConfig) {
+    const browserConfig = require(process.cwd()+'/'+program.browserConfig);
+
+    options.capabilities.forEach((obj, idx) => {
+        const name = obj.browserName, version = obj.version;
+        if (browserConfig[`${name}:${version}`]) {
+            options.capabilities[idx] = browserConfig[`${name}:${version}`];
+            console.log(options.capabilities[idx]);
+        } else if (browserConfig[name]) {
+            options.capabilities[idx] = browserConfig[name];
+            console.log(options.capabilities[idx]);
+        }
+    });
+}
 
 const tagExpression = _originalTags;
 options.cucumberOpts.tagExpression = tagExpression;
@@ -143,12 +152,18 @@ if (program.cloud) {
 
 const wdio = new Launcher(`${__dirname}/../wdio.conf.js`, options);
 
-wdio.run().then(
-    code => {
-        process.exit(code);
-    },
-    error => {
-        console.error('Launcher failed to start the test', error.stacktrace);
-        process.exit(1);
-    }
-);
+try {
+    wdio.run().then(
+        code => {
+            console.log('Normal exit:', code);
+            process.exit(code);
+        },
+        error => {
+            console.error('Launcher failed to start the test', error.stacktrace);
+            process.exit(1);
+        }
+    );
+} catch(e) {
+    console.log('Ultimate error catch:', e);
+    process.exit(1);
+}
