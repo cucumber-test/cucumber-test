@@ -1,6 +1,6 @@
 {
     "name": "cucumber-test",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
@@ -39,6 +39,7 @@
         "babel-register": "~6.26.0",
         "chai": "~4.1.2",
         "wdio-appium-service": "^0.2.3",
+        "wdio-browserstack-service": "^0.1.14",
         "wdio-chromedriver-service": "^0.1.2",
         "wdio-cucumber-framework": "~1.1.0",
         "wdio-firefox-profile-service": "^0.1.1",

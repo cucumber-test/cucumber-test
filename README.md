@@ -92,9 +92,18 @@ appium
 # check deviceName - adb devices & pass to deviceName:android version
 cct --android f344ee26:7.0
 ```
+## Integration with: BrowserStack
+Add these env variables from your BrowserStack user & key:
+```bash
+export BROWSERSTACK_ACCESS_KEY=xxXXXxXxXxXxxXxXXXxx
+export BROWSERSTACK_USERNAME=cucumber-test
+cct -c browserstack
+```
+
+![alt #D Saucelabs](docs/BrowserStack.gif)
 
 ## Integration with: Sauce Labs
-Add these env variables, your SauceLabs user & key:
+Add these env variables from your SauceLabs user & key:
 ```bash
 export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export SAUCE_USERNAME=cucumber-test

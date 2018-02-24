@@ -3,7 +3,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.33');
+program.version('1.0.34');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -36,6 +36,7 @@ if (program.features) {
 const options = {
     waitforTimeout: timeout - 10000,
     connectionRetryCount,
+    services: [],
     cucumberOpts: {
         _originalTags,
         timeout
@@ -63,7 +64,7 @@ cct --android [deviceName:platformVersion]
     }
     const android = program.android.split(':');
     options.port = '4723';
-    options.services = ['appium'];
+    options.services.push('appium');
     options.capabilities = [{
         appiumVersion: '1.7.2',                    // Appium module version
         browserName: browser,                      // browser name is empty for native apps
@@ -78,12 +79,12 @@ cct --android [deviceName:platformVersion]
         // appActivity: 'com.android.calculator2.Calculator', // App activity of the app
     }];
 } else {
-    if (program.browser.match(/\:[a-zA-Z]+\d+/) && program.browserConfig===undefined) {
-        console.log(`Browser: ${program.browser} need to have option --browserConfig`);
+    browser = program.browser || 'chrome';
+    if (browser.match(/\:[a-zA-Z]+\d+/) && program.browserConfig===undefined) {
+        console.log(`Browser: ${browser} need to have option --browserConfig`);
         process.exit(0);
     }
-    browser = program.browser || 'chrome';
-    options.services = ['selenium-standalone', 'sauce'];  // 'firefox-profile'
+    options.services.push('selenium-standalone');  // 'firefox-profile'
     options.capabilities = browser.split(',').map(browserIds => {
         const browserCfg = browserIds.split(':');
         const browserName = browserCfg[0];
@@ -142,11 +143,17 @@ if (program.cloud) {
     console.log('Run from ', program.cloud);
     const provider = program.cloud.split(':');
     if (provider[0]==='saucelabs') {
+        options.services.push('sauce');
         if (provider[1]==='connect') {
             options.sauceConnect = true;
         }
         options.user = process.env.SAUCE_USERNAME;
         options.key = process.env.SAUCE_ACCESS_KEY;
+    } else if (provider[0]==='browserstack') {
+        options.services.push('browserstack');
+        options.user = process.env.BROWSERSTACK_USERNAME;
+        options.key = process.env.BROWSERSTACK_ACCESS_KEY;
+        options.browserstackLocal = true;
     }
 }
 
