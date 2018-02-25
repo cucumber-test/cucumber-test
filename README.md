@@ -92,6 +92,74 @@ appium
 # check deviceName - adb devices & pass to deviceName:android version
 cct --android f344ee26:7.0
 ```
+
+## Config & Variables
+Setting up browsers capabilities and adding variables that can be use inside steps statement. Put `config.js` in the current folder (above features folder) where you will run cucumber-test.
+
+```cucumber
+@simple
+Feature: Search on Google
+    Search should be on the google website
+    and the first should be cucumber.io
+
+Scenario: Navigate to Google
+    Given I open the url "${g.url}"
+    Then I expect that the title is "Google"
+
+@__non_safari @__non_mobile
+Scenario: Search cucumber-test on desktop browser
+    When I set "${g.search}" to the inputfield "${g.input}"
+    And I expect that element "${g.input}" becomes visible
+    When I click on the button "${g.btnGMobile}"
+    Then I expect that element "${g.cucumberIo}" becomes visible
+
+@__mobile
+Scenario: Search cucumber-test on mobile browser
+    When I set "${g.search}" to the inputfield "${g.input}"
+    And I expect that element "${g.input}" becomes visible
+    When I click on the button "${g.btnG}"
+    Then I expect that element "${g.cucumberIo}" becomes visible
+```
+`config.js`
+```js
+module.exports = () => {
+    return {
+        browsers: {
+            chrome: {
+                platform: 'MAC',
+            },
+            "firefox:M52": {
+                platform: 'MAC',
+                version: 52
+            },
+            "firefox:W52": {
+                platform: 'WIN8',
+                version: 52
+            },
+            "firefox": {
+                platform: 'MAC',
+                version: 48
+            }
+        },
+        vars: {
+            g: {
+                input: '[name=q]',
+                btnG: '[name=btnG]',
+                btnGMobile: 'input.lsb',
+                search: 'cucumber-test',
+                url: 'https://google.com',
+                cucumberIo: "a[href='https://cucumber.io/']"
+            }
+        }
+    }
+}
+```
+the `config.js` will automatically pickup by the runner or you can provide the fullpath in the CLI:
+```bash
+cct --config ./config.js -b chrome
+cct -b chrome
+```
+
 ## Integration with: BrowserStack
 Add these env variables from your BrowserStack user & key:
 ```bash
@@ -119,7 +187,7 @@ cct -c saucelabs
 npm install -g selenium-standalone@latest
 NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone install
 NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone start
-NODE_TLS_REJECT_UNAUTHORIZED=0 cct -t '@simple or @smoke'
+NODE_TLS_REJECT_UNAUTHORIZED=0 cct -t '@smoke'
 ```
 
 ## Dev Mode

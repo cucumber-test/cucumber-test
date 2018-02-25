@@ -1,18 +1,19 @@
 
+const fs = require('fs');
 const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.34');
+program.version('1.0.35');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
+program.option('-c, --cloud [provider]', 'cloud [saucelabs] or [browserstack]');
 program.option('-i, --instances [instances]', 'max instances');
 program.option('-b, --browser [browser]', 'target browser');
-program.option('-c, --cloud [provider]', 'cloud saucelabs:connect');
-program.option('--browserConfig [fpath]', 'browser config [file/path.js]');
 program.option('--timeout [timeout]', 'timeout [20000]');
 program.option('--retry [retry]', 'connection retry [3]');
+program.option('--config [fpath]', 'config [./config.js]');
 program.option('--android [android]', 'run on android device');
 program.option('--uaIphone', 'chrome w/ user agent of iPhone');
 program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
@@ -44,6 +45,10 @@ const options = {
     specs
 };
 
+if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
+    program.config = 'config.js';
+}
+
 if (program.remote) {
     const myURL = url.parse(program.remote);
     console.log('Remote:', program.remote);
@@ -74,14 +79,11 @@ cct --android [deviceName:platformVersion]
         newCommandTimeout: 30 * 60000,
         waitforTimeout: 10000,
         commandTimeout: 7200,
-        // app: './app/LGCalculator.apk',          // Path to the native app
-        // appPackage: 'com.android.calculator2',  // Package name of the app
-        // appActivity: 'com.android.calculator2.Calculator', // App activity of the app
     }];
 } else {
     browser = program.browser || 'chrome';
-    if (browser.match(/\:[a-zA-Z]+\d+/) && program.browserConfig===undefined) {
-        console.log(`Browser: ${browser} need to have option --browserConfig`);
+    if (browser.match(/\:[a-zA-Z]+\d+/) && program.config===undefined) {
+        console.log(`Browser: ${browser} need to have option --config`);
         process.exit(0);
     }
     options.services.push('selenium-standalone');  // 'firefox-profile'
@@ -120,16 +122,18 @@ program.uaGalaxy ? '--uaGalaxy' : '',
 program.android  ? '--android' : '',
 );
 
-if (program.browserConfig) {
-    const browserConfig = require(process.cwd()+'/'+program.browserConfig);
+if (program.config) {
+    const config = require(process.cwd()+'/'+program.config)();
+    const {browsers, vars} = config;
 
+    options.vars = vars;
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, version = obj.version;
-        if (browserConfig[`${name}:${version}`]) {
-            options.capabilities[idx] = browserConfig[`${name}:${version}`];
+        if (browsers[`${name}:${version}`]) {
+            options.capabilities[idx] = browsers[`${name}:${version}`];
             console.log(options.capabilities[idx]);
-        } else if (browserConfig[name]) {
-            options.capabilities[idx] = browserConfig[name];
+        } else if (browsers[name]) {
+            options.capabilities[idx] = browsers[name];
             console.log(options.capabilities[idx]);
         }
     });
@@ -158,7 +162,7 @@ if (program.cloud) {
 }
 
 const wdio = new Launcher(`${__dirname}/../wdio.conf.js`, options);
-
+console.log('start...');
 try {
     wdio.run().then(
         code => {

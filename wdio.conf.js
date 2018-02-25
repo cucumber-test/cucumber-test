@@ -311,9 +311,26 @@ exports.config = {
         }
     },
     beforeFeature: function(event) {
-        console.log('>>>>>',`@__${browserName()}`);
+        const {vars} = global.browser.options;
 
+        console.log('>>>>>',`@__${browserName()}`);
         event.scenarios = event.scenarios.filter(x=>{
+            // variable parser
+            x.steps.forEach(obj => {
+                const varNames = obj.name.match(/\${([A-z.]+)}/g);
+                if (varNames) {
+                    varNames.forEach(varName=> {
+                        let items = vars;
+                        varName.replace(/[${}]/g,'').trim().split('.').forEach(i => {
+                            if (items!==undefined)
+                                items = items[i];
+                        })
+                        if (items!==undefined) {
+                            obj.name = obj.name.replace(varName, items);
+                        }
+                    })
+                }
+            })
             if (x.tags) {
                 const isBrowserTags = x.tags.map(y => isBrowserTag(y.name)).sort();
                 const isMobileTags = x.tags.map(y => isMobileTag(y.name)).sort();
