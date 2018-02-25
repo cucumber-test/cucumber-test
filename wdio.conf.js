@@ -331,10 +331,10 @@ exports.config = {
                     })
                 }
             })
-            if (x.tags) {
+            if (x.tags.length>0) {
                 const isBrowserTags = x.tags.map(y => isBrowserTag(y.name)).sort();
                 const isMobileTags = x.tags.map(y => isMobileTag(y.name)).sort();
-                return (isBrowserTags[0] + isMobileTags[0])===2
+                return (isBrowserTags[0] + isMobileTags[0])===2;
             }
             return true;
         });

@@ -109,7 +109,7 @@ cct --android [deviceName:platformVersion]
         }
         if (browserName==='safari') {
             bconfig['safari.options'] = {
-                // technologyPreview: true,
+                technologyPreview: true,
             }
         }
         return bconfig;

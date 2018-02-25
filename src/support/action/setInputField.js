@@ -21,7 +21,8 @@ module.exports = (method, value, element) => {
     }
 
     browser.pause(2000, '*internal*');
-    if (browserName==='safari') {
+    const windowHandles = browser.windowHandles();
+    if (browserName==='safari' && windowHandles.value.length>1) {
         browser.execute(function(element, checkValue) {
              document.querySelector(element).value = checkValue;
         }, element, checkValue)
