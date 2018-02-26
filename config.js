@@ -16,8 +16,8 @@ module.exports = () => {
         vars: {
             g: {
                 input: '[name=q]',
-                btnG: '[name=btnG]',
-                btnGMobile: 'input.lsb',
+                btnG: 'input.lsb',
+                btnGMobile: 'button._S6q',
                 search: 'cucumber-test',
                 url: 'https://google.com',
                 cucumberIo: "a[href='https://cucumber.io/']"

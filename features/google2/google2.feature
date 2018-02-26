@@ -10,12 +10,12 @@ Scenario: Navigate to Google
 Scenario: Search cucumber-test on desktop browser
     When I set "${g.search}" to the inputfield "${g.input}"
     And I expect that element "${g.input}" becomes visible
-    When I click on the button "${g.btnGMobile}"
+    When I click on the button "${g.btnG}"
     Then I expect that element "${g.cucumberIo}" becomes visible
 
 @__mobile
 Scenario: Search cucumber-test on mobile browser
     When I set "${g.search}" to the inputfield "${g.input}"
     And I expect that element "${g.input}" becomes visible
-    When I click on the button "${g.btnG}"
+    When I click on the button "${g.btnGMobile}"
     Then I expect that element "${g.cucumberIo}" becomes visible

@@ -4,7 +4,7 @@ const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 
-program.version('1.0.36');
+program.version('1.0.37');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -72,11 +72,13 @@ cct --android [deviceName:platformVersion]
     options.port = '4723';
     options.services.push('appium');
     options.capabilities = [{
-        appiumVersion: '1.7.2',                    // Appium module version
-        browserName: browser,                      // browser name is empty for native apps
+        browserName: 'chrome',                 // browser name is empty for native apps
+        appiumVersion: '1.7.2',                // Appium module version
+        // https://github.com/appium/appium/issues/8651
+        // browserName: browserIds[0].split(':')[0],
         platformName: 'Android',
-        platformVersion: android[1] || '7.0',      // Android platform version of the device
-        deviceName: android[0],                    // device name of the mobile device
+        platformVersion: android[1] || '7.0',  // Android platform version of the device
+        deviceName: android[0],                // device name of the mobile device
         newCommandTimeout: 30 * 60000,
         waitforTimeout: 10000,
         commandTimeout: 7200,

@@ -17,5 +17,5 @@ Scenario: Search cucumber-test
 Scenario: Search cucumber-test
     When I set "cucumber-test" to the inputfield "[name=q]"
     And I expect that element "[name=q]" becomes visible
-    When I click on the button "[name=btnG]"
+    When I click on the button "button._S6q"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
