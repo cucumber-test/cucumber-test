@@ -1,9 +1,6 @@
 module.exports = () => {
     return {
         browsers: {
-            chrome: {
-                platform: 'MAC',
-            },
             "firefox:M52": {
                 platform: 'MAC',
                 version: 52
@@ -12,16 +9,9 @@ module.exports = () => {
                 platform: 'WIN8',
                 version: 52
             },
-            "firefox": {
-                platform: 'MAC',
-                version: 48
-            }
-        },
-        saucelabs: {
-            //
-        },
-        browserstack: {
-            //
+            chrome: { platform: 'MAC' },
+            safari: { platform: 'MAC' },
+            firefox: { platform: 'MAC' },
         },
         vars: {
             g: {

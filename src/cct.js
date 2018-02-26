@@ -57,8 +57,9 @@ if (program.remote) {
     options.host = myURL.hostname;
 }
 
-let browser = 'chrome';
-options.maxInstances = +(program.instances || 1);
+let browser = program.browser || 'chrome';
+let browserIds = browser.split(',');
+options.maxInstances = +(program.instances || browserIds.length);
 if (program.android) {
     if (program.android===true) {
         console.log(`
@@ -81,14 +82,13 @@ cct --android [deviceName:platformVersion]
         commandTimeout: 7200,
     }];
 } else {
-    browser = program.browser || 'chrome';
     if (browser.match(/\:[a-zA-Z]+\d+/) && program.config===undefined) {
         console.log(`Browser: ${browser} need to have option --config`);
         process.exit(0);
     }
     options.services.push('selenium-standalone');  // 'firefox-profile'
-    options.capabilities = browser.split(',').map(browserIds => {
-        const browserCfg = browserIds.split(':');
+    options.capabilities = browserIds.map(bName => {
+        const browserCfg = bName.split(':');
         const browserName = browserCfg[0];
         const bconfig = {
             acceptInsecureCerts: true,
@@ -130,10 +130,10 @@ if (program.config) {
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, version = obj.version;
         if (browsers[`${name}:${version}`]) {
-            options.capabilities[idx] = browsers[`${name}:${version}`];
+            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], browsers[`${name}:${version}`]);
             console.log(options.capabilities[idx]);
         } else if (browsers[name]) {
-            options.capabilities[idx] = browsers[name];
+            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], browsers[name]);
             console.log(options.capabilities[idx]);
         }
     });
