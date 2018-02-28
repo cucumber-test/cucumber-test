@@ -3,8 +3,9 @@ const fs = require('fs');
 const url = require('url');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
+const _merge = require('lodash/merge');
 
-program.version('1.0.37');
+program.version('1.0.38');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -17,6 +18,7 @@ program.option('--config [fpath]', 'config [./config.js]');
 program.option('--android [android]', 'run on android device');
 program.option('--uaIphone', 'chrome w/ user agent of iPhone');
 program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
+program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
 
 program.parse(process.argv);
 console.log('Loading...');
@@ -139,6 +141,13 @@ if (program.config) {
             console.log(options.capabilities[idx]);
         }
     });
+} else {
+    options.vars = {};
+}
+
+if (program.vars) {
+    const paramVars = JSON.parse(program.vars);
+    options.vars = _merge(options.vars, paramVars);
 }
 
 const tagExpression = _originalTags;
