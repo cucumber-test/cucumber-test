@@ -20,7 +20,8 @@ module.exports = (method, value, element) => {
         checkValue = '';
     }
 
-    browser.pause(2000, '*internal*');
+    const { general } = global.browser.options;
+    browser.pause(general.inputPause || 500, '*internal*');
     const windowHandles = browser.windowHandles();
     if (browserName==='safari' && windowHandles.value.length>1) {
         // http://www.paraesthesia.com/archive/2010/01/29/the-difference-between-a-workaround-and-a-fix.aspx/

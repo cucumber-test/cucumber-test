@@ -4,7 +4,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.0.39');
+program.version('1.1.1');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -22,9 +22,6 @@ program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
 program.parse(process.argv);
 console.log('Loading...');
 
-const timeout = program.timeout || 20000;
-const connectionRetryCount = program.retry || 3;
-
 let _originalTags = 'not @Pending';
 if (program.tags) {
     _originalTags = `${program.tags} and (not @Pending)`;
@@ -35,6 +32,8 @@ if (program.features) {
     specs = [`./features/${program.features}/**/*.feature`];
 }
 
+let timeout = program.timeout || 20000;
+const connectionRetryCount = program.retry || 3;
 const options = {
     connectionRetryCount,
     waitforTimeout: timeout - 10000,
@@ -51,6 +50,24 @@ const options = {
 
 if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
     program.config = 'config.js';
+}
+
+let config = {};
+if (program.config) {
+    config = require(process.cwd()+'/'+program.config)();
+    const {browsers, general, vars} = config;
+
+    options.vars = vars || {};
+    options.general = general || {};
+
+    if (options.general.timeout) {
+        timeout = options.general.timeout
+        options.cucumberOpts.timeout = timeout;
+        options.waitforTimeout = timeout - 10000;
+    }
+} else {
+    options.vars = {};
+    options.general = {};
 }
 
 if (program.remote) {
@@ -94,12 +111,14 @@ cct --android [deviceName:platformVersion]
     }
     options.services.push('selenium-standalone');  // 'firefox-profile'
     options.capabilities = browserIds.map(bName => {
+        const name = options.general.logsTitle || 'CCT';
         const browserCfg = bName.split(':');
         const browserName = browserCfg[0];
         const bconfig = {
-            acceptInsecureCerts: true,
+            name,
             maxInstances: 5,
-            browserName
+            browserName,
+            acceptInsecureCerts: true,
         };
         if (browserCfg[1]) {
             bconfig.version = browserCfg[1];
@@ -129,10 +148,7 @@ program.android  ? '--android' : '',
 );
 
 if (program.config) {
-    const config = require(process.cwd()+'/'+program.config)();
-    const {browsers, vars} = config;
-
-    options.vars = vars;
+    const { browsers } = config;
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, version = obj.version;
         if (browsers[`${name}:${version}`]) {
@@ -143,8 +159,6 @@ if (program.config) {
             console.log(options.capabilities[idx]);
         }
     });
-} else {
-    options.vars = {};
 }
 
 if (program.vars) {
