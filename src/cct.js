@@ -4,11 +4,11 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.1');
+program.version('1.1.2');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
-program.option('-c, --cloud [provider]', 'cloud [saucelabs] or [browserstack]');
+program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfecto]');
 program.option('-i, --instances [instances]', 'max instances');
 program.option('-b, --browser [browser]', 'target browser');
 program.option('--timeout [timeout]', 'timeout [20000]');
@@ -22,6 +22,18 @@ program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
 program.parse(process.argv);
 console.log('Loading...');
 
+if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
+    program.config = 'config.js';
+}
+
+let config = {};
+if (program.config) {
+    config = require(process.cwd()+'/'+program.config)();
+}
+const vars = config.vars || {};
+const general = config.general || {};
+const browsers = config.browsers || {};
+
 let _originalTags = 'not @Pending';
 if (program.tags) {
     _originalTags = `${program.tags} and (not @Pending)`;
@@ -32,74 +44,99 @@ if (program.features) {
     specs = [`./features/${program.features}/**/*.feature`];
 }
 
-let timeout = program.timeout || 20000;
-const connectionRetryCount = program.retry || 3;
+let browser = general.browser || 'chrome';
+if (program.browser) {
+    browser = program.browser;
+}
+
+let timeout = general.timeout || 20000;
+if (program.timeout) {
+    timeout = program.timeout;
+}
+
+let retry = general.retry || 3;
+if (program.retry) {
+    retry = program.retry;
+}
 const options = {
-    connectionRetryCount,
+    connectionRetryCount: retry,
     waitforTimeout: timeout - 10000,
+    firefoxProfile: {"security.tls.version.max": 1},
     services: ['firefox-profile'],
-    firefoxProfile: {
-        "security.tls.version.max": 1,
-    },
     cucumberOpts: {
         _originalTags,
         timeout
     },
-    specs
+    general,
+    specs,
+    vars
 };
 
-if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
-    program.config = 'config.js';
-}
-
-let config = {};
-if (program.config) {
-    config = require(process.cwd()+'/'+program.config)();
-    const {browsers, general, vars} = config;
-
-    options.vars = vars || {};
-    options.general = general || {};
-
-    if (options.general.timeout) {
-        timeout = options.general.timeout
-        options.cucumberOpts.timeout = timeout;
-        options.waitforTimeout = timeout - 10000;
+let remoteConfig = {};
+if (program.cloud) {
+    console.log('Run from ', program.cloud);
+    const provider = program.cloud.split(':');
+    if (provider[0]==='saucelabs') {
+        options.services.push('sauce');
+        if (provider[1]==='connect') {
+            options.sauceConnect = true;
+        }
+        options.user = process.env.SAUCE_USERNAME;
+        options.key = process.env.SAUCE_ACCESS_KEY;
+    } else if (provider[0]==='browserstack') {
+        options.services.push('browserstack');
+        options.user = process.env.BROWSERSTACK_USERNAME;
+        options.key = process.env.BROWSERSTACK_ACCESS_KEY;
+        options.browserstackLocal = true;
     }
-} else {
-    options.vars = {};
-    options.general = {};
+    remoteConfig = config[program.cloud] || {};
 }
 
-if (program.remote) {
-    const myURL = url.parse(program.remote);
-    console.log('Remote:', program.remote);
+if (remoteConfig.remote===undefined && program.remote===true) {
+    remoteConfig = config.remote || {};
+} else if (program.remote) {
+    remoteConfig = {
+        remote: program.remote
+    };
+}
+
+if (remoteConfig.remote) {
+    console.log('Remote>>>:', remoteConfig.remote);
+    const myURL = url.parse(remoteConfig.remote);
     options.protocol = myURL.protocol.replace(':', '') || 'http';
     options.port = myURL.port || 4444;
     options.host = myURL.hostname;
 }
 
-let browser = program.browser || 'chrome';
+if (program.browser===undefined && remoteConfig.browser) {
+    browser = remoteConfig.browser;
+}
+
 let browserIds = browser.split(',');
 options.maxInstances = +(program.instances || browserIds.length);
 if (program.android) {
     if (program.android===true) {
-        console.log(`
+        if (general.android) {
+            program.android = general.android;
+        } else {
+            console.log(`
 deviceName & platformVersion are required!
 cct --android [deviceName:platformVersion]
-        `);
-        process.exit(0);
+            `);
+            process.exit(0);
+        }
     }
     const android = program.android.split(':');
     options.port = '4723';
     options.services.push('appium');
     options.capabilities = [{
-        browserName: 'chrome',                 // browser name is empty for native apps
-        appiumVersion: '1.7.2',                // Appium module version
+        browserName: 'chrome',  // browser name is empty for native apps
+        appiumVersion: '1.7.2', // Appium module version
         // https://github.com/appium/appium/issues/8651
         // browserName: browserIds[0].split(':')[0],
         platformName: 'Android',
-        platformVersion: android[1] || '7.0',  // Android platform version of the device
-        deviceName: android[0],                // device name of the mobile device
+        platformVersion: android[1] || '7.0',  // Android version
+        deviceName: android[0], // device name of the mobile device
         newCommandTimeout: 30 * 60000,
         waitforTimeout: 10000,
         commandTimeout: 7200,
@@ -111,7 +148,7 @@ cct --android [deviceName:platformVersion]
     }
     options.services.push('selenium-standalone');  // 'firefox-profile'
     options.capabilities = browserIds.map(bName => {
-        const name = options.general.logsTitle || 'CCT';
+        const name = general.logsTitle || 'CCT';
         const browserCfg = bName.split(':');
         const browserName = browserCfg[0];
         const bconfig = {
@@ -169,24 +206,6 @@ if (program.vars) {
 const tagExpression = _originalTags;
 options.cucumberOpts.tagExpression = tagExpression;
 console.log('Tags:', tagExpression);
-
-if (program.cloud) {
-    console.log('Run from ', program.cloud);
-    const provider = program.cloud.split(':');
-    if (provider[0]==='saucelabs') {
-        options.services.push('sauce');
-        if (provider[1]==='connect') {
-            options.sauceConnect = true;
-        }
-        options.user = process.env.SAUCE_USERNAME;
-        options.key = process.env.SAUCE_ACCESS_KEY;
-    } else if (provider[0]==='browserstack') {
-        options.services.push('browserstack');
-        options.user = process.env.BROWSERSTACK_USERNAME;
-        options.key = process.env.BROWSERSTACK_ACCESS_KEY;
-        options.browserstackLocal = true;
-    }
-}
 
 const wdio = new Launcher(`${__dirname}/../wdio.conf.js`, options);
 console.log('start...');

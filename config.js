@@ -9,9 +9,23 @@ module.exports = () => {
                 platform: 'WIN8',
                 version: 52
             },
-            chrome: { platform: 'MAC' },
-            safari: { platform: 'MAC' },
-            firefox: { platform: 'MAC' },
+            safari: {
+                platform: 'MAC'
+            },
+            chrome: {},
+            firefox: {},
+        },
+        browserstack: {},
+        saucelabs: {},
+        perfecto: {},
+        remote: {
+            remote: 'http://10.193.94.142:4444', //'http://localhost:4444',
+            browser: 'firefox,chrome'
+        },
+        general: {
+            android: 'f344ee26:7.0',
+            browser: 'firefox,chrome,safari',
+            retry: 6
         },
         vars: {
             g: {
