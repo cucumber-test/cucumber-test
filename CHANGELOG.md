@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0] - 2018-03-07
+
+### Sub :Scenario
+Repetitive scenario can be store to share.feature 
+
 ## [1.0.17] - 2018-02-14
 
 ### Add several options:

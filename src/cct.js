@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const url = require('url');
 const program = require('commander');

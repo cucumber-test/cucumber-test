@@ -2,9 +2,8 @@ Feature: Search on Google
     Search should be on the google website
     and the first should be cucumber.io
 
-Scenario: Navigate to Google
-    Given I open the url "https://www.google.com"
-    Then I expect that the title is "Google"
+Scenario: :Navigate to Google
+    Given ...
 
 @__non_mobile
 Scenario: Search cucumber-test
