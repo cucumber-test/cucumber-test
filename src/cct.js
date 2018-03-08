@@ -1,10 +1,11 @@
 const fs = require('fs');
 const url = require('url');
+const faker = require('faker');
 const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.3');
+program.version('1.1.4');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -28,7 +29,7 @@ if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
 
 let config = {};
 if (program.config) {
-    config = require(process.cwd()+'/'+program.config)();
+    config = require(process.cwd()+'/'+program.config)(faker);
 }
 const vars = config.vars || {};
 const general = config.general || {};

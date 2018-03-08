@@ -1,4 +1,4 @@
-module.exports = () => {
+module.exports = (faker) => {
     return {
         browsers: {
             "firefox:M52": {
@@ -34,7 +34,8 @@ module.exports = () => {
                 btnGMobile: 'button._S6q',
                 search: 'cucumber-test',
                 url: 'https://google.com',
-                cucumberIo: "a[href='https://cucumber.io/']"
+                cucumberIo: "a[href='https://cucumber.io/']",
+                email: faker.internet.email()
             }
         }
     }
