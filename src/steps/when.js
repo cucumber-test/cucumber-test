@@ -24,6 +24,7 @@ import switchToPopup from '../support/action2/switchToPopup';
 import switchToMain from '../support/action2/switchToMain';
 import switchToParent from '../support/action2/switchToParent';
 import deleteAllCookies from '../support/action2/deleteAllCookies';
+import typeInputField from '../support/action2/typeInputField';
 
 defineSupportCode(({ When }) => {
     When(
@@ -34,6 +35,11 @@ defineSupportCode(({ When }) => {
     When(
         /^I (add|set) "([^"]*)?" to the inputfield "([^"]*)?"$/,
         setInputField
+    );
+
+    When(
+        /^I type "([^"]*)?" to the inputfield "([^"]*)?"$/,
+        typeInputField
     );
 
     When(

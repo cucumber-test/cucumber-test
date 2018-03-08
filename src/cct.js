@@ -4,7 +4,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.2');
+program.version('1.1.3');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -61,8 +61,8 @@ if (program.retry) {
 const options = {
     connectionRetryCount: retry,
     waitforTimeout: timeout - 10000,
-    firefoxProfile: {"security.tls.version.max": 1},
-    services: ['firefox-profile'],
+    // firefoxProfile: {"security.tls.version.max": 1},
+    services: [], // services: ['firefox-profile'],
     cucumberOpts: {
         _originalTags,
         timeout
