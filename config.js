@@ -3,11 +3,11 @@ module.exports = (faker) => {
         browsers: {
             "firefox:M52": {
                 platform: 'MAC',
-                version: 52
+                version: '52'
             },
             "firefox:W52": {
                 platform: 'WIN8',
-                version: 52
+                version: '52'
             },
             safari: {
                 platform: 'MAC'
@@ -30,13 +30,18 @@ module.exports = (faker) => {
                     platform: 'macOS 10.12',
                     version: '10.1'
                 },
+                edge: {
+                    browserName: 'microsoftEdge',
+                    platform: 'Windows 10',
+                    version: '16.16299'
+                },
                 ie: {
                     browserName: 'internet explorer',
                     platform: 'WIN7',
                     version: '11'
                 }
             },
-            browser: 'chrome,firefox,safari,ie'
+            browser: 'chrome,firefox,safari,edge,ie'
         },
         perfecto: {},
         remote: {
