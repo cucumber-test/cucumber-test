@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.5');
+program.version('1.1.6');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -31,9 +31,9 @@ let config = {};
 if (program.config) {
     config = require(process.cwd()+'/'+program.config)(faker);
 }
-const vars = config.vars || {};
+let vars = config.vars || {};
+let browsers = config.browsers || {};
 const general = config.general || {};
-const browsers = config.browsers || {};
 
 let _originalTags = 'not @Pending';
 if (program.tags) {
@@ -76,19 +76,23 @@ const options = {
 let remoteConfig = {};
 if (program.cloud) {
     console.log('Run from ', program.cloud);
-    const provider = program.cloud.split(':');
-    if (provider[0]==='saucelabs') {
+    const clouds = program.cloud.split(':');
+    const provider = clouds[0];
+    if (provider==='saucelabs') {
         options.services.push('sauce');
-        if (provider[1]==='connect') {
+        if (clouds[1]==='connect') {
             options.sauceConnect = true;
         }
         options.user = process.env.SAUCE_USERNAME;
         options.key = process.env.SAUCE_ACCESS_KEY;
-    } else if (provider[0]==='browserstack') {
+    } else if (provider==='browserstack') {
         options.services.push('browserstack');
         options.user = process.env.BROWSERSTACK_USERNAME;
         options.key = process.env.BROWSERSTACK_ACCESS_KEY;
         options.browserstackLocal = true;
+    }
+    if (config[provider] && config[provider].browsers) {
+        browsers = Object.assign({}, browsers, config[provider].browsers);
     }
     remoteConfig = config[program.cloud] || {};
 }
@@ -186,7 +190,6 @@ program.android  ? '--android' : '',
 );
 
 if (program.config) {
-    const { browsers } = config;
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, version = obj.version;
         if (browsers[`${name}:${version}`]) {

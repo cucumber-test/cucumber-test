@@ -16,7 +16,28 @@ module.exports = (faker) => {
             firefox: {},
         },
         browserstack: {},
-        saucelabs: {},
+        saucelabs: {
+            browsers: {
+                chrome: {
+                    platform: 'WIN7',
+                    version: '65'
+                },
+                "firefox": {
+                    platform: 'WIN7',
+                    version: '59'
+                },
+                safari: {
+                    platform: 'macOS 10.12',
+                    version: '10.1'
+                },
+                ie: {
+                    browserName: 'internet explorer',
+                    platform: 'WIN7',
+                    version: '11'
+                }
+            },
+            browser: 'chrome,firefox,safari,ie'
+        },
         perfecto: {},
         remote: {
             remote: 'http://10.193.94.142:4444', //'http://localhost:4444',

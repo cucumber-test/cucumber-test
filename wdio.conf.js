@@ -36,7 +36,7 @@ exports.config = {
     // key: process.env.SAUCE_ACCESS_KEY,
 
     seleniumArgs,
-    seleniumInstallArgs: seleniumArgs,
+    // seleniumInstallArgs: seleniumArgs,
 
     //
     // ==================
