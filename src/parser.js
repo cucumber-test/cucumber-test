@@ -74,9 +74,9 @@ module.exports = event => {
 
         // share feature
         const fname = x.name.trim();
-        if (fname[0]===':') {
+        if (x.steps.length===1 && x.steps[0].name==='...') {
             global.shareGherkinFeature.children.forEach(gScenario => {
-                if (fname===`:${gScenario.name}`) {
+                if (fname===gScenario.name) {
                     x.steps = gScenario.steps.map(gk => {
                         const {uri, line, scenario, isBackground} =  x.steps[0];
                         return {

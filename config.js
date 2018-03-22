@@ -29,9 +29,9 @@ module.exports = (faker) => {
         },
         vars: {
             g: {
-                input: '[name=q]',
-                btnG: 'input.lsb',
-                btnGMobile: 'button._S6q',
+                q: '[name=q]',
+                btnG: 'input.lsb', //'[name=btnK]',
+                btnM: 'button._S6q',
                 search: 'cucumber-test',
                 url: 'https://google.com',
                 cucumberIo: "a[href='https://cucumber.io/']",
