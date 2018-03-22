@@ -5,7 +5,7 @@ const seleniumArgs = {
     // version: '3.7.1',
     drivers: {
         chrome: {
-            version: '2.35',
+            version: '2.37',
             arch: process.arch,
             baseURL: 'https://chromedriver.storage.googleapis.com'
         },

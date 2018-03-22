@@ -1,30 +1,31 @@
 module.exports = (faker) => {
     return {
         browsers: {
-            "firefox:M52": {
-                platform: 'MAC',
-                version: '52'
-            },
-            "firefox:W52": {
-                platform: 'WIN8',
-                version: '52'
-            },
-            safari: {
-                platform: 'MAC'
-            },
             chrome: {},
             firefox: {},
+            safari: { platform: 'MAC' }
         },
-        browserstack: {},
+        browserstack: {
+            browsers: {
+                browserName: 'microsoftEdge',
+                platform: 'Windows 10',
+                version: '16'
+            },
+            browser: 'edge'
+        },
         saucelabs: {
             browsers: {
                 chrome: {
                     platform: 'WIN7',
                     version: '65'
                 },
-                "firefox": {
+                firefox: {
                     platform: 'WIN7',
                     version: '59'
+                },
+                "firefox:m52": {
+                    platform: 'MAC',
+                    version: '52'
                 },
                 safari: {
                     platform: 'macOS 10.12',
@@ -66,8 +67,3 @@ module.exports = (faker) => {
         }
     }
 }
-// proxy: {
-//     proxyType: 'MANUAL',
-//     httpProxy: 'domain:80',
-//     sslProxy: 'domain:443'
-// }
