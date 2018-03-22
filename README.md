@@ -28,8 +28,8 @@ Scenario: Navigate to Google
 
 Scenario: Search cucumber-test
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "[name=q]" becomes visible
-    When I click on the button "input.lsb"
+    And I expect that element "input.lsb" becomes visible
+    And I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 
@@ -73,15 +73,15 @@ Scenario: Navigate to Google
 @__non_safari @__non_mobile
 Scenario: Search cucumber-test on desktop browser
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "[name=q]" becomes visible
-    When I click on the button "input.lsb"
+    And I expect that element "input.lsb" becomes visible
+    And I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
 @__mobile
 Scenario: Search cucumber-test on mobile browser
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "[name=q]" becomes visible
-    When I click on the button "[name=btnG]"
+    And I expect that element "[name=btnG]" becomes visible
+    And I click on the button "[name=btnG]"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 ```bash
@@ -135,22 +135,49 @@ Scenario: Search cucumber-test
 module.exports = (faker) => {
     return {
         browsers: {
-            "firefox:M52": {
-                platform: 'MAC',
-                version: 52
-            },
-            "firefox:W52": {
-                platform: 'WIN8',
-                version: 52
-            },
-            safari: {
-                platform: 'MAC'
-            },
             chrome: {},
             firefox: {},
+            safari: { platform: 'MAC' }
         },
-        browserstack: {},
-        saucelabs: {},
+        browserstack: {
+            browsers: {
+                browserName: 'microsoftEdge',
+                platform: 'Windows 10',
+                version: '16'
+            },
+            browser: 'edge'
+        },
+        saucelabs: {
+            browsers: {
+                chrome: {
+                    platform: 'WIN7',
+                    version: '65'
+                },
+                firefox: {
+                    platform: 'WIN7',
+                    version: '59'
+                },
+                "firefox:m52": {
+                    platform: 'MAC',
+                    version: '52'
+                },
+                safari: {
+                    platform: 'macOS 10.12',
+                    version: '10.1'
+                },
+                edge: {
+                    browserName: 'microsoftEdge',
+                    platform: 'Windows 10',
+                    version: '16.16299'
+                },
+                ie: {
+                    browserName: 'internet explorer',
+                    platform: 'WIN7',
+                    version: '11'
+                }
+            },
+            browser: 'chrome,firefox,safari,edge,ie'
+        },
         perfecto: {},
         remote: {
             remote: 'http://10.193.94.142:4444', //'http://localhost:4444',
@@ -175,7 +202,7 @@ module.exports = (faker) => {
     }
 }
 ```
-the `config.js` will automatically pickup by the runner or you can provide the fullpath in the CLI:
+`config.js` will automatically pickup by runner or you can provide the fullpath in CLI:
 ```bash
 cct -f google --config ./config.js -b chrome
 cct -f google -b chrome,safari,firefox
