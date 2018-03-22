@@ -96,38 +96,45 @@ cct --android f344ee26:7.0
 ## Config & Variables
 Setting up browsers capabilities and adding variables that can be use inside steps statement. Put `config.js` in the current folder (above features folder) where you will run cucumber-test.
 
+`share.feature`
 ```cucumber
-@simple
+Feature: Share Scenario
+    To be share during automation
+
+Scenario: Navigate to Google
+    Given I open the url "https://www.google.com"
+    Then I expect that the title is "Google"
+```
+
+`google/google.feature`
+```cucumber
 Feature: Search on Google
     Search should be on the google website
     and the first should be cucumber.io
 
 Scenario: Navigate to Google
-    Given I open the url "${g.url}"
-    Then I expect that the title is "Google"
+    Given ...
 
-@__non_safari @__non_mobile
-Scenario: Search cucumber-test on desktop browser
-    When I set "${g.search}" to the inputfield "${g.input}"
-    And I expect that element "${g.input}" becomes visible
-    When I click on the button "${g.btnGMobile}"
-    Then I expect that element "${g.cucumberIo}" becomes visible
+@__non_mobile
+Scenario: Search cucumber-test
+    When I type "cucumber-test" to the inputfield "${g.q}"
+    And I expect that element "${g.btnG}" becomes visible
+    And I click on the button "${g.btnG}"
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
 @__mobile
-Scenario: Search cucumber-test on mobile browser
-    When I set "${g.search}" to the inputfield "${g.input}"
-    And I expect that element "${g.input}" becomes visible
-    When I click on the button "${g.btnG}"
-    Then I expect that element "${g.cucumberIo}" becomes visible
+Scenario: Search cucumber-test
+    When I type "cucumber-test" to the inputfield "${g.q}"
+    And I expect that element "${g.btnM}" becomes visible
+    And I click on the button "${g.btnM}"
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
+
 `config.js`
 ```js
-module.exports = () => {
+module.exports = (faker) => {
     return {
         browsers: {
-            chrome: {
-                platform: 'MAC',
-            },
             "firefox:M52": {
                 platform: 'MAC',
                 version: 52
@@ -136,19 +143,33 @@ module.exports = () => {
                 platform: 'WIN8',
                 version: 52
             },
-            "firefox": {
-                platform: 'MAC',
-                version: 48
-            }
+            safari: {
+                platform: 'MAC'
+            },
+            chrome: {},
+            firefox: {},
+        },
+        browserstack: {},
+        saucelabs: {},
+        perfecto: {},
+        remote: {
+            remote: 'http://10.193.94.142:4444', //'http://localhost:4444',
+            browser: 'firefox,chrome'
+        },
+        general: {
+            android: 'f344ee26:7.0',
+            browser: 'firefox,chrome,safari',
+            retry: 6
         },
         vars: {
             g: {
-                input: '[name=q]',
-                btnG: '[name=btnG]',
-                btnGMobile: 'input.lsb',
+                q: '[name=q]',
+                btnG: 'input.lsb', //'[name=btnK]',
+                btnM: 'button._S6q',
                 search: 'cucumber-test',
                 url: 'https://google.com',
-                cucumberIo: "a[href='https://cucumber.io/']"
+                cucumberIo: "a[href='https://cucumber.io/']",
+                email: faker.internet.email()
             }
         }
     }
@@ -156,8 +177,8 @@ module.exports = () => {
 ```
 the `config.js` will automatically pickup by the runner or you can provide the fullpath in the CLI:
 ```bash
-cct --config ./config.js -b chrome
-cct -b chrome
+cct -f google --config ./config.js -b chrome
+cct -f google -b chrome,safari,firefox
 ```
 
 ## Integration with: BrowserStack
