@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.8');
+program.version('1.1.9');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -31,9 +31,6 @@ let config = {};
 if (program.config) {
     config = require(process.cwd()+'/'+program.config)(faker);
 }
-let vars = config.vars || {};
-let browsers = config.browsers || {};
-const general = config.general || {};
 
 let _originalTags = 'not @Pending';
 if (program.tags) {
@@ -45,35 +42,25 @@ if (program.features) {
     specs = [`./features/${program.features}/**/*.feature`];
 }
 
-let browser = general.browser || 'chrome';
-if (program.browser) {
-    browser = program.browser;
-}
-
-let timeout = general.timeout || 20000;
-if (program.timeout) {
-    timeout = program.timeout;
-}
-
-let retry = general.retry || 3;
-if (program.retry) {
-    retry = program.retry;
-}
-const options = {
-    connectionRetryCount: retry,
-    waitforTimeout: timeout - 10000,
-    // firefoxProfile: {"security.tls.version.max": 1},
-    services: [], // services: ['firefox-profile'],
-    cucumberOpts: {
-        _originalTags,
-        timeout
-    },
-    general,
-    specs,
-    vars
-};
-
+let vars = config.vars || {};
+let options = {services: []}; // services: ['firefox-profile'],
+let general = config.general || {};
+let browsers = config.browsers || {};
 let remoteConfig = {};
+
+let browser = general.browser || 'chrome';
+let timeout = general.timeout || 20000;
+let retry = general.retry || 3;
+
+if (program.remote) {
+    remoteConfig = config.remote || {};
+    if (typeof(program.remote)==='string') {
+        remoteConfig = {
+            remote: program.remote
+        };
+    }
+}
+
 if (program.cloud) {
     console.log('Run from ', program.cloud);
     const clouds = program.cloud.split(':');
@@ -91,18 +78,9 @@ if (program.cloud) {
         options.key = process.env.BROWSERSTACK_ACCESS_KEY;
         options.browserstackLocal = true;
     }
-    if (config[provider] && config[provider].browsers) {
-        browsers = _merge(browsers, config[provider].browsers);
+    if (config[provider]) {
+        remoteConfig = config[provider];
     }
-    remoteConfig = config[program.cloud] || {};
-}
-
-if (remoteConfig.remote===undefined && program.remote===true) {
-    remoteConfig = config.remote || {};
-} else if (program.remote) {
-    remoteConfig = {
-        remote: program.remote
-    };
 }
 
 if (remoteConfig.remote) {
@@ -113,9 +91,47 @@ if (remoteConfig.remote) {
     options.host = myURL.hostname;
 }
 
-if (program.browser===undefined && remoteConfig.browser) {
+if (remoteConfig.browsers) {
+    browsers = _merge(browsers, remoteConfig.browsers);
+}
+
+if (remoteConfig.browser) {
     browser = remoteConfig.browser;
 }
+
+if (remoteConfig.timeout) {
+    timeout = remoteConfig.timeout;
+}
+
+if (remoteConfig.retry) {
+    retry = remoteConfig.retry;
+}
+
+if (program.browser) {
+    browser = program.browser;
+}
+
+if (program.timeout) {
+    timeout = program.timeout;
+}
+
+if (program.retry) {
+    retry = program.retry;
+}
+
+options = _merge(options, {
+    connectionRetryCount: retry,
+    waitforTimeout: timeout - 10000,
+    // firefoxProfile: {"security.tls.version.max": 1},
+    cucumberOpts: {
+        _originalTags,
+        timeout
+    },
+    general,
+    specs,
+    vars
+});
+console.log('Timeout/Retry:', `${timeout}/${retry}`);
 
 let browserIds = browser.split(',');
 options.maxInstances = +(program.instances || browserIds.length);

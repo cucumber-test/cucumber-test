@@ -25,6 +25,7 @@ import switchToMain from '../support/action2/switchToMain';
 import switchToParent from '../support/action2/switchToParent';
 import deleteAllCookies from '../support/action2/deleteAllCookies';
 import typeInputField from '../support/action2/typeInputField';
+import dismissAlert from '../support/action2/dismissAlert';
 
 defineSupportCode(({ When }) => {
     When(
@@ -150,5 +151,10 @@ defineSupportCode(({ When }) => {
     When(
         /^I switch to tab$/,
         switchToTab
+    );
+
+    When(
+        /^I dismiss Alert$/,
+        dismissAlert
     );
 });

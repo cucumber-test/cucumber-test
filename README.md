@@ -141,11 +141,16 @@ module.exports = (faker) => {
         },
         browserstack: {
             browsers: {
-                browserName: 'microsoftEdge',
-                platform: 'Windows 10',
-                version: '16'
+                edge: {
+                    browserName: 'microsoftEdge',
+                    platform: 'WINDOWS',
+                    version: '16',
+                    unhandledPromptBehavior: 'accept'
+                },
             },
-            browser: 'edge'
+            browser: 'edge',
+            timeout: 50000,
+            retry: 7
         },
         saucelabs: {
             browsers: {
@@ -176,22 +181,27 @@ module.exports = (faker) => {
                     version: '11'
                 }
             },
-            browser: 'chrome,firefox,safari,edge,ie'
+            browser: 'chrome,firefox,safari,edge,ie',
+            timeout: 50000,
+            retry: 7
         },
         perfecto: {},
         remote: {
-            remote: 'http://10.193.94.142:4444', //'http://localhost:4444',
-            browser: 'firefox,chrome'
+            remote: 'http://localhost:4444',
+            browser: 'firefox,chrome',
+            timeout: 40000,
+            retry: 6
         },
         general: {
             android: 'f344ee26:7.0',
             browser: 'firefox,chrome,safari',
-            retry: 6
+            timeout: 20000,
+            retry: 3
         },
         vars: {
             g: {
                 q: '[name=q]',
-                btnG: 'input.lsb', //'[name=btnK]',
+                btnG: 'input.lsb',
                 btnM: 'button._S6q',
                 search: 'cucumber-test',
                 url: 'https://google.com',
