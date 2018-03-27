@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.9');
+program.version('1.1.10');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -133,8 +133,6 @@ options = _merge(options, {
 });
 console.log('Timeout/Retry:', `${timeout}/${retry}`);
 
-let browserIds = browser.split(',');
-options.maxInstances = +(program.instances || browserIds.length);
 if (program.android) {
     if (program.android===true) {
         if (general.android) {
@@ -148,13 +146,13 @@ cct --android [deviceName:platformVersion]
         }
     }
     const android = program.android.split(':');
+    browser = 'chrome';
     options.port = '4723';
     options.services.push('appium');
     options.capabilities = [{
-        browserName: 'chrome',  // browser name is empty for native apps
+        browserName: browser,  // browser name is empty for native apps
         appiumVersion: '1.7.2', // Appium module version
         // https://github.com/appium/appium/issues/8651
-        // browserName: browserIds[0].split(':')[0],
         platformName: 'Android',
         platformVersion: android[1] || '7.0',  // Android version
         deviceName: android[0], // device name of the mobile device
@@ -167,7 +165,9 @@ cct --android [deviceName:platformVersion]
         console.log(`Browser: ${browser} need to have option --config`);
         process.exit(0);
     }
+    let browserIds = browser.split(',');
     options.services.push('selenium-standalone');  // 'firefox-profile'
+    options.maxInstances = +(program.instances || browserIds.length);
     options.capabilities = browserIds.map(bName => {
         const name = general.logsTitle || 'CCT';
         const browserCfg = bName.split(':');

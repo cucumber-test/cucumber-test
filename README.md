@@ -137,15 +137,18 @@ module.exports = (faker) => {
         browsers: {
             chrome: {},
             firefox: {},
-            safari: { platform: 'MAC' }
+            safari: { platform: 'MAC' },
+            edge: { browserName: 'microsoftEdge' },
+            ie: { browserName: 'internet explorer',
+                version: '11'
+            }
         },
         browserstack: {
             browsers: {
                 edge: {
-                    browserName: 'microsoftEdge',
+                    unhandledPromptBehavior: 'accept',
                     platform: 'WINDOWS',
-                    version: '16',
-                    unhandledPromptBehavior: 'accept'
+                    version: '16'
                 },
             },
             browser: 'edge',
@@ -171,15 +174,27 @@ module.exports = (faker) => {
                     version: '10.1'
                 },
                 edge: {
-                    browserName: 'microsoftEdge',
                     platform: 'Windows 10',
-                    version: '16.16299'
+                    version: '16'
                 },
                 ie: {
-                    browserName: 'internet explorer',
-                    platform: 'WIN7',
-                    version: '11'
-                }
+                    platform: 'WIN7'
+                },
+                ios: {
+                    appiumVersion: '1.7.2',
+                    deviceName:"iPhone 8 Plus Simulator",
+                    deviceOrientation: 'portrait',
+                    platformName: 'iOS',
+                    platformVersion: '11.2',
+                    browserName: 'Safari',
+                },
+                android: {
+                    appiumVersion: '1.7.2',
+                    deviceName:"Android Emulator",
+                    platformName: 'Android',
+                    platformVersion: '6.0',
+                    browserName: 'Chrome',
+                },
             },
             browser: 'chrome,firefox,safari,edge,ie',
             timeout: 50000,
