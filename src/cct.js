@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher, remote } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.10');
+program.version('1.1.11');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -54,11 +54,6 @@ let retry = general.retry || 3;
 
 if (program.remote) {
     remoteConfig = config.remote || {};
-    if (typeof(program.remote)==='string') {
-        remoteConfig = {
-            remote: program.remote
-        };
-    }
 }
 
 if (program.cloud) {
@@ -79,8 +74,12 @@ if (program.cloud) {
         options.browserstackLocal = true;
     }
     if (config[provider]) {
-        remoteConfig = config[provider];
+        remoteConfig = _merge(remoteConfig, config[provider]);;
     }
+}
+
+if (typeof(program.remote)==='string') {
+    remoteConfig.remote = program.remote;
 }
 
 if (remoteConfig.remote) {
