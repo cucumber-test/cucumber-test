@@ -5,7 +5,7 @@ Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
     Then I expect that the title is "Google"
 
-@__non_mobile @__chrome
+@__non_mobile @__chrome @__non_url:localhost
 Scenario: Search cucumber-test
     When I type "cucumber-test" to the inputfield "${g.q}"
     And I expect that element "${g.btnG}" becomes visible

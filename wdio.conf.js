@@ -1,5 +1,7 @@
-const beforeExecute = require('./lib/before');
-const featureParser = require('./lib/parser');
+const beforeExecute = require('./lib/beforeExecute');
+const beforeFeature = require('./lib/beforeFeature');
+const beforeScenario = require('./lib/beforeScenario');
+const beforeStep = require('./lib/beforeStep');
 const seleniumArgs = {
     // baseURL: 'https://selenium-release.storage.googleapis.com',
     // version: '3.7.1',
@@ -225,7 +227,9 @@ exports.config = {
     // all global variables, such as `browser`. It is the perfect place to
     // define custom commands.
     before: beforeExecute,
-    beforeFeature: featureParser,
+    beforeFeature: beforeFeature,
+    beforeScenario: beforeScenario,
+    beforeStep: beforeStep,
     // beforeStep: function(event) {
     // },
     //
