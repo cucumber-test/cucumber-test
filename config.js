@@ -73,9 +73,12 @@ module.exports = (faker) => {
             timeout: 40000,
             retry: 6
         },
-        general: {
+        base: {
+            name: 'CCT',
+            cloud: 'saucelabs',
             android: 'f344ee26:7.0',
             browser: 'firefox,chrome,safari',
+            inputPause: 500,
             timeout: 20000,
             retry: 3
         },

@@ -104,6 +104,27 @@ Feature: Share Scenario
 Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
     Then I expect that the title is "Google"
+
+@__non_mobile @__chrome
+Scenario: Search cucumber-test
+    When I type "cucumber-test" to the inputfield "${g.q}"
+    And I expect that element "${g.btnG}" becomes visible
+    And I click on the button "${g.btnG}"
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
+
+@__non_mobile @__non_chrome
+Scenario: Search cucumber-test
+    When I type "cucumber-test *" to the inputfield "${g.q}"
+    And I expect that element "${g.btnG}" becomes visible
+    And I click on the button "${g.btnG}"
+    Then I expect that element "a[href='https://en.wikipedia.org/wiki/Cucumber_(software)']" becomes visible
+
+@__mobile
+Scenario: Search cucumber-test
+    When I type "cucumber-test mobile" to the inputfield "${g.q}"
+    And I expect that element "${g.btnM}" becomes visible
+    And I click on the button "${g.btnM}"
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 
 `google/google.feature`
@@ -115,19 +136,8 @@ Feature: Search on Google
 Scenario: Navigate to Google
     Given ...
 
-@__non_mobile
 Scenario: Search cucumber-test
-    When I type "cucumber-test" to the inputfield "${g.q}"
-    And I expect that element "${g.btnG}" becomes visible
-    And I click on the button "${g.btnG}"
-    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
-
-@__mobile
-Scenario: Search cucumber-test
-    When I type "cucumber-test" to the inputfield "${g.q}"
-    And I expect that element "${g.btnM}" becomes visible
-    And I click on the button "${g.btnM}"
-    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
+    When ...
 ```
 
 `config.js`
@@ -207,9 +217,12 @@ module.exports = (faker) => {
             timeout: 40000,
             retry: 6
         },
-        general: {
+        base: {
+            name: 'CCT',
+            cloud: 'saucelabs',
             android: 'f344ee26:7.0',
             browser: 'firefox,chrome,safari',
+            inputPause: 500,
             timeout: 20000,
             retry: 3
         },
@@ -257,10 +270,11 @@ cct -c saucelabs
 ## Behind Proxy / VPN:
 
 ```bash
+export NODE_TLS_REJECT_UNAUTHORIZED=0
 npm install -g selenium-standalone@latest
-NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone install
-NODE_TLS_REJECT_UNAUTHORIZED=0 selenium-standalone start
-NODE_TLS_REJECT_UNAUTHORIZED=0 cct -t '@smoke'
+selenium-standalone install
+selenium-standalone start
+cct -t '@smoke'
 ```
 
 ## Dev Mode

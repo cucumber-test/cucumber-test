@@ -67,18 +67,28 @@ function isMobileTag(tagName) {
 }
 
 module.exports = event => {
+    const newScenarios = [];
     const {vars} = global.browser.options;
 
     console.log('>>>>>',`@__${browserName()}`);
-    event.scenarios = event.scenarios.filter(x=>{
-
+    event.scenarios.forEach((xObj, xId) => {
         // share feature
-        const fname = x.name.trim();
-        if (x.steps.length===1 && x.steps[0].name==='...') {
+        const fname = xObj.name.trim();
+        if (xObj.steps.length===1 && xObj.steps[0].name==='...') {
             global.shareGherkinFeature.children.forEach(gScenario => {
                 if (fname===gScenario.name) {
-                    x.steps = gScenario.steps.map(gk => {
-                        const {uri, line, scenario, isBackground} =  x.steps[0];
+                    let cloneObj = Object.assign({}, xObj);
+                    // console.log('XXX>>>',xId,gScenario,xObj)
+                    if (gScenario.tags.length>0) {
+                        cloneObj.tags = gScenario.tags.map(tg => {
+                            return {
+                                line: 0,
+                                name: tg.name
+                            }
+                        })
+                    }
+                    cloneObj.steps = gScenario.steps.map(gk => {
+                        const {uri, line, scenario, isBackground} =  xObj.steps[0];
                         return {
                             uri,
                             line,
@@ -90,12 +100,17 @@ module.exports = event => {
                             keywordType: gk.type
                         }
                     });
+                    newScenarios.push(cloneObj);
                 }
             })
+        } else {
+            newScenarios.push(xObj);
         }
+    });
 
+    event.scenarios = newScenarios.filter(xObj => {
         // variable parser
-        x.steps.forEach(obj => {
+        xObj.steps.forEach(obj => {
             const varNames = obj.name.match(/\${([A-z.]+)}/g);
             if (varNames) {
                 varNames.forEach(varName=> {
@@ -110,9 +125,9 @@ module.exports = event => {
                 })
             }
         })
-        if (x.tags.length>0) {
-            const isBrowserTags = x.tags.map(y => isBrowserTag(y.name)).sort();
-            const isMobileTags = x.tags.map(y => isMobileTag(y.name)).sort();
+        if (xObj.tags.length>0) {
+            const isBrowserTags = xObj.tags.map(y => isBrowserTag(y.name)).sort();
+            const isMobileTags = xObj.tags.map(y => isMobileTag(y.name)).sort();
             return (isBrowserTags[0] + isMobileTags[0])===2;
         }
         return true;

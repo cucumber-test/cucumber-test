@@ -2,16 +2,17 @@ const fs = require('fs');
 const url = require('url');
 const faker = require('faker');
 const program = require('commander');
-const { Launcher, remote } = require('webdriverio');
+const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.1.11');
+program.version('1.2.0');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
 program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfecto]');
 program.option('-i, --instances [instances]', 'max instances');
 program.option('-b, --browser [browser]', 'target browser');
+program.option('-n, --name [name]', 'capability name');
 program.option('--timeout [timeout]', 'timeout [20000]');
 program.option('--retry [retry]', 'connection retry [3]');
 program.option('--config [fpath]', 'config [./config.js]');
@@ -44,21 +45,22 @@ if (program.features) {
 
 let vars = config.vars || {};
 let options = {services: []}; // services: ['firefox-profile'],
-let general = config.general || {};
+let base = config.base || {};
 let browsers = config.browsers || {};
 let remoteConfig = {};
 
-let browser = general.browser || 'chrome';
-let timeout = general.timeout || 20000;
-let retry = general.retry || 3;
+let browser = base.browser || 'chrome';
+let timeout = base.timeout || 20000;
+let retry = base.retry || 3;
 
 if (program.remote) {
     remoteConfig = config.remote || {};
 }
 
 if (program.cloud) {
-    console.log('Run from ', program.cloud);
-    const clouds = program.cloud.split(':');
+    const { cloud } = ((program.cloud===true && base.cloud) ? base : program);
+    console.log('Run from ', cloud);
+    const clouds = cloud.split(':');
     const provider = clouds[0];
     if (provider==='saucelabs') {
         options.services.push('sauce');
@@ -118,6 +120,10 @@ if (program.retry) {
     retry = program.retry;
 }
 
+if (program.name) {
+    base.name = program.name;
+}
+
 options = _merge(options, {
     connectionRetryCount: retry,
     waitforTimeout: timeout - 10000,
@@ -126,7 +132,7 @@ options = _merge(options, {
         _originalTags,
         timeout
     },
-    general,
+    base,
     specs,
     vars
 });
@@ -134,8 +140,8 @@ console.log('Timeout/Retry:', `${timeout}/${retry}`);
 
 if (program.android) {
     if (program.android===true) {
-        if (general.android) {
-            program.android = general.android;
+        if (base.android) {
+            program.android = base.android;
         } else {
             console.log(`
 deviceName & platformVersion are required!
@@ -149,6 +155,7 @@ cct --android [deviceName:platformVersion]
     options.port = '4723';
     options.services.push('appium');
     options.capabilities = [{
+        name: base.name,
         browserName: browser,  // browser name is empty for native apps
         appiumVersion: '1.7.2', // Appium module version
         // https://github.com/appium/appium/issues/8651
@@ -168,11 +175,10 @@ cct --android [deviceName:platformVersion]
     options.services.push('selenium-standalone');  // 'firefox-profile'
     options.maxInstances = +(program.instances || browserIds.length);
     options.capabilities = browserIds.map(bName => {
-        const name = general.logsTitle || 'CCT';
         const browserCfg = bName.split(':');
         const browserName = browserCfg[0];
         const bconfig = {
-            name,
+            name: base.name,
             maxInstances: 5,
             browserName,
             acceptInsecureCerts: true,
