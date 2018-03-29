@@ -22,7 +22,6 @@ program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
 program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
 
 program.parse(process.argv);
-console.log('Loading...');
 
 if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
     program.config = 'config.js';
@@ -57,11 +56,21 @@ if (program.remote) {
     remoteConfig = config.remote || {};
 }
 
+console.log('Loading...');
 if (program.cloud) {
-    const { cloud } = ((program.cloud===true && base.cloud) ? base : program);
-    console.log('Run from ', cloud);
+    let cloud = base.cloud;
+    if (program.cloud===true) {
+        if (typeof(base.cloud)!=='string') {
+            console.log(`option --cloud need to have params or config.js {base: {cloud:'cloudprovider'}} set`);
+            process.exit(1);
+        }
+    } else {
+        cloud = program.cloud;
+    }
     const clouds = cloud.split(':');
     const provider = clouds[0];
+
+    console.log(`Run from ${cloud}`);
     if (provider==='saucelabs') {
         options.services.push('sauce');
         if (clouds[1]==='connect') {
@@ -169,7 +178,7 @@ cct --android [deviceName:platformVersion]
 } else {
     if (browser.match(/\:[a-zA-Z]+\d+/) && program.config===undefined) {
         console.log(`Browser: ${browser} need to have option --config`);
-        process.exit(0);
+        process.exit(1);
     }
     let browserIds = browser.split(',');
     options.services.push('selenium-standalone');  // 'firefox-profile'
