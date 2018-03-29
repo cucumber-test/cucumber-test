@@ -80,6 +80,7 @@ module.exports = (faker) => {
             browser: 'firefox,chrome,safari',
             inputPause: 500,
             timeout: 20000,
+            instances: 1,
             retry: 3
         },
         vars: {

@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.2.1');
+program.version('1.2.2');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -133,10 +133,20 @@ if (typeof(program.name)==='string') {
     base.name = program.name;
 }
 
+let browserIds = browser.split(',');
+if (!base.instances) {
+    base.instances = browserIds.length;
+}
+
+if (program.instances) {
+    base.instances = program.instances;
+}
+
 options = _merge(options, {
     connectionRetryCount: retry,
     waitforTimeout: timeout - 10000,
     // firefoxProfile: {"security.tls.version.max": 1},
+    maxInstances: base.instances,
     cucumberOpts: {
         _originalTags,
         timeout
@@ -145,7 +155,7 @@ options = _merge(options, {
     specs,
     vars
 });
-console.log('Timeout/Retry:', `${timeout}/${retry}`);
+console.log('Timeout/Retry/I:', `${timeout}/${retry}/${base.instances}`);
 
 if (program.android) {
     if (program.android===true) {
@@ -163,6 +173,7 @@ cct --android [deviceName:platformVersion]
     browser = 'chrome';
     options.port = '4723';
     options.services.push('appium');
+    options.maxInstances = 1;
     options.capabilities = [{
         name: base.name,
         browserName: browser,  // browser name is empty for native apps
@@ -180,9 +191,7 @@ cct --android [deviceName:platformVersion]
         console.log(`Browser: ${browser} need to have option --config`);
         process.exit(1);
     }
-    let browserIds = browser.split(',');
     options.services.push('selenium-standalone');  // 'firefox-profile'
-    options.maxInstances = +(program.instances || browserIds.length);
     options.capabilities = browserIds.map(bName => {
         const browserCfg = bName.split(':');
         const browserName = browserCfg[0];
