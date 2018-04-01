@@ -83,6 +83,13 @@ module.exports = (faker) => {
             instances: 1,
             retry: 3
         },
+        tags: {
+            __test: function(vars, string) {
+                vars.g.search = `cucumber-io`;
+                // console.log(vars.g, string);
+                return true;
+            }
+        },
         vars: {
             g: {
                 q: '[name=q]',

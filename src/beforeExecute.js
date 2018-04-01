@@ -1,5 +1,7 @@
 const fs = require('fs');
+const faker = require('faker');
 const Gherkin = require('gherkin');
+const _merge = require('lodash/merge');
 var parser = new Gherkin.Parser();
 
 module.exports = () => {
@@ -7,10 +9,16 @@ module.exports = () => {
      * Setup the Chai assertion framework
      */
     const chai = require('chai');
+    const config = require(global.browser.options.cpath)(faker);
 
     global.expect = chai.expect;
     global.assert = chai.assert;
     global.should = chai.should();
+    global.tags = config.tags || {};
+    global.vars = config.vars || {};
+
+    const {vars} = global.browser.options;
+    global.vars = _merge(global.vars, vars);
 
     global.shareGherkinFeature = {}
     const fshare = process.cwd()+'/features/share.feature';

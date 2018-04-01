@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.2.2');
+program.version('1.2.3');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -27,9 +27,11 @@ if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
     program.config = 'config.js';
 }
 
+let cpath;
 let config = {};
 if (program.config) {
-    config = require(process.cwd()+'/'+program.config)(faker);
+    cpath = process.cwd()+'/'+program.config;
+    config = require(cpath)(faker);
 }
 
 let _originalTags = 'not @Pending';
@@ -42,7 +44,6 @@ if (program.features) {
     specs = [`./features/${program.features}/**/*.feature`];
 }
 
-let vars = config.vars || {};
 let options = {services: []}; // services: ['firefox-profile'],
 let base = config.base || {};
 let browsers = config.browsers || {};
@@ -151,9 +152,10 @@ options = _merge(options, {
         _originalTags,
         timeout
     },
-    base,
+    vars: {},
     specs,
-    vars
+    cpath,
+    base,
 });
 console.log('Timeout/Retry/I:', `${timeout}/${retry}/${base.instances}`);
 

@@ -68,7 +68,6 @@ function isMobileTag(tagName) {
 
 module.exports = event => {
     const newScenarios = [];
-    const {vars} = global.browser.options;
 
     console.log('>>>>>',`@__${browserName()}`);
     event.scenarios.forEach((xObj, xId) => {
@@ -109,22 +108,6 @@ module.exports = event => {
     });
 
     event.scenarios = newScenarios.filter(xObj => {
-        // variable parser
-        xObj.steps.forEach(obj => {
-            const varNames = obj.name.match(/\${([A-z.]+)}/g);
-            if (varNames) {
-                varNames.forEach(varName=> {
-                    let items = vars;
-                    varName.replace(/[${}]/g,'').trim().split('.').forEach(i => {
-                        if (items!==undefined)
-                            items = items[i];
-                    })
-                    if (items!==undefined) {
-                        obj.name = obj.name.replace(varName, items);
-                    }
-                })
-            }
-        })
         if (xObj.tags.length>0) {
             const isBrowserTags = xObj.tags.map(y => isBrowserTag(y.name)).sort();
             const isMobileTags = xObj.tags.map(y => isMobileTag(y.name)).sort();

@@ -224,7 +224,14 @@ module.exports = (faker) => {
             browser: 'firefox,chrome,safari',
             inputPause: 500,
             timeout: 20000,
+            instances: 1,
             retry: 3
+        },
+        tags: {
+            __test: function(vars, string) {
+                vars.g.search = `cucumber-io`;
+                return true;
+            }
         },
         vars: {
             g: {
