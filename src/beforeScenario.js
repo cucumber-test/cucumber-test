@@ -25,24 +25,23 @@ module.exports = event => {
                 event.tags = [];
                 event.name = '';
                 event.steps = [];
-            } else {
-                // variable parser
-                event.steps.forEach(step => {
-                    const varNames = step.name.match(/\${([A-z.]+)}/g);
-                    if (varNames) {
-                        varNames.forEach(varName=> {
-                            let items = vars;
-                            varName.replace(/[${}]/g,'').trim().split('.').forEach(i => {
-                                if (items!==undefined)
-                                    items = items[i];
-                            })
-                            if (items!==undefined) {
-                                step.name = step.name.replace(varName, items);
-                            }
-                        })
-                    }
-                })
             }
+        }
+    })
+    // variable parser
+    event.steps.forEach(step => {
+        const varNames = step.name.match(/\${([A-z.]+)}/g);
+        if (varNames) {
+            varNames.forEach(varName=> {
+                let items = vars;
+                varName.replace(/[${}]/g,'').trim().split('.').forEach(i => {
+                    if (items!==undefined)
+                        items = items[i];
+                })
+                if (items!==undefined) {
+                    step.name = step.name.replace(varName, items);
+                }
+            })
         }
     })
 }
