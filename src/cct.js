@@ -5,7 +5,7 @@ const program = require('commander');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 
-program.version('1.2.4');
+program.version('1.2.5');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');

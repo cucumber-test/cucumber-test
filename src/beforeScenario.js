@@ -1,5 +1,5 @@
 module.exports = event => {
-    const url = browser.getUrl();
+    const url = browser.execute(() => location.href).value;
     const {tags, vars} = global;
 
     event.tags.forEach(tag => {
