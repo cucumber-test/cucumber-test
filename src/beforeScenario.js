@@ -19,7 +19,7 @@ module.exports = event => {
             const fn = tags[keys[1]];
             if (fn && !isRemove) {
                 console.log('>>>>>',arr[0]);
-                isRemove = !fn(global.vars, arr[1]);
+                isRemove = !fn(browser, global.vars, arr[1]);
             }
             if (isRemove) {
                 event.tags = [];

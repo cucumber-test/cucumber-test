@@ -1,4 +1,4 @@
-module.exports = (faker) => {
+module.exports = (webdriverio, faker) => {
     return {
         browsers: {
             chrome: {},
@@ -84,9 +84,26 @@ module.exports = (faker) => {
             retry: 3
         },
         tags: {
-            __test: function(vars, string) {
+            __test: function(browser, vars, string) {
                 vars.g.search = `cucumber-io`;
                 // console.log(vars.g, string);
+                return true;
+            },
+            __wd: function(browser, vars, string) {
+                var result = browser.chromeClient(function(client, resolved, reject) {
+                    client
+                    .init()
+                    .url('https://duckduckgo.com/')
+                    .setValue('#search_form_input_homepage', 'WebdriverIO')
+                    .click('#search_button_homepage')
+                    .getTitle()
+                    .then(function(title) {
+                        resolved(title);
+                    })
+                    .end();
+                });
+                console.log('Title is: ' + result);
+                vars.g.search = result;
                 return true;
             }
         },

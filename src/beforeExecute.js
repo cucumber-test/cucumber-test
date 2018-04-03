@@ -2,18 +2,45 @@ const fs = require('fs');
 const faker = require('faker');
 const Gherkin = require('gherkin');
 const _merge = require('lodash/merge');
-var parser = new Gherkin.Parser();
+const webdriverio = require('webdriverio');
+const parser = new Gherkin.Parser();
 
 module.exports = () => {
+    // https://stackoverflow.com/questions/47167050/how-to-run-webdriverio-synchronously-in-standalone-mode
+    // https://stackoverflow.com/questions/27143740/a-simple-webdriverio-mocha-test-doesnt-display-browser
+    browser.addCommand("chromeClient", function (fn) {
+        return browser.call(function () {
+            return new Promise(function(resolve, reject) {
+                const options = { desiredCapabilities: { browserName: 'chrome' } };
+                const client = webdriverio.remote(options);
+                let timer;
+                function resolved(result) {
+                    if (timer) {
+                        clearTimeout(timer);
+                        client.close();
+                        timer = null;
+                        resolve(result);
+                    }
+                }
+                fn(client, resolved, reject);
+                timer = setTimeout(function() {
+                    client.close();
+                    reject('Timeout at: @__wd !');
+                }, browser.options.cucumberOpts.timeout);
+            })
+        });
+    });
+
     /**
      * Setup the Chai assertion framework
      */
     const chai = require('chai');
-    const config = require(global.browser.options.cpath)(faker);
 
     global.expect = chai.expect;
     global.assert = chai.assert;
     global.should = chai.should();
+
+    const config = require(global.browser.options.cpath)(webdriverio, faker);
     global.tags = config.tags || {};
     global.vars = config.vars || {};
 

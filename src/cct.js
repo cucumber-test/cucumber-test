@@ -2,6 +2,7 @@ const fs = require('fs');
 const url = require('url');
 const faker = require('faker');
 const program = require('commander');
+const webdriverio = require('webdriverio');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 
@@ -31,7 +32,7 @@ let cpath;
 let config = {};
 if (program.config) {
     cpath = process.cwd()+'/'+program.config;
-    config = require(cpath)(faker);
+    config = require(cpath)(webdriverio, faker);
 }
 
 let _originalTags = 'not @Pending';
