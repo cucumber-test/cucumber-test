@@ -27,7 +27,7 @@ module.exports = event => {
     })
     // variable parser
     event.steps.forEach(step => {
-        const varNames = step.name.match(/\${([A-z.]+)}/g);
+        const varNames = step.name.match(/\${([A-z0-9_.]+)}/g);
         if (varNames) {
             varNames.forEach(varName=> {
                 let items = vars;
