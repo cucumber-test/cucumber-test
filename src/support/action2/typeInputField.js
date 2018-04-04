@@ -1,10 +1,11 @@
-import checkIfElementExists from '../lib/checkIfElementExists';
-
 /**
  * Type the value of the given input field
  * @param  {String}   value   The value to type the element to
- * @param  {String}   element Element selector
+ * @param  {String}   selector Element selector
  */
-module.exports = (value, element) => {
-    browser.setValueSafe(element, value);
+module.exports = (value, selector) => {
+    browser.pause(browser.options.base.inputPause || 500, '*internal*');
+    const elementId = browser.element(selector).value.ELEMENT;
+    browser.elementIdClear(elementId);
+    browser.elementIdValue(elementId, value);
 };
