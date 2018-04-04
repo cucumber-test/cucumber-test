@@ -3,11 +3,20 @@ const faker = require('faker');
 const Gherkin = require('gherkin');
 const _merge = require('lodash/merge');
 const webdriverio = require('webdriverio');
+const { Launcher } = webdriverio;
 const parser = new Gherkin.Parser();
 
 module.exports = () => {
-    // https://stackoverflow.com/questions/47167050/how-to-run-webdriverio-synchronously-in-standalone-mode
-    // https://stackoverflow.com/questions/27143740/a-simple-webdriverio-mocha-test-doesnt-display-browser
+    browser.addCommand("subProcess", function (fn) {
+        var wdio = new Launcher(`${__dirname}/config.js`);
+        wdio.run().then(function (code) {
+            // process.exit(code);
+        }, function (error) {
+            console.error('Launcher failed to start the test', error.stacktrace);
+            // process.exit(1);
+        });
+    });
+
     browser.addCommand("chromeClient", function (fn) {
         return browser.call(function () {
             return new Promise(function(resolve, reject) {

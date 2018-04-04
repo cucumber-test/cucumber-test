@@ -257,7 +257,7 @@ exports.config = {
             if (commandName === 'frame') {
                 arg = Object.keys(arg);
             }
-            console.log('commandName:', commandName, arg);
+            console.log('command name:', commandName, arg);
         }
     }
     //

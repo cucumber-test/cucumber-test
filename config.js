@@ -84,12 +84,12 @@ module.exports = (webdriverio, faker) => {
             retry: 3
         },
         tags: {
-            __test: function(browser, vars, string) {
+            "@__test": function(browser, vars, string) {
                 vars.g.search = `cucumber-io`;
                 // console.log(vars.g, string);
                 return true;
             },
-            __wd: function(browser, vars, string) {
+            "@__wd": function(browser, vars, string) {
                 var result = browser.chromeClient(function(client, resolved, reject) {
                     client
                     .init()
