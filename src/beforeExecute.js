@@ -1,5 +1,6 @@
 const fs = require('fs');
 const faker = require('faker');
+const request = require('request');
 const Gherkin = require('gherkin');
 const _merge = require('lodash/merge');
 const webdriverio = require('webdriverio');
@@ -49,7 +50,7 @@ module.exports = () => {
     global.assert = chai.assert;
     global.should = chai.should();
 
-    const config = require(global.browser.options.cpath)(webdriverio, faker);
+    const config = require(global.browser.options.cpath)({webdriverio, faker, request});
     global.tags = config.tags || {};
     global.vars = config.vars || {};
 

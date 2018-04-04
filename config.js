@@ -1,4 +1,4 @@
-module.exports = (webdriverio, faker) => {
+module.exports = (ob) => {
     return {
         browsers: {
             chrome: {},
@@ -115,7 +115,7 @@ module.exports = (webdriverio, faker) => {
                 search: 'cucumber-test',
                 url: 'https://google.com',
                 cucumberIo: "a[href='https://cucumber.io/']",
-                email: faker.internet.email()
+                email: ob.faker.internet.email()
             }
         }
     }
