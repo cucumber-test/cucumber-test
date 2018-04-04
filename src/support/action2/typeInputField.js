@@ -6,9 +6,5 @@ import checkIfElementExists from '../lib/checkIfElementExists';
  * @param  {String}   element Element selector
  */
 module.exports = (value, element) => {
-    browser.pause(browser.options.base.inputPause || 500, '*internal*');
-    browser.clearElement(element);
-    const result = browser.elementActive();
-    const node = Object.values(result.value)[0];
-    browser.elementIdValue(node, value);
+    browser.setValueSafe(element, value);
 };
