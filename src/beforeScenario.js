@@ -5,7 +5,7 @@ module.exports = event => {
 
     event.tags.forEach(tag => {
         const arr = tag.name.split(':');
-        const fn = tags[arr[1]];
+        const fn = tags[arr[0]];
 
         if (!isRemove && arr[1]) {
             if (url.match(arr[1])) {

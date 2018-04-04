@@ -1,6 +1,6 @@
 {
     "name": "cucumber-test",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
