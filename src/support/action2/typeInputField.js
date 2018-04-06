@@ -7,5 +7,5 @@ module.exports = (value, selector) => {
     browser.pause(browser.options.base.inputPause || 500, '*internal*');
     const elementId = browser.element(selector).value.ELEMENT;
     browser.elementIdClear(elementId);
-    browser.elementIdValue(elementId, value);
+    value.split('').forEach(s => browser.elementIdValue(elementId, s))
 };
