@@ -6,8 +6,9 @@ const program = require('commander');
 const webdriverio = require('webdriverio');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
+const compiler = require('./compiler');
 
-program.version('1.2.13');
+program.version('1.2.14');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -15,6 +16,7 @@ program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfec
 program.option('-i, --instances [instances]', 'max instances');
 program.option('-b, --browser [browser]', 'target browser');
 program.option('-n, --name [name]', 'capability name');
+program.option('-d, --dev', 'compile fits to feature');
 program.option('--timeout [timeout]', 'timeout [20000]');
 program.option('--retry [retry]', 'connection retry [3]');
 program.option('--config [fpath]', 'config [./config.js]');
@@ -43,6 +45,7 @@ if (program.tags) {
 
 let specs = ['./features/**/*.feature'];
 if (program.features) {
+    program.dev && compiler(program.features);
     specs = [`./features/${program.features}/**/*.feature`];
 }
 

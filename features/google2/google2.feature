@@ -2,20 +2,28 @@ Feature: Search on Google
     Search should be on the google website
     and the first should be cucumber.io
 
+@google2
 Scenario: Navigate to Google
-    Given I open the url "${g.url}"
+    Given I open the url "https://www.google.com"
     Then I expect that the title is "Google"
 
-@__non_mobile
-Scenario: Search cucumber-test on desktop browser
-    When I set "${g.search}" to the inputfield "${g.q}"
+@__non_mobile @__chrome @__non_url:localhost
+Scenario: Search cucumber-test
+    When I type "${g.search}" to the inputfield "${g.q}"
     And I expect that element "${g.btnG}" becomes visible
     And I click on the button "${g.btnG}"
-    Then I expect that element "${g.cucumberIo}" becomes visible
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
+
+@__non_mobile @__non_chrome
+Scenario: Search cucumber-test
+    When I type "${g.search} *" to the inputfield "${g.q}"
+    And I expect that element "${g.btnG}" becomes visible
+    And I click on the button "${g.btnG}"
+    Then I expect that element "a[href='https://en.wikipedia.org/wiki/Cucumber_(software)']" becomes visible
 
 @__mobile
-Scenario: Search cucumber-test on mobile browser
-    When I set "${g.search}" to the inputfield "${g.q}"
+Scenario: Search cucumber-test
+    When I type "cucumber-test mobile" to the inputfield "${g.q}"
     And I expect that element "${g.btnM}" becomes visible
     And I click on the button "${g.btnM}"
-    Then I expect that element "${g.cucumberIo}" becomes visible
+    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
