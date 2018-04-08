@@ -93,10 +93,12 @@ appium
 cct --android f344ee26:7.0
 ```
 
-## Config & Variables
-Setting up browsers capabilities and adding variables that can be use inside steps statement. Put `config.js` in the current folder (above features folder) where you will run cucumber-test.
+## Fits (Feature in tight scenario)
+Enhancement on how to write cucumber-test, this feature will make developer much faster to produce automation, as simpler to write the tests. `-d / --dev` is the option to trigger  compiling from `fits` folder to `feature` folder.
 
-`share.feature`
+When run in the jenkins job, usually folders are readonly, make sure `-d` is excluded from job.
+
+`flib/share.feature`
 ```cucumber
 Feature: Share Scenario
     To be share during automation
@@ -127,18 +129,20 @@ Scenario: Search cucumber-test
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 
-`google/google.feature`
+`fits/google/google.feature`
 ```cucumber
 Feature: Search on Google
     Search should be on the google website
     and the first should be cucumber.io
 
 Scenario: Navigate to Google
-    Given ...
-
 Scenario: Search cucumber-test
-    When ...
+
+$ cct -f google -b safari -d
 ```
+
+## Config & Variables
+Setting up browsers capabilities and adding variables that can be use inside steps statement. Put `config.js` in the current folder (above features folder) where you will run cucumber-test.
 
 `config.js`
 ```js

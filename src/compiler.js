@@ -1,10 +1,46 @@
 const fs = require('fs-extra')
-var Gherkin = require('gherkin');
-var parser = new Gherkin.Parser();
+const chalk = require('chalk');
+const Gherkin = require('gherkin');
+const parser = new Gherkin.Parser();
+const path = process.cwd();
 
-const share = process.cwd()+'/fits/share.feature';
-const doc = fs.readFileSync(share, 'utf8');
-const scs = parser.parse(doc);
+let features = [];
+const traverseFileSystem = function (currentPath) {
+    const files = fs.readdirSync(currentPath);
+    for (var i in files) {
+        const currentFile = currentPath + '/' + files[i];
+        const stats = fs.statSync(currentFile);
+        if (stats.isFile()) {
+            if (currentFile.match(/\.feature$/)) {
+                features.push(currentFile);
+            }
+        } else if (stats.isDirectory()) {
+            traverseFileSystem(currentFile);
+        }
+    }
+};
+traverseFileSystem(`flib`);
+
+let files = [];
+let children = [];
+features.forEach(f => {
+    const share = `${path}/${f}`;
+    const doc = fs.readFileSync(share, 'utf8');
+    const ftr = parser.parse(doc).feature;
+    let arr = [];
+    ftr.children.forEach(o => {
+        children.filter(x => {
+            if (o.name===x.name) {
+                const error = chalk.bold.red;
+                console.log(`\n==> ${files.join('\n==> ')}`);
+                console.log(error(`==> ${f}: ${o.name} -> Duplicate scenario!!!\n`));
+                process.exit(1);
+            }
+        });
+    })
+    children = children.concat(ftr.children);
+    files.push(f);
+});
 
 function mixParser(file) {
     const fit = `${process.cwd()}/${file}`;
@@ -33,7 +69,6 @@ function mixParser(file) {
         }
     }
 
-    const {children} = scs.feature;
     ftr.children.forEach(o => {
         const arr = children.filter(x => {
             const result = o.name===x.name;
@@ -51,27 +86,11 @@ function mixParser(file) {
     const feature = `features/${file.replace(/^fits\//,'')}`;
     const arr = feature.split('/');
     const dir = arr.splice(0,arr.length-1).join('/');
-    fs.ensureDir(`${process.cwd()}/${dir}`, err => {
-        const file = `${process.cwd()}/${feature}`;
+    fs.ensureDir(`${path}/${dir}`, err => {
+        const file = `${path}/${feature}`;
         !err && fs.writeFileSync(file, content, 'utf8');
     })
 }
-
-let features = [];
-const traverseFileSystem = function (currentPath) {
-    const files = fs.readdirSync(currentPath);
-    for (var i in files) {
-        const currentFile = currentPath + '/' + files[i];
-        const stats = fs.statSync(currentFile);
-        if (stats.isFile()) {
-            if (currentFile.match(/\.feature$/)) {
-                features.push(currentFile);
-            }
-        } else if (stats.isDirectory()) {
-            traverseFileSystem(currentFile);
-        }
-    }
-};
 
 module.exports = (filter) => {
     features = [];
