@@ -12,7 +12,7 @@ const seleniumArgs = {
             baseURL: 'https://chromedriver.storage.googleapis.com'
         },
         firefox: {
-            version: '0.20.0',
+            version: '0.20.1',
             arch: process.arch,
             baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
         },
@@ -38,7 +38,7 @@ exports.config = {
     // key: process.env.SAUCE_ACCESS_KEY,
 
     seleniumArgs,
-    // seleniumInstallArgs: seleniumArgs,
+    seleniumInstallArgs: seleniumArgs,
 
     //
     // ==================
@@ -259,7 +259,7 @@ exports.config = {
             }
             console.log('command name:', commandName, arg);
         }
-    }
+    },
     //
     // Runs after a WebdriverIO command gets executed
     // afterCommand: function afterCommand(commandName, args, result, error) {
@@ -277,6 +277,7 @@ exports.config = {
     // Gets executed after all tests are done. You still have access to all
     // global variables from the test.
     // after: function after(result, capabilities, specs) {
+    //     console.log('AFTER>>>',result, specs);
     // },
     //
     // Gets executed after all workers got shut down and the process is about to

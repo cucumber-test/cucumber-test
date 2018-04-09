@@ -15,7 +15,6 @@ module.exports = event => {
             }
         }
         if (!isRemove && fn) {
-            console.log('>>>>>',arr[0]);
             isRemove = !fn(browser, global.vars, arr[1]);
         }
         if (isRemove) {
