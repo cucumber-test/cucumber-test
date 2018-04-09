@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const Gherkin = require('gherkin');
 const parser = new Gherkin.Parser();
 const path = process.cwd();
+const error = chalk.bold.red;
 
 let features = [];
 const traverseFileSystem = function (currentPath) {
@@ -31,7 +32,6 @@ features.forEach(f => {
     ftr.children.forEach(o => {
         children.filter(x => {
             if (o.name===x.name) {
-                const error = chalk.bold.red;
                 console.log(`\n==> ${files.join('\n==> ')}`);
                 console.log(error(`==> ${f}: ${o.name} -> Duplicate scenario!!!\n`));
                 process.exit(1);
@@ -86,10 +86,17 @@ function mixParser(file) {
     const feature = `features/${file.replace(/^fits\//,'')}`;
     const arr = feature.split('/');
     const dir = arr.splice(0,arr.length-1).join('/');
-    fs.ensureDir(`${path}/${dir}`, err => {
-        const file = `${path}/${feature}`;
-        !err && fs.writeFileSync(file, content, 'utf8');
-    })
+    fs.remove(`${path}/${dir}`, err => {
+        if (err) {
+            console.log(error(`==> ${err}`));
+            process.exit(1);
+        } else {
+            fs.ensureDir(`${path}/${dir}`, err => {
+                const file = `${path}/${feature}`;
+                !err && fs.writeFileSync(file, content, 'utf8');
+            })
+        }
+    });
 }
 
 module.exports = (filter) => {
