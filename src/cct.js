@@ -8,7 +8,7 @@ const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 const compiler = require('./compiler');
 
-program.version('1.2.18');
+program.version('1.2.19');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -62,6 +62,7 @@ if (program.remote) {
     remoteConfig = config.remote || {};
 }
 
+let provider;
 console.log('Loading...');
 if (program.cloud) {
     let cloud = base.cloud;
@@ -74,7 +75,7 @@ if (program.cloud) {
         cloud = program.cloud;
     }
     const clouds = cloud.split(':');
-    const provider = clouds[0];
+    provider = clouds[0];
 
     console.log(`Run from ${cloud}`);
     if (provider==='saucelabs') {
@@ -224,6 +225,9 @@ cct --android [deviceName:platformVersion]
             bconfig['safari.options'] = {
                 technologyPreview: true,
             }
+        }
+        if (provider==='saucelabs' && remoteConfig.parentTunnel) {
+            bconfig.parentTunnel = remoteConfig.parentTunnel;
         }
         return bconfig;
     });

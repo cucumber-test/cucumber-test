@@ -7,6 +7,15 @@ module.exports = (ob) => {
             edge: { browserName: 'microsoftEdge' },
             ie: { browserName: 'internet explorer',
                 version: '11'
+            },
+            android: {
+                port: 4723,
+                browserName: 'android',
+                appiumVersion: '1.7.2',
+                platformName: 'android',
+                platformVersion: '8.0.0',
+                deviceName: '010806850904',
+                orientation: 'POTRAIT'
             }
         },
         browserstack: {
@@ -63,6 +72,7 @@ module.exports = (ob) => {
                 },
             },
             browser: 'chrome,firefox,safari,edge,ie',
+            parentTunnel: 'magelanga',
             timeout: 50000,
             retry: 7
         },
