@@ -8,7 +8,7 @@ const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 const compiler = require('./compiler');
 
-program.version('1.2.20');
+program.version('1.2.21');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -242,11 +242,12 @@ program.android  ? '--android' : '',
 if (program.config) {
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, version = obj.version;
+        const baseCfg = browsers[name] || {};
         if (browsers[`${name}:${version}`]) {
-            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], browsers[`${name}:${version}`]);
+            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg, browsers[`${name}:${version}`]);
             console.log(options.capabilities[idx]);
         } else if (browsers[name]) {
-            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], browsers[name]);
+            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg);
             console.log(options.capabilities[idx]);
         }
     });

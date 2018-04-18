@@ -1,7 +1,12 @@
 module.exports = (ob) => {
     return {
         browsers: {
-            chrome: {},
+            chrome: {
+                version: '65'
+            },
+            'chrome:dx': {
+                proxy: {proxyType: 'DIRECT'}
+            },
             firefox: {},
             safari: { platform: 'MAC' },
             edge: { browserName: 'microsoftEdge' },
@@ -72,7 +77,7 @@ module.exports = (ob) => {
                 },
             },
             browser: 'chrome,firefox,safari,edge,ie',
-            parentTunnel: 'magelanga',
+            parentTunnel: 'username',
             timeout: 50000,
             retry: 7
         },
