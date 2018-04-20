@@ -1,10 +1,11 @@
 /**
  * Change focus to an Iframe (element)
- * @param  {String}   element Element selector
+ * @param  {String} selector Element selector
  */
-module.exports = (element) => {
-    // browser.waitForExist(`iframe${element}`);
-    const iFrame = browser.element(element).value;
+module.exports = (selector) => {
+    // browser.waitForExist(`iframe${selector}`);
+    // const iFrame = browser.element(selector).value;
+    const iFrame = browser.execute((s) => document.querySelector(s), selector).value;
 
     browser.pause(3000, '*internal*');
     browser.frame(iFrame);
