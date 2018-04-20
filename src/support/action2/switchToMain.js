@@ -6,5 +6,8 @@ module.exports = () => {
 
     const windowHandles = browser.windowHandles();
     const next = windowHandles.value[0];
-    next && browser.window(next);
+    if (next) {
+        browser.window(next);
+        browser.pause(2000, '*internal*');
+    }
 };

@@ -8,4 +8,5 @@ module.exports = (element) => {
 
     browser.pause(3000, '*internal*');
     browser.frame(iFrame);
+    browser.pause(2000, '*internal*');
 };
