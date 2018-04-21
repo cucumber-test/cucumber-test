@@ -1,14 +1,16 @@
 const fs = require('fs');
 const url = require('url');
 const faker = require('faker');
+const Chance = require('chance');
 const request = require('request');
 const program = require('commander');
 const webdriverio = require('webdriverio');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
 const compiler = require('./compiler');
+const chance = new Chance();
 
-program.version('1.2.24');
+program.version('1.2.25');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
@@ -35,7 +37,7 @@ let cpath;
 let config = {};
 if (program.config) {
     cpath = process.cwd()+'/'+program.config;
-    config = require(cpath)({webdriverio, faker, request});
+    config = require(cpath)({webdriverio, faker, chance, request});
 }
 
 let _originalTags = 'not @Pending';

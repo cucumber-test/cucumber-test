@@ -1,5 +1,6 @@
 const fs = require('fs');
 const faker = require('faker');
+const Chance = require('chance');
 const request = require('request');
 const Gherkin = require('gherkin');
 const _merge = require('lodash/merge');
@@ -45,12 +46,13 @@ module.exports = () => {
      * Setup the Chai assertion framework
      */
     const chai = require('chai');
+    const chance = new Chance();
 
     global.expect = chai.expect;
     global.assert = chai.assert;
     global.should = chai.should();
 
-    const config = require(global.browser.options.cpath)({webdriverio, faker, request});
+    const config = require(global.browser.options.cpath)({webdriverio, faker, chance, request});
     global.tags = config.tags || {};
     global.vars = config.vars || {};
 

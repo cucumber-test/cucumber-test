@@ -130,7 +130,7 @@ module.exports = (ob) => {
                 search: 'cucumber-test',
                 url: 'https://google.com',
                 cucumberIo: "a[href='https://cucumber.io/']",
-                email: ob.faker.internet.email()
+                email: ob.chance.email()
             }
         }
     }
