@@ -19,7 +19,7 @@ module.exports = event => {
         }
         if (isRemove) {
             event.tags = [];
-            event.name = '';
+            event.name = '...';
             event.steps = [];
             break;
         }

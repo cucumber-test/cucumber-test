@@ -2,6 +2,7 @@ const beforeExecute = require('./lib/beforeExecute');
 const beforeFeature = require('./lib/beforeFeature');
 const beforeScenario = require('./lib/beforeScenario');
 const beforeStep = require('./lib/beforeStep');
+const reporter = require('./lib/reporter');
 const seleniumArgs = {
     baseURL: 'https://selenium-release.storage.googleapis.com',
     version: '3.9.1',
@@ -170,7 +171,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: http://webdriver.io/guide/testrunner/reporters.html
-    reporters: ['spec'],
+    reporters: [reporter, 'spec'],
     //
     // If you are using Cucumber you need to specify the location of your step
     // definitions.
