@@ -18,7 +18,6 @@ of your product development. `cucumber-test` is a fork of
 if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
 
 ```cucumber
-@simple
 Feature:
     Search on Google
 
@@ -61,7 +60,6 @@ please check the developer tools security options, ensure them to be checked.
 * USB debugging(Security settings)
 
 ```cucumber
-@simple
 Feature: Search on Google
     Search should be on the google website
     and the first should be cucumber.io
@@ -181,6 +179,10 @@ This env vars can be keep into bash/zsh profile/rc
 ```bash
 export NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
+
+## Tips
+#### Safari Technology Preview
+[Safari Technology Preview](https://developer.apple.com/safari/technology-preview/) is the best way to get the latest update of the webdriver included in Safari.
 
 ## Dev Mode
 
