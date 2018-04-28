@@ -287,6 +287,10 @@ selenium-standalone install
 selenium-standalone start
 cct -t '@smoke'
 ```
+This env vars can be keep into bash/zsh profile/rc
+```bash
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+```
 
 ## Dev Mode
 
