@@ -49,18 +49,34 @@ function mixParser(file) {
 
     const exp = [];
     const ftr = ast.feature;
+
     if (ftr.tags.length>0) {
         exp.push(ftr.tags.map(o => o.name).join(' '));
     }
+
     exp.push(`${ftr.type}: ${ftr.name}`);
     exp.push(ftr.description);
 
-    function addScenario(o, t) {
+    function addScenario(o, tags) {
+        const libTags = [...(o.tags || [])];
+        let newTags = [...(tags || [])];
+
+        let mergeTags = libTags.map(item => {
+            const nameKey = item.name.split(':')[0];
+            const idx = newTags.findIndex(obj => obj.name.split(':')[0] === nameKey);
+            const tag = (idx > -1 ? newTags[idx] : item);
+            if (idx > -1) {
+                newTags.splice(idx, 1);
+            }
+            return tag;
+        });
+        mergeTags = [...mergeTags, ...newTags];
+
         exp.push('');
-        const tags = o.tags.length>0 ? o.tags : (t.length>0 ? t : []);
-        if (tags.length>0) {
-            exp.push(tags.map(t => t.name).join(' '));
+        if (mergeTags.length>0) {
+            exp.push(mergeTags.map(obj => obj.name).join(' '));
         }
+
         exp.push(`${o.keyword}: ${o.name}`);
         if (o.steps.length>0) {
             o.steps.forEach(s => {
@@ -86,6 +102,7 @@ function mixParser(file) {
     const feature = `features/${file.replace(/^fits\//,'')}`;
     const arr = feature.split('/');
     const dir = arr.splice(0,arr.length-1).join('/');
+
     fs.remove(`${path}/${dir}`, err => {
         if (err) {
             console.log(error(`==> ${err}`));

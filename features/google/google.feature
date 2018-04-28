@@ -27,3 +27,5 @@ Scenario: Search cucumber-test
     And I expect that element "${g.btnM}" becomes visible
     And I click on the button "${g.btnM}"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
+
+Scenario: Not in the flib
