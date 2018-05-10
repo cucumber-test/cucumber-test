@@ -5,12 +5,31 @@ module.exports = (ob) => {
                 version: '65'
             },
             'chrome:dx': {
-                proxy: {proxyType: 'DIRECT'}
+                proxy: {
+                    proxyType: 'DIRECT'
+                }
             },
-            firefox: {},
-            safari: { platform: 'MAC' },
-            edge: { browserName: 'microsoftEdge' },
-            ie: { browserName: 'internet explorer',
+            firefox: {
+                version: '60'
+            },
+            'firefox:dx': {
+                proxy: {
+                    proxyType: 'DIRECT'
+                }
+            },
+            safari: { 
+                platform: 'MAC'
+            },
+            'safari:dx': {
+                proxy: {
+                    proxyType: 'DIRECT'
+                }
+            },
+            edge: { 
+                browserName: 'microsoftEdge'
+            },
+            ie: { 
+                browserName: 'internet explorer',
                 version: '11'
             },
             android: {
@@ -92,7 +111,7 @@ module.exports = (ob) => {
             name: 'CCT',
             cloud: 'saucelabs',
             android: 'f344ee26:7.0',
-            browser: 'firefox,chrome,safari',
+            browser: 'chrome',
             inputPause: 500,
             timeout: 20000,
             instances: 1,

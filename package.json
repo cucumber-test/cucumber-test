@@ -1,12 +1,13 @@
 {
     "name": "cucumber-test",
-    "version": "1.2.30",
+    "version": "1.2.31",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
     "scripts": {
         "start": "node src/cct",
-        "build": "babel src -d lib"
+        "build": "babel src -d lib",
+        "install": "selenium-standalone install"
     },
     "bin": {
         "cct": "bin/cct.js"
@@ -44,6 +45,7 @@
         "chance": "^1.0.13",
         "fs-extra": "^5.0.0",
         "lodash": "^4.17.5",
+        "selenium-standalone": "latest",
         "wdio-appium-service": "^0.2.3",
         "wdio-browserstack-service": "^0.1.14",
         "wdio-chromedriver-service": "^0.1.2",

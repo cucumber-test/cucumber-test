@@ -184,7 +184,9 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 #### Safari Technology Preview
 [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/) is the best way to get the latest update of the webdriver included in Safari.
 #### Firefox known problem
-[`cannot access dead object`](https://github.com/mozilla/geckodriver/issues/614), the open ticket was filled on April 8, 2017. should be careful if plan to create scenario involved with iframe. 
+[`cannot access dead object`](https://github.com/mozilla/geckodriver/issues/614), the open ticket was filled on April 8, 2017. should be careful if plan to create scenario involved with iframe.
+
+[`element#id is not supported in geckodriver`](https://github.com/webdriverio/webdriverio/issues/2392), the open ticket was filled on Nov 2, 2017. see locator strategy in [`w3c.org`](https://www.w3.org/TR/webdriver/#locator-strategies).
 
 ## Dev Mode
 

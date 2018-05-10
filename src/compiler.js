@@ -5,22 +5,23 @@ const parser = new Gherkin.Parser();
 const path = process.cwd();
 const error = chalk.bold.red;
 
-let features = [];
 const traverseFileSystem = function (currentPath) {
     const files = fs.readdirSync(currentPath);
+    let files2 = [];
     for (var i in files) {
         const currentFile = currentPath + '/' + files[i];
         const stats = fs.statSync(currentFile);
         if (stats.isFile()) {
             if (currentFile.match(/\.feature$/)) {
-                features.push(currentFile);
+                files2.push(currentFile);
             }
         } else if (stats.isDirectory()) {
-            traverseFileSystem(currentFile);
+            files2 = files2.concat(traverseFileSystem(currentFile));
         }
     }
+    return files2;
 };
-traverseFileSystem(`flib`);
+const features = traverseFileSystem(`flib`);
 
 let files = [];
 let children = [];
@@ -116,8 +117,10 @@ function mixParser(file) {
     });
 }
 
-module.exports = (filter) => {
-    features = [];
-    traverseFileSystem(`fits/${filter}`);
-    features.forEach(f => mixParser(f));
+module.exports = { 
+    traverseFileSystem,
+    feature: (filter) => {
+        const arr = traverseFileSystem(`fits/${filter}`);
+        arr.forEach(f => mixParser(f));
+    }
 }

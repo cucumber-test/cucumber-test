@@ -1,36 +1,36 @@
 const beforeExecute = require('./lib/beforeExecute');
 const beforeFeature = require('./lib/beforeFeature');
 const beforeScenario = require('./lib/beforeScenario');
-const beforeStep = require('./lib/beforeStep');
+const beforeStep =      require('./lib/beforeStep');
 const reporter = require('./lib/reporter');
 const seleniumArgs = {
     baseURL: 'https://selenium-release.storage.googleapis.com',
-    version: '3.9.1',
-    drivers: {
-        chrome: {
-            version: '2.38',
-            arch: process.arch,
-            baseURL: 'https://chromedriver.storage.googleapis.com'
-        },
-        firefox: {
-            version: '0.20.1',
-            arch: process.arch,
-            baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
-        },
-        safari: {
-            version: '2.48',
-            arch: process.arch,
-            baseURL: 'https://selenium-release.storage.googleapis.com'
-        },
-        ie: {
-            version: '3.9.0',
-            arch: process.arch,
-            baseURL: 'https://selenium-release.storage.googleapis.com'
-        },
-        edge: {
-            version: '16299'
-        }
-    }
+    version: '3.12.0',
+    // drivers: {
+    //     chrome: {
+    //         version: '2.37', //'2.38',
+    //         arch: process.arch,
+    //         baseURL: 'https://chromedriver.storage.googleapis.com'
+    //     },
+    //     firefox: {
+    //         version: '0.20.0', //'0.20.1',
+    //         arch: process.arch,
+    //         baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
+    //     },
+    //     safari: {
+    //         version: '2.48',
+    //         arch: process.arch,
+    //         baseURL: 'https://selenium-release.storage.googleapis.com'
+    //     },
+    //     ie: {
+    //         version: '3.9.0',
+    //         arch: process.arch,
+    //         baseURL: 'https://selenium-release.storage.googleapis.com'
+    //     },
+    //     edge: {
+    //         version: '16299'
+    //     }
+    // }
 };
 
 exports.config = {

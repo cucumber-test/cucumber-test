@@ -10,8 +10,9 @@ const _merge = require('lodash/merge');
 const compiler = require('./compiler');
 const chance = new Chance();
 
-program.version('1.2.30');
+program.version('1.2.31');
 program.option('-f, --features [path]', 'location of features/[path]');
+program.option('-s, --specs [files]', 'location pattern files');
 program.option('-t, --tags [tags]', 'run features filtered by tags');
 program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
 program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfecto]');
@@ -47,9 +48,18 @@ if (program.tags) {
 
 let specs = ['./features/**/*.feature'];
 if (program.features) {
-    program.dev && compiler(program.features);
+    program.dev && compiler.feature(program.features);
     specs = [`./features/${program.features}/**/*.feature`];
 }
+
+if (program.specs) {
+    const path = specs[0].replace('/**/*.feature', '');
+    const files = compiler.traverseFileSystem(path);
+    specs = files.filter(file => {
+        return file.match(program.specs);
+    });
+}
+console.log('Specs:', specs);
 
 let options = {services: []}; // services: ['firefox-profile'],
 let base = config.base || {};
@@ -212,7 +222,7 @@ cct --android [deviceName:platformVersion]
             acceptInsecureCerts: true,
         };
         if (browserCfg[1]) {
-            bconfig.version = browserCfg[1];
+            bconfig._ext = browserCfg[1];
         };
         if (browserName === 'chrome') {
         	const args = ['disable-web-security'];
@@ -243,10 +253,11 @@ program.android  ? '--android' : '',
 
 if (program.config) {
     options.capabilities.forEach((obj, idx) => {
-        const name = obj.browserName, version = obj.version;
+        const name = obj.browserName, _ext = obj._ext;
         const baseCfg = browsers[name] || {};
-        if (browsers[`${name}:${version}`]) {
-            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg, browsers[`${name}:${version}`]);
+        if (browsers[`${name}:${_ext}`]) {
+            options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg, browsers[`${name}:${_ext}`]);
+            delete options.capabilities[idx]._ext;
             console.log(options.capabilities[idx]);
         } else if (browsers[name]) {
             options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg);
