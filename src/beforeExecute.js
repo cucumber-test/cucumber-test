@@ -56,7 +56,8 @@ module.exports = () => {
     global.tags = config.tags || {};
     global.vars = config.vars || {};
 
-    const {vars} = global.browser.options;
+    const {vars, desiredCapabilities} = global.browser.options;
+    global.browser.options.name = desiredCapabilities.name;
     global.vars = _merge(global.vars, vars);
 
     global.shareGherkinFeature = {}

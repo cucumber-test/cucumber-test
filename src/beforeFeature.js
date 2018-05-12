@@ -22,14 +22,10 @@ const nonMobileTags = [
     '@__non_mobile',
     '@__non_ios'
 ];
-
-function browserName() {
-    const {browserName} = global.browser.desiredCapabilities;
-    return browserName.toLowerCase().replace(/ /g,'');
-}
+let _browserName;
 
 function isBrowserTag(tagName) {
-    const browserId = browserName();
+    const browserId = _browserName();
     const arr = tagName.split('||');
     if (browserTags.indexOf(arr[0])>-1) {
         if (arr[0]===`@__${browserId}`) {
@@ -66,10 +62,18 @@ function isMobileTag(tagName) {
     return 1;
 }
 
-module.exports = event => {
+const beforeFeature = event => {
+    const {desiredCapabilities} = global.browser;
+    const {browserName} = desiredCapabilities;
+    const {name} = global.browser.options;
     const newScenarios = [];
-
-    console.log('>>>>>',`@__${browserName()}`);
+    
+    _browserName = function() {
+        return browserName.toLowerCase().replace(/ /g,'');
+    }
+    const file = event.uri.split('/features/').pop();
+    desiredCapabilities.name = `${name} ${file}`;
+    console.log('>>>>>', `@__${_browserName()}`);
     event.scenarios.forEach((xObj, xId) => {
         // share feature
         const fname = xObj.name.trim();
@@ -116,3 +120,4 @@ module.exports = event => {
         return true;
     });
 }
+module.exports = beforeFeature;
