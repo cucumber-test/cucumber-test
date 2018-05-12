@@ -8,7 +8,7 @@ const error = chalk.bold.red;
 const traverseFileSystem = function (currentPath) {
     const files = fs.readdirSync(currentPath);
     let files2 = [];
-    for (var i in files) {
+    for (let i in files) {
         const currentFile = currentPath + '/' + files[i];
         const stats = fs.statSync(currentFile);
         if (stats.isFile()) {

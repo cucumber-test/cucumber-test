@@ -1,7 +1,7 @@
-var util = require('util'),
+const util = require('util'),
     events = require('events');
 
-var CustomReporter = function(baseReporter, config, options) {
+const CustomReporter = function(baseReporter, config, options) {
     this.on('runner:end', function (runner) {
         const stats = baseReporter.stats;
         const results = stats.runners[runner.cid];

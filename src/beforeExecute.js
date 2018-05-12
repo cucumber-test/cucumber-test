@@ -10,7 +10,7 @@ const parser = new Gherkin.Parser();
 
 module.exports = () => {
     // browser.addCommand("subProcess", function (fn) {
-    //     var wdio = new Launcher(`${__dirname}/config.js`);
+    //     const wdio = new Launcher(`${__dirname}/config.js`);
     //     wdio.run().then(function (code) {
     //         // process.exit(code);
     //     }, function (error) {
@@ -62,8 +62,8 @@ module.exports = () => {
     global.shareGherkinFeature = {}
     const fshare = process.cwd()+'/features/share.feature';
     if (fs.existsSync(fshare)) {
-        var data = fs.readFileSync(fshare, 'utf8');
-        var gherkinAst = parser.parse(data);
+        const data = fs.readFileSync(fshare, 'utf8');
+        const gherkinAst = parser.parse(data);
         global.shareGherkinFeature = gherkinAst.feature;
         // console.log('AST', global.shareGherkinFeature);
     }
