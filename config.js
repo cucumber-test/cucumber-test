@@ -17,7 +17,7 @@ module.exports = (ob) => {
                     proxyType: 'DIRECT'
                 }
             },
-            safari: { 
+            safari: {
                 platform: 'MAC'
             },
             'safari:dx': {
@@ -25,10 +25,10 @@ module.exports = (ob) => {
                     proxyType: 'DIRECT'
                 }
             },
-            edge: { 
+            edge: {
                 browserName: 'microsoftEdge'
             },
-            ie: { 
+            ie: {
                 browserName: 'internet explorer',
                 version: '11'
             },
@@ -146,7 +146,7 @@ module.exports = (ob) => {
                 q: '[name=q]',
                 btnG: 'input.lsb',
                 btnM: 'button._S6q',
-                search: 'cucumber-test',
+                search: 'cucumber io',
                 url: 'https://google.com',
                 cucumberIo: "a[href='https://cucumber.io/']",
                 email: ob.chance.email()

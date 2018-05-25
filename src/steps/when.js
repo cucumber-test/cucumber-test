@@ -2,6 +2,7 @@ import { defineSupportCode } from 'cucumber';
 
 import clearInputField from '../support/action/clearInputField';
 import clickElement from '../support/action/clickElement';
+import clickAppearElement from '../support/action2/clickAppearElement';
 import closeLastOpenedWindow from '../support/action/closeLastOpenedWindow';
 import deleteCookie from '../support/action/deleteCookie';
 import dragElement from '../support/action/dragElement';
@@ -31,6 +32,11 @@ defineSupportCode(({ When }) => {
     When(
         /^I (click|doubleclick) on the (link|button|element) "([^"]*)?"$/,
         clickElement
+    );
+
+    When(
+        /^I (click|doubleclick) on appearing (link|button|element) "([^"]*)?"$/,
+        clickAppearElement
     );
 
     When(
