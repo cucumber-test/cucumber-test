@@ -7,15 +7,25 @@ function nonUrl(partial) {
     return !url(partial);
 }
 
-function waitUrl(partial) {
+function waitForUrl(partial) {
     const msg = `expected ${partial} is part of current url after 5s`;
-    browser.waitUntil(() => url(partial), 5000, msg);
+    return browser.waitUntil(() => url(partial), 5000, msg);
+}
+
+function slc(string) {
+    if (string.match(/^\/\//)) {
+        string = string.replace(/(\[)(\w+=)/g,'$1@$2');
+    }
+    var value = $$(string);
+    console.log('>>>value', value);
+    return value.length > 0;
 }
 
 const ftags = {
+    '@__$': slc,
     '@__url': url,
     '@__non_url': nonUrl,
-    '@__waitUrl': waitUrl
+    '@__waitForUrl': waitForUrl
 }
 
 module.exports = event => {

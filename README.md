@@ -50,7 +50,10 @@ Extended tags will simplify how to write cucumber with different browser & envir
 // url related
 @__url           ex: =>  @__url:/search
 @__non_url       ex: =>  @__non_url:/search
-@__waitUrl       ex: =>  @__waitUrl:/search
+@__waitForUrl    ex: =>  @__waitForUrl:/search
+
+// Selector, it can be css or xpath (without `@`)
+@__$             ex: =>  @__$://*[class='dialog']//button
 ```
 Sample usage can be seen on the example below `Search on Google`, when it get executed on the desktop browser like chrome, firefox or IE, it will pickup scenario with:
 

@@ -9,4 +9,8 @@ Scenario: Navigate to Google
 Scenario: Skipped scenario
     When I set "not reach here" to the inputfield "${g.q}"
 
+@__$://*[id='lga']
+Scenario: Selector found
+    When I set "selector found in here" to the inputfield "${g.q}"
+
 Scenario: Search cucumber-test
