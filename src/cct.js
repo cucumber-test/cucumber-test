@@ -10,7 +10,7 @@ const _merge = require('lodash/merge');
 const compiler = require('./compiler');
 const chance = new Chance();
 
-program.version('1.2.36');
+program.version('1.2.37');
 program.option('-f, --features [path]', 'location of features/[path]');
 program.option('-s, --specs [files]', 'location pattern files');
 program.option('-t, --tags [tags]', 'run features filtered by tags');

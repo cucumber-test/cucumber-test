@@ -48,6 +48,7 @@ function mixParser(file) {
     const src = fs.readFileSync(fit, 'utf8');
     const ast = parser.parse(src);
 
+    let tgfile;
     const exp = [];
     const ftr = ast.feature;
 
@@ -104,23 +105,17 @@ function mixParser(file) {
     const arr = feature.split('/');
     const dir = arr.splice(0,arr.length-1).join('/');
 
-    fs.remove(`${path}/${dir}`, err => {
-        if (err) {
-            console.log(error(`==> ${err}`));
-            process.exit(1);
-        } else {
-            fs.ensureDir(`${path}/${dir}`, err => {
-                const file = `${path}/${feature}`;
-                !err && fs.writeFileSync(file, content, 'utf8');
-            })
-        }
-    });
+    tgfile = path + '/' + feature;
+    fs.ensureDirSync(path + '/' + dir);
+    fs.writeFileSync(tgfile, content, 'utf8');
+    return tgfile;
 }
 
-module.exports = { 
+module.exports = {
     traverseFileSystem,
     feature: (filter) => {
+        fs.removeSync('features/' + filter);
         const arr = traverseFileSystem(`fits/${filter}`);
-        arr.forEach(f => mixParser(f));
+        return arr.map(f => mixParser(f));
     }
 }
