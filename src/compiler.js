@@ -26,21 +26,23 @@ const features = traverseFileSystem(`flib`);
 let files = [];
 let children = [];
 features.forEach(f => {
-    const share = `${path}/${f}`;
-    const doc = fs.readFileSync(share, 'utf8');
-    const ftr = parser.parse(doc).feature;
-    let arr = [];
-    ftr.children.forEach(o => {
-        children.filter(x => {
-            if (o.name===x.name) {
-                console.log(`\n==> ${files.join('\n==> ')}`);
-                console.log(error(`==> ${f}: ${o.name} -> Duplicate scenario!!!\n`));
-                process.exit(1);
-            }
-        });
-    })
-    children = children.concat(ftr.children);
-    files.push(f);
+    if (!f.match('/@')) {
+        const share = `${path}/${f}`;
+        const doc = fs.readFileSync(share, 'utf8');
+        const ftr = parser.parse(doc).feature;
+        let arr = [];
+        ftr.children.forEach(o => {
+            children.filter(x => {
+                if (o.name===x.name) {
+                    console.log(`\n==> ${files.join('\n==> ')}`);
+                    console.log(error(`==> ${f}: ${o.name} -> Duplicate scenario!!!\n`));
+                    process.exit(1);
+                }
+            });
+        })
+        children = children.concat(ftr.children);
+        files.push(f);
+    }
 });
 
 function mixParser(file) {
@@ -87,7 +89,7 @@ function mixParser(file) {
         }
     }
 
-    ftr.children.forEach(o => {
+    function searchOnflib(o) {
         const arr = children.filter(x => {
             const result = o.name===x.name;
             if (result) {
@@ -97,6 +99,19 @@ function mixParser(file) {
         });
         if (arr.length===0) {
             addScenario(o);
+        }
+    }
+
+    ftr.children.forEach(o => {
+        if (o.name.match(/^@/)) {
+            const xfile = features.filter(f => f.match(o.name))[0];
+            const src2 = fs.readFileSync(xfile, 'utf8');
+            const ast2 = parser.parse(src2);
+            ast2.feature.children.forEach(function (o2) {
+                searchOnflib(o2);
+            })
+        } else {
+            searchOnflib(o);
         }
     })
 
