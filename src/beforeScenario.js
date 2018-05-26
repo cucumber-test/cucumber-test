@@ -12,20 +12,34 @@ function waitForUrl(partial) {
     return browser.waitUntil(() => url(partial), 5000, msg);
 }
 
+function main_url(browser, vars, string) {
+    return (browser.getUrl().match(string) !== null);
+}
+
+function non_main_url(browser, vars, string) {
+    return (browser.getUrl().match(string) === null);
+}
+
 function slc(string) {
     if (string.match(/^\/\//)) {
         string = string.replace(/(\[)(\w+=)/g,'$1@$2');
     }
-    var value = $$(string);
-    console.log('>>>value', value);
-    return value.length > 0;
+    return browser.isExisting(string);
+}
+
+function debug(browser, vars, string) {
+    browser.debug();
+    return true;
 }
 
 const ftags = {
     '@__$': slc,
     '@__url': url,
+    '@__mainUrl': main_url,
+    '@__waitForUrl': waitForUrl,
+    '@__debug': debug,
     '@__non_url': nonUrl,
-    '@__waitForUrl': waitForUrl
+    '@__non_mainUrl': non_main_url
 }
 
 module.exports = event => {
