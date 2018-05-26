@@ -46,6 +46,11 @@ Extended tags will simplify how to write cucumber with different browser & envir
 @__android           ><  @__non_android
 @__mobile            ><  @__non_mobile
 @__ios               ><  @__non_ios
+
+// url related
+@__url           ex: =>  @__url:/search
+@__non_url       ex: =>  @__non_url:/search
+@__waitUrl       ex: =>  @__waitUrl:/search
 ```
 Sample usage can be seen on the example below `Search on Google`, when it get executed on the desktop browser like chrome, firefox or IE, it will pickup scenario with:
 
