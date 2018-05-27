@@ -8,6 +8,6 @@ import clickElement from '../action/clickElement';
  * @param  {String}   element Element selector
  */
 module.exports = (action, type, element) => {
-    waitForVisible(element)
-    clickElement(action, type, element)
+    waitForVisible(element.split('|')[0]);
+    clickElement(action, type, element);
 };
