@@ -85,7 +85,7 @@ defineSupportCode(({ When }) => {
     );
 
     When(
-        /^I press "([^"]*)?"$/,
+        /^I press "([^"]*)?" to the inputfield "([^"]*)?"$/,
         pressButton
     );
 

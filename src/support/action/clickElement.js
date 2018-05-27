@@ -11,7 +11,8 @@ module.exports = (action, type, element) => {
      * Element to perform the action on
      * @type {String}
      */
-    const elem = (type === 'link') ? `=${element}` : element;
+    const arr = element.split('|');
+    const elem = (type === 'link') ? `=${arr[0]}` : arr[0];
 
     /**
      * The method to call on the browser object
@@ -23,4 +24,7 @@ module.exports = (action, type, element) => {
 
     browser.pause(1000, '*internal*');
     browser[method](elem);
+    if (arr[1]) {
+        browser.pause(+arr[1], '*internal*');
+    }
 };

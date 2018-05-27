@@ -7,7 +7,7 @@ Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
     Then I expect that the title is "Google"
 
-@__waitForUrl:google
+@__waitForUrl:googler
 Scenario: Skipped scenario
     When I set "not reach here" to the inputfield "${g.q}"
 

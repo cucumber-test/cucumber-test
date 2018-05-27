@@ -1,5 +1,3 @@
-// import checkIfElementExists from '../lib/checkIfElementExists';
-
 /**
  * Set the value of the given input field to a new value or add a value to the
  * current element value
@@ -13,9 +11,12 @@ module.exports = (method, value, element) => {
      * @type {String}
      */
     let checkValue = value || '';
+    const arr = element.split('|');
     const { base } = global.browser.options;
     const command = (method === 'add') ? 'addValue' : 'setValue';
     browser.pause(base.inputPause || 500, '*internal*');
-    // checkIfElementExists(element, false, 1);
-    browser[command](element, checkValue);
+    browser[command](arr[0], checkValue);
+    if (arr[1]) {
+        browser.pause(+arr[1], '*internal*');
+    }
 };
