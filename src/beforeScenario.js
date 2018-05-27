@@ -8,8 +8,18 @@ function nonUrl(partial) {
 }
 
 function waitForUrl(partial) {
-    const msg = `expected ${partial} is part of current url after 5s`;
-    return browser.waitUntil(() => url(partial), 5000, msg);
+    const arr = partial.split('|');
+    const timeout = +(arr[1] || 2000);
+    const {screenshotPath} = browser.options;
+    try {
+        browser.options.screenshotPath = null;
+        const result = browser.waitUntil(() => url(arr[0]), timeout);
+        browser.options.screenshotPath = screenshotPath;
+        return result;
+    } catch(e) {
+        browser.options.screenshotPath = screenshotPath;
+        return false;
+    }
 }
 
 function main_url(browser, vars, string) {

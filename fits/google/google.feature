@@ -5,7 +5,7 @@ Feature: Search on Google
 @google
 Scenario: Navigate to Google
 
-@__url:/Search
+@__waitForUrl:googler
 Scenario: Skipped scenario
     When I set "not reach here" to the inputfield "${g.q}"
 
