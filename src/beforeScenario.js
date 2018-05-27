@@ -37,6 +37,31 @@ function slc(string) {
     return browser.isExisting(string);
 }
 
+function getCookie(string) {
+    const names = [], cookies = {};
+    string.split(/, */).forEach(x => {
+        const kv = x.split('=');
+        if (kv.length > 1) {
+            names.push(kv[0]);
+            cookies[kv[0]] = kv[1];
+        }
+    });
+
+    const cookielist = browser.execute(() => document.cookie).value;
+    // console.log('cookies', cookielist, cookies);
+    function getCookie(name) {
+        var v = cookielist.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return v ? v[2] : null;
+    }
+
+    for (var name of names) {
+        if (cookies[name]!==getCookie(name)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 function debug(browser, vars, string) {
     browser.debug();
     return true;
@@ -46,6 +71,7 @@ const ftags = {
     '@__$': slc,
     '@__url': url,
     '@__mainUrl': main_url,
+    '@__cookies': getCookie,
     '@__waitForUrl': waitForUrl,
     '@__debug': debug,
     '@__non_url': nonUrl,
@@ -54,19 +80,21 @@ const ftags = {
 
 module.exports = event => {
     const {tags, vars} = global;
+    const rgtags = /(^@__[_\w|\$]+):(.+)/;
     let isRemove = false;
 
     for (let tag of event.tags) {
-        const arr = tag.name.split(':');
-        const fn = tags[arr[0]];
-        const ft = ftags[arr[0]];
+        const mc = tag.name.match(rgtags);
+        const kv = mc ? mc.splice(1,2) : tag.name.split(':');
+        const fn = tags[kv[0]];
+        const ft = ftags[kv[0]];
 
         if (ft) {
-            isRemove = !ft(arr[1]);
+            isRemove = !ft(kv[1]);
         }
 
         if (!isRemove && fn) {
-            isRemove = !fn(browser, global.vars, arr[1]);
+            isRemove = !fn(browser, global.vars, kv[1]);
         }
 
         if (isRemove) {
