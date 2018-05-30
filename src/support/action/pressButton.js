@@ -5,6 +5,9 @@
  * @param  {String}   element Element selector
  */
 module.exports = (keys, element) => {
-    browser.addValue(element.split('|')[0], keys.split(','));
-    // browser.keys(key);
+    const arr = element.split('|');
+    browser.addValue(arr[0], keys.split(','));
+    if (arr[1]) {
+        browser.pause(+arr[1], '*internal*');
+    }
 };

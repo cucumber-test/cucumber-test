@@ -57,6 +57,9 @@ Extended tags will simplify how to write cucumber with different browser & envir
 // Selector, it can be css or xpath (without `@`)
 @__$             ex: =>  @__$://*[class='dialog']//button
 
+// cookies
+@__cookies       ex: => @ __cookies:user=alex,locale=US
+
 // for development
 @__debug
 ```
