@@ -35,7 +35,7 @@ module.exports = (ob) => {
             android: {
                 port: 4723,
                 browserName: 'android',
-                appiumVersion: '1.7.2',
+                appiumVersion: '1.8.1',
                 platformName: 'android',
                 platformVersion: '8.0.0',
                 deviceName: '010806850904',
@@ -80,7 +80,7 @@ module.exports = (ob) => {
                     platform: 'WIN7'
                 },
                 ios: {
-                    appiumVersion: '1.7.2',
+                    appiumVersion: '1.8.1',
                     deviceName:"iPhone 8 Plus Simulator",
                     deviceOrientation: 'portrait',
                     platformName: 'iOS',
@@ -88,7 +88,7 @@ module.exports = (ob) => {
                     browserName: 'Safari',
                 },
                 android: {
-                    appiumVersion: '1.7.2',
+                    appiumVersion: '1.8.1',
                     deviceName:"Android Emulator",
                     platformName: 'Android',
                     platformVersion: '6.0',
