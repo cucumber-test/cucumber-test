@@ -50,11 +50,11 @@ function getCookie(string) {
     const cookielist = browser.execute(() => document.cookie).value;
     // console.log('cookies', cookielist, cookies);
     function getCookie(name) {
-        var v = cookielist.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        const v = cookielist.match('(^|;) ?' + name + '=([^;]*)(;|$)');
         return v ? v[2] : null;
     }
 
-    for (var name of names) {
+    for (let name of names) {
         if (cookies[name]!==getCookie(name)) {
             return false;
         }
