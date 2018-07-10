@@ -186,7 +186,7 @@ cct -c saucelabs
 
 ```bash
 export NODE_TLS_REJECT_UNAUTHORIZED=0
-npm install -g selenium-standalone@latest
+npm install -g selenium-standalone@6.15.0
 selenium-standalone install
 selenium-standalone start
 cct -t '@smoke'
@@ -197,12 +197,17 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 
 ## Tips
+
+#### Selenium-standalone known problem
+`ERROR: Unable to create new service ... driver.version: unknown` need to down-grade selenium-standalone to `~6.15.0`
+
 #### Safari (technology preview) known problem
 [Safari Technology Preview](https://developer.apple.com/safari/technology-preview/) is the best way to get the latest update of the webdriver included in Safari.
 
 `You must enable the "Allow Remote Automation"`, you need to launch Safari and go to the menu "Develop > Allow Remote Automation" & make sure that it is checked.
 
 `Hang or Error(from selenium-standalone): safaridriver could not launch because it is not configured correctly`, need to open a terminal console and manually configure as a super user: "sudo safaridriver --enable".
+
 #### Firefox known problem
 [`cannot access dead object`](https://github.com/mozilla/geckodriver/issues/614), the open ticket was filled on April 8, 2017. should be careful if plan to create scenario involved with iframe.
 

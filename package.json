@@ -7,7 +7,8 @@
     "scripts": {
         "start": "node src/cct",
         "build": "babel src -d lib",
-        "install": "selenium-standalone install"
+        "install": "selenium-standalone install",
+        "selenium": "selenium-standalone start"
     },
     "bin": {
         "cct": "bin/cct.js"
@@ -37,13 +38,15 @@
     "license": "MIT",
     "dependencies": {
         "appium": "^1.8.1",
+        "babel-preset-env": "^1.7.0",
+        "babel-register": "~6.26.0",
         "chai": "~4.1.2",
+        "chance": "^1.0.16",
         "chromedriver": "^2.40.0",
         "faker": "^4.1.0",
-        "chance": "^1.0.16",
         "fs-extra": "^6.0.1",
         "lodash": "^4.17.10",
-        "selenium-standalone": "^6.15.1",
+        "selenium-standalone": "6.15.0",
         "wdio-appium-service": "^0.2.3",
         "wdio-browserstack-service": "^0.1.16",
         "wdio-chromedriver-service": "^0.1.3",
@@ -56,8 +59,6 @@
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-register": "~6.26.0",
         "commander": "^2.14.1"
     }
 }

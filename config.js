@@ -2,7 +2,7 @@ module.exports = (ob) => {
     return {
         browsers: {
             chrome: {
-                version: '65'
+                version: '67'
             },
             'chrome:dx': {
                 proxy: {
