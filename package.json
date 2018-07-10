@@ -43,7 +43,7 @@
         "chance": "^1.0.16",
         "fs-extra": "^6.0.1",
         "lodash": "^4.17.10",
-        "selenium-standalone": "latest",
+        "selenium-standalone": "^6.15.1",
         "wdio-appium-service": "^0.2.3",
         "wdio-browserstack-service": "^0.1.16",
         "wdio-chromedriver-service": "^0.1.3",
