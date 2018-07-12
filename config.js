@@ -44,6 +44,10 @@ module.exports = (ob) => {
         },
         browserstack: {
             browsers: {
+                chrome: {
+                    platform: 'WIN7',
+                    version: '67'
+                },
                 edge: {
                     unhandledPromptBehavior: 'accept',
                     platform: 'WINDOWS',

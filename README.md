@@ -1,5 +1,7 @@
 # Cucumber Test
 
+<a href="https://www.browserstack.com/automate/public-build/elU2bmp1MzhoYkZ5a1RqNDRwSThGK1BZYk1tc202enhKNDVULzZIN25vUT0tLXIyVlZkTEd5WVB0T3VUZ1ZGMWxML0E9PQ==--447f59bf19bfd645f779420ae2540c385fde5988"><img src='https://www.browserstack.com/automate/badge.svg?badge_key=elU2bmp1MzhoYkZ5a1RqNDRwSThGK1BZYk1tc202enhKNDVULzZIN25vUT0tLXIyVlZkTEd5WVB0T3VUZ1ZGMWxML0E9PQ==--447f59bf19bfd645f779420ae2540c385fde5988'/></a>
+
 Made easy - Cucumber testing using webdriver.io, instead of writing complicated
 test code that only developers can understand, Cucumber maps an ordinary
 language to code and allows to start with the test process in the early stages
@@ -228,6 +230,6 @@ MIT
 
 ![alt SauceLabs](docs/Sauce-Labs_Horiz_Red-Grey_RGB_250x35.png)
 
-Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs][homepage]
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs]( https://saucelabs.com)
 
-[homepage]: https://saucelabs.com
+<img src="docs/browserstack-logo-600x315.png" alt="alt BrowserStack" width="300">
