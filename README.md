@@ -13,7 +13,7 @@ of your product development. `cucumber-test` is a fork of
 3. selenium-standalone start
 4. create folder `features/google`
 5. add file `features/google/google.feature`
-6. run `cct -f google` (or `cct -f google -b chrome,firefox,safari -i 2`)
+6. run `cct -f google -d` (or `cct -f google -d -b chrome,firefox,safari -i 2`)
 
 if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
 
@@ -104,7 +104,7 @@ npm install -g appium appium-doctor
 # run appium & connect your android device using USB
 appium
 # check deviceName - adb devices & pass to deviceName:android version
-cct -f google --android f344ee26:7.0
+cct -f google -d --android f344ee26:7.0
 ```
 
 ## Fits (Feature in tight scenario)
@@ -152,7 +152,7 @@ Feature: Search on Google
 Scenario: Navigate to Google
 Scenario: Search cucumber-test
 
-$ cct -f google -b safari -d
+$ cct -f google -d -b safari
 ```
 
 ## Config & Variables
@@ -161,8 +161,8 @@ Setting up browsers capabilities and adding variables that can be use inside ste
 [`config.js`](https://github.com/cucumber-test/cucumber-test/blob/master/config.js)
 will automatically pickup by runner or you can provide the fullpath in CLI:
 ```bash
-cct -f google --config ./config.js -b chrome
-cct -f google -b chrome,safari,firefox
+cct -f google -d --config ./config.js -b chrome
+cct -f google -d -b chrome,safari,firefox
 ```
 
 ## Integration with SauceLabs
@@ -170,8 +170,8 @@ Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
 ```bash
 export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export SAUCE_USERNAME=cucumber-test
-cct -f google -c saucelabs:connect
-cct -f google -c saucelabs
+cct -f google -d -c saucelabs:connect
+cct -f google -d -c saucelabs
 ```
 
 ## Integration with BrowserStack
@@ -179,7 +179,7 @@ Add these env variables from your [BrowserStack](docs/BrowserStack.gif) user & k
 ```bash
 export BROWSERSTACK_ACCESS_KEY=xxXXXxXxXxXxxXxXXXxx
 export BROWSERSTACK_USERNAME=cucumber-test
-cct -c browserstack
+cct -f google -d -c browserstack
 ```
 
 ## Behind proxy or vpn:
@@ -189,7 +189,7 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 npm install -g selenium-standalone@6.15.0
 selenium-standalone install
 selenium-standalone start
-cct -f google
+cct -f google -d
 ```
 This env vars can be keep into bash/zsh profile/rc
 ```bash
