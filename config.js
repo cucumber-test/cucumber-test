@@ -10,7 +10,7 @@ module.exports = (ob) => {
                 }
             },
             firefox: {
-                version: '60'
+                version: '61'
             },
             'firefox:dx': {
                 proxy: {
@@ -95,10 +95,13 @@ module.exports = (ob) => {
                     browserName: 'Chrome',
                 },
             },
-            browser: 'chrome,firefox,safari,edge,ie',
-            parentTunnel: 'username',
+            // browser: 'chrome,firefox,safari,edge,ie',
+            // parentTunnel: 'username',
+            browser: 'chrome',
             timeout: 50000,
-            retry: 7
+            retry: 7,
+            SAUCE_USERNAME: 'cucumber-test',
+            SAUCE_ACCESS_KEY: 'd776ea79-688a-49ce-8143-ddaf8b999976',
         },
         perfecto: {},
         remote: {

@@ -1,6 +1,6 @@
 {
     "name": "cucumber-test",
-    "version": "1.2.46",
+    "version": "1.2.47",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
@@ -46,7 +46,7 @@
         "faker": "^4.1.0",
         "fs-extra": "^6.0.1",
         "lodash": "^4.17.10",
-        "selenium-standalone": "6.15.0",
+        "selenium-standalone": "^6.14.0",
         "wdio-appium-service": "^0.2.3",
         "wdio-browserstack-service": "^0.1.16",
         "wdio-chromedriver-service": "^0.1.3",

@@ -8,12 +8,12 @@ of your product development. `cucumber-test` is a fork of
 
 ## Quick start
 
-1. npm install -g cucumber-test selenium-standalone
+1. npm install -g cucumber-test selenium-standalone@6.15.0
 2. selenium-standalone install
 3. selenium-standalone start
-4. create folder `features`
-5. add file `features/simple.feature`
-6. run `cct` (or `cct -b chrome,firefox,safari --timeout 40000 -i 3`)
+4. create folder `features/google`
+5. add file `features/google/google.feature`
+6. run `cct -f google` (or `cct -f google -b chrome,firefox,safari -i 2`)
 
 if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
 
