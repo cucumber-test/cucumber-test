@@ -101,7 +101,7 @@ module.exports = (ob) => {
             timeout: 50000,
             retry: 7,
             SAUCE_USERNAME: 'cucumber-test',
-            SAUCE_ACCESS_KEY: 'd776ea79-688a-49ce-8143-ddaf8b999976',
+            // SAUCE_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         },
         perfecto: {},
         remote: {

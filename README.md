@@ -104,7 +104,7 @@ npm install -g appium appium-doctor
 # run appium & connect your android device using USB
 appium
 # check deviceName - adb devices & pass to deviceName:android version
-cct --android f344ee26:7.0
+cct -f google --android f344ee26:7.0
 ```
 
 ## Fits (Feature in tight scenario)
@@ -165,21 +165,21 @@ cct -f google --config ./config.js -b chrome
 cct -f google -b chrome,safari,firefox
 ```
 
+## Integration with SauceLabs
+Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
+```bash
+export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SAUCE_USERNAME=cucumber-test
+cct -f google -c saucelabs:connect
+cct -f google -c saucelabs
+```
+
 ## Integration with BrowserStack
 Add these env variables from your [BrowserStack](docs/BrowserStack.gif) user & key:
 ```bash
 export BROWSERSTACK_ACCESS_KEY=xxXXXxXxXxXxxXxXXXxx
 export BROWSERSTACK_USERNAME=cucumber-test
 cct -c browserstack
-```
-
-## Integration with SauceLabs
-Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
-```bash
-export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export SAUCE_USERNAME=cucumber-test
-cct -c saucelabs:connect
-cct -c saucelabs
 ```
 
 ## Behind proxy or vpn:
@@ -189,7 +189,7 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 npm install -g selenium-standalone@6.15.0
 selenium-standalone install
 selenium-standalone start
-cct -t '@smoke'
+cct -f google
 ```
 This env vars can be keep into bash/zsh profile/rc
 ```bash
@@ -223,3 +223,11 @@ ln -s /Users/wharsojo/Dev/cucumber-test cucumber-test
 ## License
 
 MIT
+
+### Big Thanks
+
+![alt SauceLabs](docs/Sauce-Labs_Horiz_Red-Grey_RGB_250x35.png)
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs][homepage]
+
+[homepage]: https://saucelabs.com
