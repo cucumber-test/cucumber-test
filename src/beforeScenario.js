@@ -1,5 +1,8 @@
 function url(partial) {
-    const url = browser.execute(() => location.href).value;
+    // avoid arrow function to support IE11
+    const url = browser.execute(function() {
+        return location.href
+    }).value;
     return !!url.match(partial);
 }
 
@@ -47,7 +50,11 @@ function getCookie(string) {
         }
     });
 
-    const cookielist = browser.execute(() => document.cookie).value;
+    // avoid arrow function to support IE11
+    const cookielist = browser.execute(function() {
+        return document.cookie;
+    }).value;
+
     // console.log('cookies', cookielist, cookies);
     function getCookie(name) {
         const v = cookielist.match('(^|;) ?' + name + '=([^;]*)(;|$)');

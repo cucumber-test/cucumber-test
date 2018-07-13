@@ -1,5 +1,5 @@
 # Cucumber Test
-[![Sauce Test Status](https://saucelabs.com/buildstatus/cucumber-test)](https://saucelabs.com/u/cucumber-test) - 
+[![Sauce Test Status](https://saucelabs.com/buildstatus/cucumber-test)](https://saucelabs.com/u/cucumber-test) -
 <a href="https://www.browserstack.com/automate/public-build/elU2bmp1MzhoYkZ5a1RqNDRwSThGK1BZYk1tc202enhKNDVULzZIN25vUT0tLXIyVlZkTEd5WVB0T3VUZ1ZGMWxML0E9PQ==--447f59bf19bfd645f779420ae2540c385fde5988"><img src='https://www.browserstack.com/automate/badge.svg?badge_key=elU2bmp1MzhoYkZ5a1RqNDRwSThGK1BZYk1tc202enhKNDVULzZIN25vUT0tLXIyVlZkTEd5WVB0T3VUZ1ZGMWxML0E9PQ==--447f59bf19bfd645f779420ae2540c385fde5988'/></a>
 
 Made easy - Cucumber testing using webdriver.io, instead of writing complicated
@@ -228,7 +228,7 @@ MIT
 
 ### Big Thanks
 
-![alt SauceLabs](docs/Sauce-Labs_Horiz_Red-Grey_RGB_250x35.png) .
-<img src="docs/browserstack-logo-600x315.png" alt="alt BrowserStack" width="250"> .
+![alt SauceLabs](docs/saucelabs-logo.png) &nbsp; 
+<img src="docs/browserstack-logo.svg" alt="alt BrowserStack" width="240">
 
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs]( https://saucelabs.com) + [BrowserStack](https://www.browserstack.com)

@@ -26,7 +26,8 @@ module.exports = (ob) => {
                 }
             },
             edge: {
-                browserName: 'microsoftEdge'
+                browserName: 'microsoftEdge',
+                unhandledPromptBehavior: 'accept'
             },
             ie: {
                 browserName: 'internet explorer',
@@ -42,17 +43,28 @@ module.exports = (ob) => {
                 orientation: 'POTRAIT'
             }
         },
-        browserstack: {
-            browsers: {
+        browserstack: {  // Platform can be one of
+            browsers: {  // MAC, WIN8, XP, WINDOWS, and ANY
                 chrome: {
-                    platform: 'WIN7',
+                    platform: 'ANY',
                     version: '67'
                 },
-                edge: {
-                    unhandledPromptBehavior: 'accept',
-                    platform: 'WINDOWS',
-                    version: '16'
+                firefox: {
+                    platform: 'ANY',
+                    version: '61'
                 },
+                safari: {
+                    platform: 'MAC',
+                    version: '11'
+                },
+                edge: {
+                    platform: 'WINDOWS',
+                    version: '17'
+                },
+                ie: {
+                    platform: 'WIN8',
+                    version: '11'
+                }
             },
             browser: 'edge',
             timeout: 50000,
