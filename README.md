@@ -228,7 +228,7 @@ MIT
 
 ### Big Thanks
 
-![alt SauceLabs](docs/saucelabs-logo.png) &nbsp; 
-<img src="docs/browserstack-logo.svg" alt="alt BrowserStack" width="240">
+![alt SauceLabs](docs/saucelabs-logo.png) &nbsp;
+<img src="docs/browserstack-logo.png" alt="alt BrowserStack" width="240">
 
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs]( https://saucelabs.com) + [BrowserStack](https://www.browserstack.com)
