@@ -3,55 +3,46 @@ const url = require('url');
 const faker = require('faker');
 const Chance = require('chance');
 const request = require('request');
-const program = require('commander');
 const webdriverio = require('webdriverio');
 const { Launcher } = require('webdriverio');
 const _merge = require('lodash/merge');
+const program = require('./program')();
 const compiler = require('./compiler');
 const chance = new Chance();
 
-program.version('1.2.49');
-program.option('-f, --features [path]', 'location of features/[path]');
-program.option('-s, --specs [files]', 'location pattern files');
-program.option('-t, --tags [tags]', 'run features filtered by tags');
-program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
-program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfecto]');
-program.option('-i, --instances [instances]', 'max instances');
-program.option('-b, --browser [browser]', 'target browser');
-program.option('-n, --name [name]', 'capability name');
-program.option('-d, --dev', 'compile fits to feature');
-program.option('--timeout [timeout]', 'timeout [20000]');
-program.option('--retry [retry]', 'connection retry [3]');
-program.option('--config [fpath]', 'config [./config.js]');
-program.option('--android [android]', 'run on android device');
-program.option('--uaIphone', 'chrome w/ user agent of iPhone');
-program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
-program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
-
-program.parse(process.argv);
-
-if (program.config===undefined && fs.existsSync(process.cwd()+'/config.js')) {
-    program.config = 'config.js';
-}
-
 let cpath;
 let config = {};
+let options = {services: []}; // services: ['firefox-profile'],
+
+/*
+ * params: --config
+ * load config.js into config var
+ */
 if (program.config) {
     cpath = process.cwd()+'/'+program.config;
     config = require(cpath)({webdriverio, faker, chance, request});
 }
 
+/*
+ * params: -t , default tags
+ */
 let _originalTags = 'not @Pending';
 if (program.tags) {
     _originalTags = `${program.tags} and (not @Pending)`;
 }
 
+/*
+ * params: -f , filter folder to be run
+ */
 let specs = ['./features/**/*.feature'];
 if (program.features) {
     program.dev && compiler.feature(program.features);
     specs = [`./features/${program.features}/**/*.feature`];
 }
 
+/*
+ * params: -s , filter script files to be execute
+ */
 if (program.specs) {
     const path = specs[0].replace('/**/*.feature', '');
     const files = compiler.traverseFileSystem(path);
@@ -61,7 +52,6 @@ if (program.specs) {
 }
 console.log('Specs:', specs);
 
-let options = {services: []}; // services: ['firefox-profile'],
 let base = config.base || {};
 let browsers = config.browsers || {};
 let remoteConfig = {};
@@ -70,12 +60,19 @@ let browser = base.browser || 'chrome';
 let timeout = base.timeout || 20000;
 let retry = base.retry || 3;
 
+/*
+ * params: -r , prepare config for remote selenium server
+ */
 if (program.remote) {
     remoteConfig = config.remote || {};
 }
 
 let provider;
 console.log('Loading...');
+
+/*
+ * params: -c , prepare for cloud services
+ */
 if (program.cloud) {
     let cloud = base.cloud;
     if (program.cloud===true) {
@@ -157,6 +154,9 @@ if (remoteConfig.retry) {
     retry = remoteConfig.retry;
 }
 
+/*
+ * params: -b , prepare config for browser
+ */
 if (program.browser) {
     browser = program.browser;
 }
@@ -169,7 +169,10 @@ if (program.retry) {
     retry = program.retry;
 }
 
-if (typeof(program.name)==='string') {
+/*
+ * params: -n , prepare config for name
+ */
+if (program.name) {
     base.name = program.name;
 }
 
@@ -178,6 +181,9 @@ if (!base.instances) {
     base.instances = browserIds.length;
 }
 
+/*
+ * params: -i , prepare config for instances
+ */
 if (program.instances) {
     base.instances = program.instances;
 }
@@ -198,6 +204,9 @@ options = _merge(options, {
 });
 console.log('Timeout/Retry/I:', `${timeout}/${retry}/${base.instances}`);
 
+/*
+ * params: --android , prepare config for android
+ */
 if (program.android) {
     if (program.android===true) {
         if (base.android) {
@@ -218,7 +227,7 @@ cct --android [deviceName:platformVersion]
     options.capabilities = [{
         name: base.name,
         browserName: browser,  // browser name is empty for native apps
-        appiumVersion: '1.7.2', // Appium module version
+        appiumVersion: '1.8.1', // Appium module version
         // https://github.com/appium/appium/issues/8651
         platformName: 'Android',
         platformVersion: android[1] || '7.0',  // Android version
@@ -272,6 +281,9 @@ program.uaGalaxy ? '--uaGalaxy' : '',
 program.android  ? '--android' : '',
 );
 
+/*
+ * setting browser capabilities
+ */
 if (program.config) {
     options.capabilities.forEach((obj, idx) => {
         const name = obj.browserName, _ext = obj._ext;
@@ -284,9 +296,19 @@ if (program.config) {
             options.capabilities[idx] = Object.assign({}, options.capabilities[idx], baseCfg);
             console.log(options.capabilities[idx]);
         }
+        const capability = options.capabilities[idx];
+        if (provider==='browserstack' && capability.build) {
+            capability['real_mobile'] = true;
+            capability['browserstack.debug'] = true;
+            capability['browserstack.user'] = options.user;
+            capability['browserstack.key'] = options.key;
+        }
     });
 }
 
+/*
+ * params: --vars , prepare config for vars
+ */
 if (program.vars) {
     const paramVars = JSON.parse(program.vars);
     options.vars = _merge(options.vars, paramVars);

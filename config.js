@@ -32,15 +32,6 @@ module.exports = (ob) => {
             ie: {
                 browserName: 'internet explorer',
                 version: '11'
-            },
-            android: {
-                port: 4723,
-                browserName: 'android',
-                appiumVersion: '1.8.1',
-                platformName: 'android',
-                platformVersion: '8.0.0',
-                deviceName: '010806850904',
-                orientation: 'POTRAIT'
             }
         },
         browserstack: {  // Platform can be one of
@@ -64,6 +55,24 @@ module.exports = (ob) => {
                 ie: {
                     platform: 'WIN8',
                     version: '11'
+                },
+                iphone8: {
+                    device: 'iPhone 8',
+                    build: 'Node IOS',
+                    name: 'single_test',
+                    os_version: '11.0',
+                },
+                samsung8: {
+                    device: 'Samsung Galaxy S8',
+                    build: 'Node Android',
+                    name: 'single_test',
+                    os_version: '7.0',
+                },
+                samsung9: {
+                    device: 'Samsung Galaxy S9',
+                    build: 'Node Android',
+                    name: 'single_test',
+                    os_version: '8.0',
                 }
             },
             browser: 'edge',
@@ -129,7 +138,7 @@ module.exports = (ob) => {
         base: {
             name: 'CCT',
             cloud: 'saucelabs',
-            android: 'f344ee26:7.0',
+            android: 'f344ee26:8.0',
             browser: 'chrome',
             inputPause: 500,
             timeout: 20000,
@@ -167,6 +176,7 @@ module.exports = (ob) => {
                 btnM: 'button._S6q',
                 search: 'cucumber io',
                 url: 'https://google.com',
+                btnI: `button[aria-label='Google Search']`,
                 cucumberIo: "a[href='https://cucumber.io/']",
                 email: ob.chance.email()
             }
