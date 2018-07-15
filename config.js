@@ -80,8 +80,21 @@ module.exports = (ob) => {
             browser: 'chrome',
             timeout: 50000,
             retry: 7,
-            // SAUCE_USERNAME: 'your-username',
-            // SAUCE_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            // SAUCELABS_USERNAME: 'your-username',
+            // SAUCELABS_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        },
+        testingbot: {
+            browsers: {
+                chrome: {
+                    platform: 'ANY',
+                    version: '67'
+                },
+            },
+            browser: 'chrome',
+            timeout: 50000,
+            retry: 7,
+            // TESTINGBOT_USERNAME: 'your-username',
+            // TESTINGBOT_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         },
         browserstack: {  // Platform can be one of
             browsers: {  // MAC, WIN8, XP, WINDOWS, and ANY

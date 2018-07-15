@@ -170,8 +170,8 @@ cct -f google -d -b chrome,safari,firefox
 ## Integration with SauceLabs
 Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
 ```bash
-export SAUCE_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export SAUCE_USERNAME=cucumber-test
+export SAUCELABS_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export SAUCELABS_USERNAME=cucumber-test
 cct -f google -d -c saucelabs:connect
 cct -f google -d -c saucelabs
 ```
