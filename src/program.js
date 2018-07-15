@@ -2,7 +2,7 @@ const fs = require('fs');
 const program = require('commander');
 
 module.exports = _ => {
-    program.version('1.2.52');
+    program.version('1.2.53');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');

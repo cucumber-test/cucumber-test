@@ -95,11 +95,27 @@ if (program.cloud) {
         if (clouds[1] === 'connect') {
             options.sauceConnect = true;
         }
+        if (config.saucelabs.SAUCELABS_TESTOBJECT) {
+            options.testobject_api_key = config.saucelabs.SAUCELABS_TESTOBJECT;
+        } else if (process.env.SAUCELABS_TESTOBJECT) {
+            options.testobject_api_key = process.env.SAUCELABS_TESTOBJECT;
+        }
+        if (options.testobject_api_key) {
+            options.protocol = 'https';
+            options.host = 'us1.appium.testobject.com'
+            options.path = '/wd/hub';
+            options.port = '443';
+        }
     } else if (provider === 'browserstack') {
         options.services.push('browserstack');
         options.browserstackLocal = true;
     } else if (provider === 'crossbrowsertesting') {
+        options.host = 'hub.crossbrowsertesting.com';
+        options.port = 80;
         options.crossbrowsertestingLocal = true;
+    } else if (provider === 'testingbot') {
+        options.host = 'hub.testingbot.com';
+        options.port = 80;
     }
     if (options.user && options.key) {
         if (config[provider]) {
@@ -248,11 +264,6 @@ cct --android [deviceName:platformVersion]
                 args.push('use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36')
             }
         }
-        if (browserName === 'safari') {
-            bconfig['safari.options'] = {
-                technologyPreview: true,
-            }
-        }
         if (provider === 'saucelabs' && remoteConfig.parentTunnel) {
             bconfig.parentTunnel = remoteConfig.parentTunnel;
         }
@@ -287,12 +298,8 @@ if (program.config) {
             capability['browserstack.debug'] = true;
             capability['browserstack.user'] = options.user;
             capability['browserstack.key'] = options.key;
-        } else if (provider === 'testingbot') {
-            options.host = 'hub.testingbot.com';
-            options.port = 80;
-        } else if (provider === 'crossbrowsertesting') {
-            options.host = 'hub.crossbrowsertesting.com';
-            options.port = 80;
+        } else if (provider === 'saucelabs' && options.testobject_api_key) {
+            capability.testobject_api_key = options.testobject_api_key;
         }
     });
 }

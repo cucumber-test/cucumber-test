@@ -18,7 +18,8 @@ module.exports = (ob) => {
                 }
             },
             safari: {
-                platform: 'MAC'
+                platform: 'MAC',
+                // 'safari.options': { technologyPreview: true }
             },
             'safari:dx': {
                 proxy: {
@@ -27,7 +28,7 @@ module.exports = (ob) => {
             },
             edge: {
                 browserName: 'microsoftedge',
-                unhandledPromptBehavior: 'accept'
+                // unhandledPromptBehavior: 'accept'
             },
             ie: {
                 browserName: 'internet explorer',
@@ -37,29 +38,22 @@ module.exports = (ob) => {
         saucelabs: {
             browsers: {
                 chrome: {
-                    platform: 'WIN7',
-                    version: '65'
+                    platform: 'WIN10'
                 },
                 firefox: {
-                    platform: 'WIN7',
-                    version: '59'
-                },
-                "firefox:m52": {
-                    platform: 'MAC',
-                    version: '52'
+                    platform: 'WIN10'
                 },
                 safari: {
-                    platform: 'macOS 10.12',
-                    version: '10.1'
+                    platform: 'OS X 10.11',
+                    version: '10.0'
                 },
                 edge: {
-                    platform: 'Windows 10',
-                    version: '16'
+                    platform: 'WIN10'
                 },
                 ie: {
-                    platform: 'WIN7'
+                    platform: 'WIN10'
                 },
-                ios: {
+                iphone8: { // simulator
                     appiumVersion: '1.8.1',
                     deviceName:"iPhone 8 Plus Simulator",
                     deviceOrientation: 'portrait',
@@ -67,21 +61,27 @@ module.exports = (ob) => {
                     platformVersion: '11.2',
                     browserName: 'Safari',
                 },
-                android: {
+                android: { // simulator
                     appiumVersion: '1.8.1',
                     deviceName:"Android Emulator",
                     platformName: 'Android',
                     platformVersion: '6.0',
                     browserName: 'Chrome',
                 },
+                // nexus5: { // no real device account
+                //     platformVersion: '7',
+                //     platformName: 'Android',
+                //     deviceName: 'LG Nexus 5X',
+                //     browserName: 'Chrome',
+                // },
             },
-            // browser: 'chrome,firefox,safari,edge,ie',
             // parentTunnel: 'username',
             browser: 'chrome',
             timeout: 50000,
             retry: 7,
             // SAUCELABS_USERNAME: 'your-username',
             // SAUCELABS_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            // SAUCELABS_TESTOBJECT: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
         },
         browserstack: {
             browsers: {  // platform: MAC, WIN8, XP, WINDOWS, and ANY
@@ -192,11 +192,11 @@ module.exports = (ob) => {
                     platform: 'ANY',
                     version: '61'
                 },
-                safari: { // not working
+                safari: {
                     build: 'Node Desktop',
                     browserName: 'Safari',
                     version: '10',
-                    platform: 'Mac OSX 10.12'
+                    platform: 'Mac OSX 10.12',
                 },
                 edge: {
                     build: 'Node Desktop',
