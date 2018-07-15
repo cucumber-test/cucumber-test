@@ -185,7 +185,13 @@ export BROWSERSTACK_USERNAME=your-username
 cct -f google -d -c browserstack
 ```
 
-https://testingbot.com/support/getting-started/browsers.html
+## Integration with TestingBot
+Add these env variables from your [TestingBot](docs/testingbot.png) user & key:
+```bash
+export TESTINGBOT_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+export TESTINGBOT_USERNAME=your-username
+cct -f google -d -c testingbot
+```
 
 ## Integration with CrossBrowserTesting
 Add these env variables from your [CrossBrowserTesting](docs/CrossBrowserTesting.gif) user & key:
@@ -214,10 +220,10 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 #### Selenium-standalone known problem
 `ERROR: Unable to create new service ... driver.version: unknown` need to down-grade selenium-standalone to `~6.15.0`
 
-#### Safari (technology preview) known problem
-[Safari Technology Preview](https://developer.apple.com/safari/technology-preview/) is the best way to get the latest update of the webdriver included in Safari.
+#### Safari known problem
+[Safari Technology Preview](https://developer.apple.com/safari/technology-preview/) to get the latest update of the webdriver included in Safari.
 
-`You must enable the "Allow Remote Automation"`, you need to launch Safari and go to the menu "Develop > Allow Remote Automation" & make sure that it is checked.
+`Enable "Allow Remote Automation"`, go to menu "Develop > Allow Remote Automation" & make sure it is checked.
 
 `Hang or Error(from selenium-standalone): safaridriver could not launch because it is not configured correctly`, need to open a terminal console and manually configure as a super user: "sudo safaridriver --enable".
 
