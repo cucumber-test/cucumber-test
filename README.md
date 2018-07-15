@@ -246,7 +246,9 @@ ln -s /Users/wharsojo/Dev/cucumber-test cucumber-test
 
 MIT
 
-## Big Thanks
+&nbsp;
+
+### Big Thanks
 
 ![alt SauceLabs](docs/saucelabs-logo.png) &nbsp;
 <img src="docs/browserstack-logo.png" alt="alt BrowserStack" width="240">

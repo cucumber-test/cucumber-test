@@ -213,16 +213,14 @@ module.exports = (ob) => {
                     browserName: 'Safari',
                     deviceName: 'iPhone 8 Simulator',
                     platformVersion: '11.0',
-                    platformName: 'iOS',
-                    name: 'single_test',
+                    platformName: 'iOS'
                 },
                 nexus9: {
                     build: 'Node Android',
                     browserName: 'Chrome',
                     deviceName: 'Nexus 9',
                     platformVersion: '6.0',
-                    platformName: 'Android',
-                    name: 'single_test',
+                    platformName: 'Android'
                 },
             },
             browser: 'chrome',
