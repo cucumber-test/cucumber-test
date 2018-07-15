@@ -9,30 +9,31 @@ of your product development. `cucumber-test` is a fork of
 `cucumber-boilerplate`.
 
 ## Quick start
+Sample code are inside example folder `example/quickstart`
 
-1. npm install -g cucumber-test selenium-standalone@6.15.0
-2. selenium-standalone install
-3. selenium-standalone start
-4. create folder `features/google`
-5. add file `features/google/google.feature`
-6. run `cct -f google -d` (or `cct -f google -d -b chrome,firefox,safari -i 2`)
-
-if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
+1. npm install -g cucumber-test
+2. create folder `features/google`
+3. add file `features/google/google.feature`
+4. run `cct -f google` (or `cct -f google -b chrome,firefox -i 2`)
 
 ```cucumber
+# features/google/google.feature
+
 Feature:
     Search on Google
 
 Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
-    Then I expect that the title is "Google"
+     Then I expect that the title is "Google"
 
 Scenario: Search cucumber-test
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "input.lsb" becomes visible
-    And I click on the button "input.lsb"
+     And I expect that element "input.lsb" becomes visible
+     And I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
+
+if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
 
 ## Extended tags
 Extended tags will simplify how to write cucumber with different browser & environment, those information are available on the browser object, utilize during execution of the cucumber file:
@@ -171,7 +172,7 @@ cct -f google -d -b chrome,safari,firefox
 Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
 ```bash
 export SAUCELABS_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-export SAUCELABS_USERNAME=cucumber-test
+export SAUCELABS_USERNAME=your-username
 cct -f google -d -c saucelabs:connect
 cct -f google -d -c saucelabs
 ```
@@ -180,8 +181,18 @@ cct -f google -d -c saucelabs
 Add these env variables from your [BrowserStack](docs/BrowserStack.gif) user & key:
 ```bash
 export BROWSERSTACK_ACCESS_KEY=xxXXXxXxXxXxxXxXXXxx
-export BROWSERSTACK_USERNAME=cucumber-test
+export BROWSERSTACK_USERNAME=your-username
 cct -f google -d -c browserstack
+```
+
+https://testingbot.com/support/getting-started/browsers.html
+
+## Integration with CrossBrowserTesting
+Add these env variables from your [CrossBrowserTesting](docs/CrossBrowserTesting.gif) user & key:
+```bash
+export CROSSBROWSERTESTING_ACCESS_KEY=xxxxxxxxxxxxxxxx
+export CROSSBROWSERTESTING_USERNAME=your-username
+cct -f google -d -c crossbrowsertesting
 ```
 
 ## Behind proxy or vpn:
@@ -214,6 +225,9 @@ export NODE_TLS_REJECT_UNAUTHORIZED=0
 [`cannot access dead object`](https://github.com/mozilla/geckodriver/issues/614), the open ticket was filled on April 8, 2017. should be careful if plan to create scenario involved with iframe.
 
 [`element#id is not supported in geckodriver`](https://github.com/webdriverio/webdriverio/issues/2392), the open ticket was filled on Nov 2, 2017. see locator strategy in [`w3c.org`](https://www.w3.org/TR/webdriver/#locator-strategies).
+
+#### Edge known problem
+`Element is obscured`, fund in TestingBot cloud service, need to down-grade Edge from `17 to 16`
 
 ## Dev Mode
 

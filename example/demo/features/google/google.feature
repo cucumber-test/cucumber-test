@@ -31,7 +31,7 @@ Scenario: Search cucumber-test
 Scenario: Search cucumber-test
     When I set "${g.search} firefox" to the inputfield "${g.q}"
     And I press "Return" to the inputfield "${g.q}"
-    Then I expect that element "a[href='https://cucumber.io/']" becomes visible
+    Then I expect that element "a[href='https://docs.cucumber.io/']" becomes visible
 
 @__mobile
 Scenario: Search cucumber-test

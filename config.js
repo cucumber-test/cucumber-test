@@ -26,7 +26,7 @@ module.exports = (ob) => {
                 }
             },
             edge: {
-                browserName: 'microsoftEdge',
+                browserName: 'microsoftedge',
                 unhandledPromptBehavior: 'accept'
             },
             ie: {
@@ -83,57 +83,51 @@ module.exports = (ob) => {
             // SAUCELABS_USERNAME: 'your-username',
             // SAUCELABS_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         },
-        testingbot: {
-            browsers: {
-                chrome: {
+        browserstack: {
+            browsers: {  // platform: MAC, WIN8, XP, WINDOWS, and ANY
+                chrome: { // ANY/WINDOWS => win7
                     platform: 'ANY',
                     version: '67'
-                },
-            },
-            browser: 'chrome',
-            timeout: 50000,
-            retry: 7,
-            // TESTINGBOT_USERNAME: 'your-username',
-            // TESTINGBOT_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
-        },
-        browserstack: {  // Platform can be one of
-            browsers: {  // MAC, WIN8, XP, WINDOWS, and ANY
-                chrome: {
-                    platform: 'ANY',
-                    version: '67'
-                },
-                firefox: {
-                    platform: 'ANY',
-                    version: '61'
                 },
                 safari: {
                     platform: 'MAC',
                     version: '11'
                 },
-                edge: {
-                    platform: 'WINDOWS',
+                firefox: { // ANY/WINDOWS => win7
+                    platform: 'WIN8',
+                    version: '61'
+                },
+                edge: { // ANY/WINDOWS => win10
+                    platform: 'ANY',
                     version: '17'
                 },
-                ie: {
-                    platform: 'WIN8',
+                ie: { // ANY/WINDOWS => win10
+                    platform: 'ANY',
                     version: '11'
+                },
+                iphone7: {
+                    device: 'iPhone 7',
+                    build: 'Node IOS',
+                    os_version: '10.3',
                 },
                 iphone8: {
                     device: 'iPhone 8',
                     build: 'Node IOS',
-                    name: 'single_test',
+                    os_version: '11.0',
+                },
+                iphonex: {
+                    device: 'iPhone X',
+                    build: 'Node IOS',
                     os_version: '11.0',
                 },
                 samsung8: {
                     device: 'Samsung Galaxy S8',
                     build: 'Node Android',
-                    name: 'single_test',
                     os_version: '7.0',
                 },
                 samsung9: {
                     device: 'Samsung Galaxy S9',
                     build: 'Node Android',
-                    name: 'single_test',
                     os_version: '8.0',
                 }
             },
@@ -141,7 +135,50 @@ module.exports = (ob) => {
             timeout: 50000,
             retry: 7
             // BROWSERSTACK_USERNAME: 'your-username',
-            // SAUCE_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            // BROWSERSTACK_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+        },
+        testingbot: {
+            browsers: {
+                chrome: {
+                    platform: 'ANY',
+                    version: '67'
+                },
+                safari: {
+                    platform: 'MAC',
+                    version: '11'
+                },
+                firefox: {
+                    platform: 'WIN10',
+                    version: '61'
+                },
+                edge: {
+                    platform: 'WIN10',
+                    version: '16'
+                },
+                ie: {
+                    platform: 'WIN10',
+                    version: '11'
+                },
+                iphone8: { // simulator is not working
+                    platform: 'HIGH-SIERRA',
+                    deviceName: 'iPhone 8',
+                    browserName: 'Safari',
+                    platformName: 'iOS',
+                    version: '11.4',
+                },
+                pixelc: { // simulator is not working
+                    platform: 'ANDROID',
+                    deviceName: 'Pixel C',
+                    browserName: 'Chrome',
+                    platformName: 'Android',
+                    version: '8.0',
+                },
+            },
+            browser: 'chrome',
+            timeout: 50000,
+            retry: 7,
+            // TESTINGBOT_USERNAME: 'your-username',
+            // TESTINGBOT_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
         },
         crossbrowsertesting: {
             browsers: {
@@ -163,7 +200,7 @@ module.exports = (ob) => {
                 },
                 edge: {
                     build: 'Node Desktop',
-                    platform: 'WINDOWS',
+                    platform: 'WIN10',
                     version: '17'
                 },
                 ie: {

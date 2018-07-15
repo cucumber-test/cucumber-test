@@ -10,22 +10,13 @@ const program = require('./program')();
 const compiler = require('./compiler');
 const chance = new Chance();
 
-let cpath;
-let config = {};
-let options = {services: []}; // services: ['firefox-profile'],
-
-/*
- * params: --config
- * load config.js into config var
- */
-if (program.config) {
-    cpath = process.cwd()+'/'+program.config;
-    config = require(cpath)({webdriverio, faker, chance, request});
-}
+const cpath = program.config;
+const config = require(cpath)({webdriverio, faker, chance, request});
 
 /*
  * params: -t , default tags
  */
+let options = {services: []}; // services: ['firefox-profile'],
 let _originalTags = 'not @Pending';
 if (program.tags) {
     _originalTags = `${program.tags} and (not @Pending)`;
@@ -52,7 +43,7 @@ if (program.specs) {
 }
 console.log('Specs:', specs);
 
-let base = config.base || {};
+const base = config.base || {};
 let browsers = config.browsers || {};
 let remoteConfig = {};
 
@@ -75,7 +66,7 @@ console.log('Loading...');
  */
 if (program.cloud) {
     let cloud = base.cloud;
-    if (program.cloud===true) {
+    if (program.cloud === true) {
         if (typeof(base.cloud)!=='string') {
             console.log(`option --cloud need to have params or config.js {base: {cloud:'cloudprovider'}} set`);
             process.exit(1);
@@ -99,15 +90,15 @@ if (program.cloud) {
     } else {
         options.key = process.env[auth_key];
     }
-    if (provider==='saucelabs') {
+    if (provider === 'saucelabs') {
         options.services.push('sauce');
-        if (clouds[1]==='connect') {
+        if (clouds[1] === 'connect') {
             options.sauceConnect = true;
         }
-    } else if (provider==='browserstack') {
+    } else if (provider === 'browserstack') {
         options.services.push('browserstack');
         options.browserstackLocal = true;
-    } else if (provider==='crossbrowsertesting') {
+    } else if (provider === 'crossbrowsertesting') {
         options.crossbrowsertestingLocal = true;
     }
     if (options.user && options.key) {
@@ -120,7 +111,7 @@ if (program.cloud) {
     }
 }
 
-if (typeof(program.remote)==='string') {
+if (typeof(program.remote) === 'string') {
     remoteConfig.remote = program.remote;
 }
 
@@ -166,7 +157,7 @@ if (program.retry) {
 /*
  * params: -n , prepare config for name
  */
-if (program.name) {
+if (typeof(program.name) === 'string') {
     base.name = program.name;
 }
 
@@ -202,7 +193,7 @@ console.log('Timeout/Retry/I:', `${timeout}/${retry}/${base.instances}`);
  * params: --android , prepare config for android
  */
 if (program.android) {
-    if (program.android===true) {
+    if (program.android === true) {
         if (base.android) {
             program.android = base.android;
         } else {
@@ -231,7 +222,7 @@ cct --android [deviceName:platformVersion]
         commandTimeout: 7200,
     }];
 } else {
-    if (browser.match(/\:[a-zA-Z]+\d+/) && program.config===undefined) {
+    if (browser.match(/\:[a-zA-Z]+\d+/) && program.config === undefined) {
         console.log(`Browser: ${browser} need to have option --config`);
         process.exit(1);
     }
@@ -257,12 +248,12 @@ cct --android [deviceName:platformVersion]
                 args.push('use-mobile-user-agent', 'Mozilla/5.0 (Linux; Android 7.0;SAMSUNG SM-G955F Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.2 Chrome/51.0.2704.106 Mobile Safari/537.36')
             }
         }
-        if (browserName==='safari') {
+        if (browserName === 'safari') {
             bconfig['safari.options'] = {
                 technologyPreview: true,
             }
         }
-        if (provider==='saucelabs' && remoteConfig.parentTunnel) {
+        if (provider === 'saucelabs' && remoteConfig.parentTunnel) {
             bconfig.parentTunnel = remoteConfig.parentTunnel;
         }
         return bconfig;
@@ -291,12 +282,15 @@ if (program.config) {
             console.log(options.capabilities[idx]);
         }
         const capability = options.capabilities[idx];
-        if (provider==='browserstack' && capability.build) {
+        if (provider === 'browserstack' && capability.build) {
             capability['real_mobile'] = true;
             capability['browserstack.debug'] = true;
             capability['browserstack.user'] = options.user;
             capability['browserstack.key'] = options.key;
-        } else if (provider==='crossbrowsertesting') {
+        } else if (provider === 'testingbot') {
+            options.host = 'hub.testingbot.com';
+            options.port = 80;
+        } else if (provider === 'crossbrowsertesting') {
             options.host = 'hub.crossbrowsertesting.com';
             options.port = 80;
         }
