@@ -2,12 +2,12 @@ const fs = require('fs');
 const program = require('commander');
 
 module.exports = _ => {
-    program.version('1.2.50');
+    program.version('1.2.51');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');
     program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
-    program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, perfecto]');
+    program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, crossbrowsertesting]');
     program.option('-i, --instances [instances]', 'max instances');
     program.option('-b, --browser [browser]', 'target browser');
     program.option('-n, --name [name]', 'capability name');

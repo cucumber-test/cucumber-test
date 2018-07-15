@@ -87,34 +87,28 @@ if (program.cloud) {
     provider = clouds[0];
 
     console.log(`Run from ${cloud}`);
+    const auth_name = `${provider.toUpperCase()}_USERNAME`;
+    const auth_key = `${provider.toUpperCase()}_ACCESS_KEY`;
+    if (config[provider] && config[provider][auth_name]) {
+        options.user = config[provider][auth_name];
+    } else {
+        options.user = process.env[auth_name];
+    }
+    if (config[provider] && config[provider][auth_key]) {
+        options.key = config[provider][auth_key];
+    } else {
+        options.key = process.env[auth_key];
+    }
     if (provider==='saucelabs') {
         options.services.push('sauce');
         if (clouds[1]==='connect') {
             options.sauceConnect = true;
         }
-        if (config.saucelabs && config.saucelabs.SAUCE_USERNAME) {
-            options.user = config.saucelabs.SAUCE_USERNAME;
-        } else {
-            options.user = process.env.SAUCE_USERNAME;
-        }
-        if (config.saucelabs && config.saucelabs.SAUCE_ACCESS_KEY) {
-            options.key = config.saucelabs.SAUCE_ACCESS_KEY;
-        } else {
-            options.key = process.env.SAUCE_ACCESS_KEY;
-        }
     } else if (provider==='browserstack') {
         options.services.push('browserstack');
-        if (config.saucelabs && config.saucelabs.BROWSERSTACK_USERNAME) {
-            options.user = config.saucelabs.BROWSERSTACK_USERNAME;
-        } else {
-            options.user = process.env.BROWSERSTACK_USERNAME;
-        }
-        if (config.saucelabs && config.saucelabs.SAUCE_ACCESS_KEY) {
-            options.key = config.saucelabs.BROWSERSTACK_ACCESS_KEY;
-        } else {
-            options.key = process.env.BROWSERSTACK_ACCESS_KEY;
-        }
         options.browserstackLocal = true;
+    } else if (provider==='crossbrowsertesting') {
+        options.crossbrowsertestingLocal = true;
     }
     if (options.user && options.key) {
         if (config[provider]) {
@@ -302,6 +296,9 @@ if (program.config) {
             capability['browserstack.debug'] = true;
             capability['browserstack.user'] = options.user;
             capability['browserstack.key'] = options.key;
+        } else if (provider==='crossbrowsertesting') {
+            options.host = 'hub.crossbrowsertesting.com';
+            options.port = 80;
         }
     });
 }
