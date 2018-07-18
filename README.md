@@ -85,20 +85,20 @@ Feature: Search on Google
 
 Scenario: Navigate to Google
     Given I open the url "https://www.google.com"
-    Then I expect that the title is "Google"
+     Then I expect that the title is "Google"
 
 @__non_safari @__non_mobile
 Scenario: Search cucumber-test on desktop browser
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "input.lsb" becomes visible
-    And I click on the button "input.lsb"
+     And I expect that element "input.lsb" becomes visible
+     And I click on the button "input.lsb"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
 @__mobile
 Scenario: Search cucumber-test on mobile browser
     When I set "cucumber-test" to the inputfield "[name=q]"
-    And I expect that element "[name=btnG]" becomes visible
-    And I click on the button "[name=btnG]"
+     And I expect that element "[name=btnG]" becomes visible
+     And I click on the button "[name=btnG]"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 ```bash
@@ -127,22 +127,22 @@ Scenario: Navigate to Google
 @__non_mobile @__chrome @__non_url:localhost
 Scenario: Search cucumber-test
     When I type "cucumber-test" to the inputfield "${g.q}"
-    And I expect that element "${g.btnG}" becomes visible
-    And I click on the button "${g.btnG}"
+     And I expect that element "${g.btnG}" becomes visible
+     And I click on the button "${g.btnG}"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
 @__non_mobile @__non_chrome
 Scenario: Search cucumber-test
     When I type "cucumber-test *" to the inputfield "${g.q}"
-    And I expect that element "${g.btnG}" becomes visible
-    And I click on the button "${g.btnG}"
+     And I expect that element "${g.btnG}" becomes visible
+     And I click on the button "${g.btnG}"
     Then I expect that element "a[href='https://en.wikipedia.org/wiki/Cucumber_(software)']" becomes visible
 
 @__mobile
 Scenario: Search cucumber-test
     When I type "cucumber-test mobile" to the inputfield "${g.q}"
-    And I expect that element "${g.btnM}" becomes visible
-    And I click on the button "${g.btnM}"
+     And I expect that element "${g.btnM}" becomes visible
+     And I click on the button "${g.btnM}"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 
@@ -169,7 +169,7 @@ cct -f google -d -b chrome,safari,firefox
 ```
 
 ## Integration with SauceLabs
-Add these env variables from your [Saucelabs](docs/saucelabs.png) user & key:
+Add these env variables from your [Saucelabs](https://saucelabs.com/) user & key:
 ```bash
 export SAUCELABS_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export SAUCELABS_USERNAME=your-username
@@ -178,7 +178,7 @@ cct -f google -d -c saucelabs
 ```
 
 ## Integration with BrowserStack
-Add these env variables from your [BrowserStack](docs/BrowserStack.gif) user & key:
+Add these env variables from your [BrowserStack](https://www.browserstack.com/) user & key:
 ```bash
 export BROWSERSTACK_ACCESS_KEY=xxXXXxXxXxXxxXxXXXxx
 export BROWSERSTACK_USERNAME=your-username
@@ -186,7 +186,7 @@ cct -f google -d -c browserstack
 ```
 
 ## Integration with TestingBot
-Add these env variables from your [TestingBot](docs/testingbot.png) user & key:
+Add these env variables from your [TestingBot](https://testingbot.com/) user & key:
 ```bash
 export TESTINGBOT_ACCESS_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 export TESTINGBOT_USERNAME=your-username
@@ -194,7 +194,7 @@ cct -f google -d -c testingbot
 ```
 
 ## Integration with CrossBrowserTesting
-Add these env variables from your [CrossBrowserTesting](docs/CrossBrowserTesting.gif) user & key:
+Add these env variables from your [CrossBrowserTesting](https://crossbrowsertesting.com/) user & key:
 ```bash
 export CROSSBROWSERTESTING_ACCESS_KEY=xxxxxxxxxxxxxxxx
 export CROSSBROWSERTESTING_USERNAME=your-username
