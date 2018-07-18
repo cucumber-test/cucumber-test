@@ -10,10 +10,11 @@ of your product development. `cucumber-test` is a fork of
 
 ## Quick start
 Sample code are inside example folder `example/quickstart`
-
+```
 1. npm install -g cucumber-test
-2. ccct -g -c
-
+2. ccct -g -c        // ccct for creating automation test in current folders
+3. cct -f google -d  // cct for running the script 
+```
 Example below is a runnable `Cucumber-test script` under folder `features`. other features that worth to checkout is a `fits folder`, please read section `Fits (Feature in tight scenario).`
 ```cucumber
 # features/google/google.feature
