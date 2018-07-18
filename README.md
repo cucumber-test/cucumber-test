@@ -12,10 +12,9 @@ of your product development. `cucumber-test` is a fork of
 Sample code are inside example folder `example/quickstart`
 
 1. npm install -g cucumber-test
-2. create folder `features/google`
-3. add file `features/google/google.feature`
-4. run `cct -f google` (or `cct -f google -b chrome,firefox -i 2`)
+2. ccct -g -c
 
+Example below is a runnable `Cucumber-test script` under folder `features`. other features that worth to checkout is a `fits folder`, please read section `Fits (Feature in tight scenario).`
 ```cucumber
 # features/google/google.feature
 
@@ -33,7 +32,7 @@ Scenario: Search cucumber-test
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 ```
 
-if step 2,3 show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
+when `run` show some warnings, might be behind proxy / VPN, please check section `Behind proxy or vpn` below.
 
 ## Extended tags
 Extended tags will simplify how to write cucumber with different browser & environment, those information are available on the browser object, utilize during execution of the cucumber file:

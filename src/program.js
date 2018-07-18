@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const program = require('commander');
 
 module.exports = _ => {
-    program.version('1.2.54');
+    program.version('1.2.55');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');
