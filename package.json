@@ -11,7 +11,8 @@
         "selenium": "selenium-standalone start"
     },
     "bin": {
-        "cct": "bin/cct.js"
+        "cct": "bin/cct.js",
+        "ccct": "bin/ccct.js"
     },
     "repository": {
         "type": "git",
