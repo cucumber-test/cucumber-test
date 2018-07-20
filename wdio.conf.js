@@ -1,8 +1,8 @@
-const beforeExecute = require('./lib/beforeExecute');
-const beforeFeature = require('./lib/beforeFeature');
-const beforeScenario = require('./lib/beforeScenario');
-const beforeStep =      require('./lib/beforeStep');
-const reporter = require('./lib/reporter');
+const beforeExecute = require('./lib/event/beforeExecute');
+const beforeFeature = require('./lib/event/beforeFeature');
+const beforeScenario = require('./lib/event/beforeScenario');
+const beforeStep = require('./lib/event/beforeStep');
+const reporter = require('./lib/report/reporter');
 const seleniumArgs = {
     baseURL: 'https://selenium-release.storage.googleapis.com',
     version: '3.12.0',
@@ -266,7 +266,11 @@ exports.config = {
             if (commandName === 'frame') {
                 arg = Object.keys(arg);
             }
-            console.log('action:', commandName, arg);
+            if (commandName.match('wait')) {
+                console.log('expect:', commandName, arg);
+            } else {
+                console.log('action:', commandName, arg);
+            }
         }
     },
     //
