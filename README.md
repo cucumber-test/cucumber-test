@@ -13,7 +13,7 @@ Sample code are inside example folder `example/quickstart`
 ```
 1. npm install -g cucumber-test
 2. ccct -g -c        // ccct for creating automation test in current folder
-3. cct -f google -d  // cct for running automation script(s) 
+3. cct -f google -d  // cct for running automation script(s)
 ```
 Example below is a runnable `Cucumber-test script` under folder `features`. other features that worth to checkout is a `fits folder`, please read section `Fits (Feature in tight scenario).`
 ```cucumber
@@ -251,6 +251,11 @@ MIT
 ### Big Thanks
 
 ![alt SauceLabs](docs/saucelabs-logo.png) &nbsp;
-<img src="docs/browserstack-logo.png" alt="alt BrowserStack" width="240">
+<img src="docs/browserstack-logo.png" alt="alt BrowserStack" width="240"> &nbsp;
+<img src="docs/testingbot-logo.svg" alt="alt TestingBot" height="55">
 
-Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs]( https://saucelabs.com) + [BrowserStack](https://www.browserstack.com)
+Cross-browser Testing Platform and Open Source <3 Provided by:
+
+[Sauce Labs]( https://saucelabs.com) +
+[BrowserStack](https://www.browserstack.com) +
+[TestingBot](https://testingbot.com/)
