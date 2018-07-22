@@ -1,58 +1,25 @@
 module.exports = (ob) => {
     return {
         browsers: {
-            chrome: {
-                version: '67'
-            },
-            'chrome:dx': {
-                proxy: {
-                    proxyType: 'DIRECT'
-                }
-            },
-            firefox: {
-                version: '61'
-            },
-            'firefox:dx': {
-                proxy: {
-                    proxyType: 'DIRECT'
-                }
-            },
-            safari: {
-                platform: 'MAC',
-                // 'safari.options': { technologyPreview: true }
-            },
-            'safari:dx': {
-                proxy: {
-                    proxyType: 'DIRECT'
-                }
-            },
-            edge: {
-                browserName: 'microsoftedge',
-                // unhandledPromptBehavior: 'accept'
-            },
-            ie: {
-                browserName: 'internet explorer',
-                version: '11'
-            }
+            chrome:  { version: '67'   },
+            safari:  { platform: 'MAC' },
+            firefox: { version: '61'   },
+            edge:    { browserName: 'microsoftedge' },
+            ie:      { browserName: 'internet explorer' },
+            'chrome:dx':  { proxy: { proxyType: 'DIRECT' }},
+            'firefox:dx': { proxy: { proxyType: 'DIRECT' }},
+            'safari:dx':  { proxy: { proxyType: 'DIRECT' }},
+            'safari:tp':  { 'safari.options': { technologyPreview: true }},
+            'edge:ex':    { unhandledPromptBehavior: 'accept' },
+            'ie:11':      { version: '11' }
         },
         saucelabs: {
             browsers: {
-                chrome: {
-                    platform: 'WIN10'
-                },
-                firefox: {
-                    platform: 'WIN10'
-                },
-                safari: {
-                    platform: 'OS X 10.11',
-                    version: '10.0'
-                },
-                edge: {
-                    platform: 'WIN10'
-                },
-                ie: {
-                    platform: 'WIN10'
-                },
+                chrome:  { platform: 'WIN10' },
+                safari:  { platform: 'OS X 10.11', version: '10.0' },
+                firefox: { platform: 'WIN10' },
+                edge:    { platform: 'WIN10' },
+                ie:      { platform: 'WIN10' },
                 iphone8: { // simulator
                     appiumVersion: '1.8.1',
                     deviceName:"iPhone 8 Plus Simulator",
@@ -139,39 +106,24 @@ module.exports = (ob) => {
         },
         testingbot: {
             browsers: {
-                chrome: {
-                    platform: 'ANY',
-                    version: '67'
-                },
-                safari: {
-                    platform: 'MAC',
-                    version: '11'
-                },
-                firefox: {
-                    platform: 'WIN10',
-                    version: '61'
-                },
-                edge: {
-                    platform: 'WIN10',
-                    version: '16'
-                },
-                ie: {
-                    platform: 'WIN10',
-                    version: '11'
-                },
+                chrome:  { platform: 'ANY',   version: '67' },
+                safari:  { platform: 'MAC',   version: '11' },
+                firefox: { platform: 'WIN10', version: '61' },
+                edge:    { platform: 'WIN10', version: '16' },
+                ie:      { platform: 'WIN10', version: '11' },
                 iphone8: { // simulator is not working
-                    platform: 'HIGH-SIERRA',
-                    deviceName: 'iPhone 8',
                     browserName: 'Safari',
-                    platformName: 'iOS',
                     version: '11.4',
+                    platform: 'iOS',
+                    platformName: 'iOS',
+                    deviceName: 'iPhone 8',
                 },
                 pixelc: { // simulator is not working
-                    platform: 'ANDROID',
-                    deviceName: 'Pixel C',
                     browserName: 'Chrome',
+                    version: '7.1',
+                    platform: 'Android',
                     platformName: 'Android',
-                    version: '8.0',
+                    deviceName: 'Pixel C',
                 },
             },
             browser: 'chrome',

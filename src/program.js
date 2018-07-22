@@ -8,7 +8,7 @@ module.exports = _ => {
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');
     program.option('-r, --remote [host]', 'remote server [http://ex.com:4444]');
-    program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, crossbrowsertesting]');
+    program.option('-c, --cloud [provider]', 'cloud [saucelabs, browserstack, testingbot, crossbrowsertesting]');
     program.option('-i, --instances [instances]', 'max instances');
     program.option('-b, --browser [browser]', 'target browser');
     program.option('-n, --name [name]', 'capability name');
