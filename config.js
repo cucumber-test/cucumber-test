@@ -1,22 +1,22 @@
 module.exports = (ob) => {
     return {
         browsers: {
-            chrome:  { version: '67'   },
-            safari:  { platform: 'MAC' },
-            firefox: { version: '61'   },
-            edge:    { browserName: 'microsoftedge' },
-            ie:      { browserName: 'internet explorer' },
+            safari:  { build: 'Desktop' },
+            chrome:  { build: 'Desktop', version: '67' },
+            firefox: { build: 'Desktop', version: '61' },
+            edge:    { build: 'Desktop', browserName: 'microsoftedge' },
+            ie:      { build: 'Desktop', browserName: 'internet explorer' },
+            'safari:tp':  { 'safari.options': { technologyPreview: true }},
+            'safari:dx':  { proxy: { proxyType: 'DIRECT' }},
             'chrome:dx':  { proxy: { proxyType: 'DIRECT' }},
             'firefox:dx': { proxy: { proxyType: 'DIRECT' }},
-            'safari:dx':  { proxy: { proxyType: 'DIRECT' }},
-            'safari:tp':  { 'safari.options': { technologyPreview: true }},
             'edge:ex':    { unhandledPromptBehavior: 'accept' },
             'ie:11':      { version: '11' }
         },
         saucelabs: {
             browsers: {
+                safari:  { platform: 'OS X 10.11' },
                 chrome:  { platform: 'WIN10' },
-                safari:  { platform: 'OS X 10.11', version: '10.0' },
                 firefox: { platform: 'WIN10' },
                 edge:    { platform: 'WIN10' },
                 ie:      { platform: 'WIN10' },
@@ -50,51 +50,36 @@ module.exports = (ob) => {
             // SAUCELABS_ACCESS_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
             // SAUCELABS_TESTOBJECT: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
         },
-        browserstack: {
-            browsers: {  // platform: MAC, WIN8, XP, WINDOWS, and ANY
-                chrome: { // ANY/WINDOWS => win7
-                    platform: 'ANY',
-                    version: '67'
-                },
-                safari: {
-                    platform: 'MAC',
-                    version: '11'
-                },
-                firefox: { // ANY/WINDOWS => win7
-                    platform: 'WIN8',
-                    version: '61'
-                },
-                edge: { // ANY/WINDOWS => win10
-                    platform: 'ANY',
-                    version: '17'
-                },
-                ie: { // ANY/WINDOWS => win10
-                    platform: 'ANY',
-                    version: '11'
-                },
+        browserstack: { // platform: MAC, WIN8, XP, WINDOWS, and ANY
+            browsers: {
+                safari:  { platform: 'MAC',     version: '11' },
+                chrome:  { platform: 'WINDOWS', version: '67' },
+                firefox: { platform: 'WINDOWS', version: '61' },
+                edge:    { platform: 'WINDOWS', version: '17' },
+                ie:      { platform: 'WINDOWS', version: '11' },
                 iphone7: {
-                    device: 'iPhone 7',
                     build: 'Node IOS',
+                    device: 'iPhone 7',
                     os_version: '10.3',
                 },
                 iphone8: {
-                    device: 'iPhone 8',
                     build: 'Node IOS',
+                    device: 'iPhone 8',
                     os_version: '11.0',
                 },
                 iphonex: {
-                    device: 'iPhone X',
                     build: 'Node IOS',
+                    device: 'iPhone X',
                     os_version: '11.0',
                 },
                 samsung8: {
-                    device: 'Samsung Galaxy S8',
                     build: 'Node Android',
+                    device: 'Samsung Galaxy S8',
                     os_version: '7.0',
                 },
                 samsung9: {
-                    device: 'Samsung Galaxy S9',
                     build: 'Node Android',
+                    device: 'Samsung Galaxy S9',
                     os_version: '8.0',
                 }
             },
@@ -106,8 +91,8 @@ module.exports = (ob) => {
         },
         testingbot: {
             browsers: {
-                chrome:  { platform: 'WIN10', version: '67' },
                 safari:  { platform: 'MAC',   version: '11' },
+                chrome:  { platform: 'WIN10', version: '67' },
                 firefox: { platform: 'WIN10', version: '61' },
                 edge:    { platform: 'WIN10', version: '16' },
                 ie:      { platform: 'WIN10', version: '11' },
@@ -134,40 +119,19 @@ module.exports = (ob) => {
         },
         crossbrowsertesting: {
             browsers: {
-                chrome: {
-                    build: 'Node Desktop',
-                    platform: 'WIN7',
-                    version: '67'
-                },
-                firefox: {
-                    build: 'Node Desktop',
-                    platform: 'ANY',
-                    version: '61'
-                },
-                safari: {
-                    build: 'Node Desktop',
-                    browserName: 'Safari',
-                    version: '10',
-                    platform: 'Mac OSX 10.12',
-                },
-                edge: {
-                    build: 'Node Desktop',
-                    platform: 'WIN10',
-                    version: '17'
-                },
-                ie: {
-                    build: 'Node Desktop',
-                    platform: 'ANY',
-                    version: '11'
-                },
-                iphone8: {
+                safari:  { platform: 'Mac OSX 10.12', version: '10' },
+                chrome:  { platform: 'WIN7',  version: '67' },
+                firefox: { platform: 'WIN10', version: '61' },
+                edge:    { platform: 'WIN10', version: '17' },
+                ie:      { platform: 'WIN10', version: '11' },
+                iphone8: { // simulator is not working
                     build: 'Node IOS',
                     browserName: 'Safari',
                     deviceName: 'iPhone 8 Simulator',
                     platformVersion: '11.0',
                     platformName: 'iOS'
                 },
-                nexus9: {
+                nexus9: { // simulator is not working
                     build: 'Node Android',
                     browserName: 'Chrome',
                     deviceName: 'Nexus 9',
