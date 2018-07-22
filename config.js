@@ -106,7 +106,7 @@ module.exports = (ob) => {
         },
         testingbot: {
             browsers: {
-                chrome:  { platform: 'ANY',   version: '67' },
+                chrome:  { platform: 'WIN10', version: '67' },
                 safari:  { platform: 'MAC',   version: '11' },
                 firefox: { platform: 'WIN10', version: '61' },
                 edge:    { platform: 'WIN10', version: '16' },
