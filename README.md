@@ -251,11 +251,13 @@ MIT
 ### Big Thanks
 
 ![alt SauceLabs](docs/saucelabs-logo.png) &nbsp;
-<img src="docs/browserstack-logo.png" alt="alt BrowserStack" width="240"> &nbsp;
-<img src="docs/testingbot-logo.svg" alt="alt TestingBot" height="55">
+<img src="docs/browserstack-logo.png" alt="BrowserStack" width="240"> &nbsp;
+<img src="docs/testingbot-logo.svg" alt="TestingBot" height="55">
+<img src="docs/CBT_OS-logo_2Color-H.png" alt="CrossBrowserTesting" >
 
 Cross-browser Testing Platform and Open Source <3 Provided by:
 
 [Sauce Labs]( https://saucelabs.com) +
 [BrowserStack](https://www.browserstack.com) +
-[TestingBot](https://testingbot.com/)
+[TestingBot](https://testingbot.com) +
+[CrossBrowserTesting](https://app.crossbrowsertesting.com)
