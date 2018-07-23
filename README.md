@@ -252,8 +252,8 @@ MIT
 
 ![alt SauceLabs](docs/saucelabs-logo.png) &nbsp;
 <img src="docs/browserstack-logo.png" alt="BrowserStack" width="240"> &nbsp;
-<img src="docs/testingbot-logo.svg" alt="TestingBot" height="55">
-<img src="docs/CBT_OS-logo_2Color-H.png" alt="CrossBrowserTesting" >
+<img src="docs/testingbot-logo.png" alt="TestingBot" height="75">
+<img src="docs/CBT_OS-logo_2Color-H.png" alt="CrossBrowserTesting" height="90">
 
 Cross-browser Testing Platform and Open Source <3 Provided by:
 

@@ -3,7 +3,7 @@ const program = require('commander');
 
 module.exports = _ => {
     console.time("Prepare");
-    program.version('1.2.58');
+    program.version('1.2.59');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');

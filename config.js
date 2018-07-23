@@ -124,14 +124,14 @@ module.exports = (ob) => {
                 firefox: { platform: 'WIN10', version: '61' },
                 edge:    { platform: 'WIN10', version: '17' },
                 ie:      { platform: 'WIN10', version: '11' },
-                iphone8: { // simulator is not working
+                iphone8: {
                     build: 'Node IOS',
                     browserName: 'Safari',
                     deviceName: 'iPhone 8 Simulator',
                     platformVersion: '11.0',
                     platformName: 'iOS'
                 },
-                nexus9: { // simulator is not working
+                nexus9: {
                     build: 'Node Android',
                     browserName: 'Chrome',
                     deviceName: 'Nexus 9',
