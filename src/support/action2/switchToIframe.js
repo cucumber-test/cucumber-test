@@ -3,38 +3,19 @@
  * @param  {String} selector Element selector
  */
 module.exports = (selector) => {
-    const {value} = browser.execute(s => {
-        //IE7 and lower
-        if (!document.querySelectorAll) {
-            document.querySelectorAll = function (selectors) {
-                var element, elements = [], style = document.createElement('style');
-                document.documentElement.firstChild.appendChild(style);
-                document._qsa = [];
-
-                style.styleSheet.cssText = selectors + '{x-qsa:expression(document._qsa && document._qsa.push(this))}';
-                window.scrollBy(0, 0);
-                style.parentNode.removeChild(style);
-
-                while (document._qsa.length) {
-                    element = document._qsa.shift();
-                    element.style.removeAttribute('x-qsa');
-                    elements.push(element);
-                }
-                document._qsa = null;
-                return elements;
-            };
+    let p1 = 3000, p2 = 2000;
+    const arr = element.split('|');
+    const idx = browser.element(arr[0]).value;
+    if (arr[1] === '0') {
+        browser.frame(idx);
+    } else {
+        if (arr[1] && +arr[1] >= 500) {
+            const value = +arr[1];
+            p1 = value * 3/5;
+            p2 = value * 2/5;
         }
-        //IE7 and lower
-        if (!document.querySelector) {
-            document.querySelector = function (selectors) {
-                var elements = document.querySelectorAll(selectors);
-                return (elements.length) ? elements[0] : null;
-            };
-        }
-        return document.querySelector(s)
-    }, selector);
-
-    browser.pause(3000, '*internal*');
-    browser.frame(value);
-    browser.pause(2000, '*internal*');
+        browser.pause(p1, '*internal*');
+        browser.frame(idx);
+        browser.pause(p2, '*internal*');
+    }
 };
