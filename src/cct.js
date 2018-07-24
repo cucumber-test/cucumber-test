@@ -294,13 +294,12 @@ if (program.config) {
             capability = options.capabilities[idx];
         }
         if (capability) {
-            if (provider === 'browserstack' && capability.build) {
-                capability['real_mobile'] = true;
+            if (provider === 'browserstack' && capability.real_mobile) {
                 capability['browserstack.debug'] = true;
                 capability['browserstack.user'] = options.user;
                 capability['browserstack.key'] = options.key;
             } else if (provider === 'testingbot' &&
-            capability.platformName && 
+            capability.platformName &&
             capability.platformName.match(/iOS|Android/)) {
                 capability['client_key'] = options.user;
                 capability['client_secret'] = options.key;
