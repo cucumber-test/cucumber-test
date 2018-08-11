@@ -1,3 +1,5 @@
+const chalk = require('chalk');
+
 const browserTags = [
     '@__chrome',
     '@__safari',
@@ -67,13 +69,13 @@ const beforeFeature = event => {
     const {browserName} = desiredCapabilities;
     const {name} = global.browser.options;
     const newScenarios = [];
-    
+
     _browserName = function() {
         return browserName.toLowerCase().replace(/ /g,'');
     }
     const file = event.uri.split('/features/').pop();
     desiredCapabilities.name = `${name} ${file}`;
-    console.log('>>>>>', `@__${_browserName()}`);
+    console.log(chalk.magenta('>>>>>', `@__${_browserName()}`));
     event.scenarios.forEach((xObj, xId) => {
         // share feature
         const fname = xObj.name.trim();

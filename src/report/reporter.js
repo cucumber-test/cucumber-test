@@ -1,4 +1,5 @@
 const util = require('util'),
+    chalk = require('chalk'),
     events = require('events');
 
 const CustomReporter = function(baseReporter, config, options) {
@@ -8,7 +9,7 @@ const CustomReporter = function(baseReporter, config, options) {
         const specHash = stats.getSpecHash(runner);
         const {suites} = results.specs[specHash];
 
-        console.log('Preprocessing report...');
+        console.log(chalk.redBright('Preprocessing report...'));
         for (const specUid in suites) {
             if (suites[specUid].title==='...') {
                 delete suites[specUid];

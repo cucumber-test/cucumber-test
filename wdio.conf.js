@@ -1,3 +1,5 @@
+const chalk = require('chalk');
+
 const beforeExecute = require('./lib/event/beforeExecute');
 const beforeFeature = require('./lib/event/beforeFeature');
 const beforeScenario = require('./lib/event/beforeScenario');
@@ -267,9 +269,9 @@ exports.config = {
                 arg = Object.keys(arg);
             }
             if (commandName.match('wait')) {
-                console.log('expect:', commandName, arg);
+                console.log(chalk.cyan('expect:', commandName, arg));
             } else {
-                console.log('action:', commandName, arg);
+                console.log(chalk.green('action:', commandName, arg));
             }
         }
     },

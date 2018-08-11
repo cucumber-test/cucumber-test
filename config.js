@@ -139,7 +139,7 @@ module.exports = (ob) => {
                     platformName: 'Android'
                 },
             },
-            browser: 'chrome',
+            browser: 'iphone8',
             timeout: 50000,
             retry: 7,
             // CROSSBROWSERTESTING_USERNAME: 'your-username',

@@ -1,8 +1,10 @@
 const fs = require('fs-extra');
+const chalk = require('chalk');
 const program = require('commander');
 
 module.exports = _ => {
-    console.time("Prepare");
+    console.log(chalk.redBright('Prepare...'));
+    console.time("Prepared");
     program.version('1.2.62');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
@@ -20,6 +22,7 @@ module.exports = _ => {
     program.option('--uaIphone', 'chrome w/ user agent of iPhone');
     program.option('--uaGalaxy', 'chrome w/ user agent of Samsung Galaxy');
     program.option('--vars [json]', `vars '{"g":{"search":"automation"}}'`);
+    program.option('--no-color', `disable color output`);
 
     program.parse(process.argv);
 
@@ -35,6 +38,6 @@ module.exports = _ => {
             program.config = `${__dirname}/../config.js`;
         }
     }
-    console.log('Config', program.config);
+    console.log(chalk.green('Config:', program.config));
     return program;
 }
