@@ -145,6 +145,19 @@ module.exports = (ob) => {
             // CROSSBROWSERTESTING_USERNAME: 'your-username',
             // CROSSBROWSERTESTING_ACCESS_KEY: 'xxxxxxxxxxxxxxxx',
         },
+        perfecto: {
+            browsers: {
+                android: {
+                    deviceName: '5LM0216201003470',
+                    // user: 'user@perfecto.com',
+                    // password: 'password'
+                },
+            },
+            host: 'myHost.perfectomobile.com',
+            browser: 'android',
+            timeout: 50000,
+            retry: 7,
+        },
         remote: {
             remote: 'http://localhost:4444',
             browser: 'firefox,chrome',
