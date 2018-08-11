@@ -1,18 +1,18 @@
 const chalk = require('chalk');
 
 const browserTags = [
+    '@__firefox',
     '@__chrome',
     '@__safari',
-    '@__firefox',
-    '@__microsoftedge',
-    '@__internetexplorer'
+    '@__edge',
+    '@__ie'
 ];
 const nonBrowserTags = [
+    '@__non_firefox',
     '@__non_chrome',
     '@__non_safari',
-    '@__non_firefox',
-    '@__non_microsoftedge',
-    '@__non_internetexplorer'
+    '@__non_edge',
+    '@__non_ie'
 ];
 const mobileTags = [
     '@__android',
@@ -24,6 +24,13 @@ const nonMobileTags = [
     '@__non_mobile',
     '@__non_ios'
 ];
+const browserMap = {
+    chrome: 'chrome',
+    safari: 'safari',
+    firefox: 'firefox',
+    microsoftedge: 'edge',
+    internetexplorer: 'ie'
+}
 let _browserName;
 
 function isBrowserTag(tagName) {
@@ -71,7 +78,8 @@ const beforeFeature = event => {
     const newScenarios = [];
 
     _browserName = function() {
-        return browserName.toLowerCase().replace(/ /g,'');
+        const browserId = browserName.toLowerCase().replace(/ /g,'');
+        return browserMap[browserId];
     }
     const file = event.uri.split('/features/').pop();
     desiredCapabilities.name = `${name} ${file}`;

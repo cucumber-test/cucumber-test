@@ -39,16 +39,16 @@ when `run` show some warnings, might be behind proxy / VPN, please check section
 Extended tags will simplify how to write cucumber with different browser & environment, those information are available on the browser object, utilize during execution of the cucumber file:
 ```js
 // Browsers
-@__chrome            ><  @__non_chrome
-@__safari            ><  @__non_safari
-@__firefox           ><  @__non_firefox
-@__microsoftedge     ><  @__non_microsoftedge
-@__internetexplorer  ><  @__non_internetexplorer
+@__firefox  ><  @__non_firefox
+@__chrome   ><  @__non_chrome
+@__safari   ><  @__non_safari
+@__edge     ><  @__non_edge
+@__ie       ><  @__non_ie
 
 // Mobile specific
-@__android           ><  @__non_android
-@__mobile            ><  @__non_mobile
-@__ios               ><  @__non_ios
+@__android  ><  @__non_android
+@__mobile   ><  @__non_mobile
+@__ios      ><  @__non_ios
 
 // url related
 @__url           ex: =>  @__url:/search

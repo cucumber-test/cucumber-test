@@ -5,7 +5,7 @@ const program = require('commander');
 module.exports = _ => {
     console.log(chalk.redBright('Prepare...'));
     console.time("Prepared");
-    program.version('1.2.62');
+    program.version('1.2.63');
     program.option('-f, --features [path]', 'location of features/[path]');
     program.option('-s, --specs [files]', 'location pattern files');
     program.option('-t, --tags [tags]', 'run features filtered by tags');

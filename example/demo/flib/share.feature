@@ -18,7 +18,7 @@ Scenario: Search cucumber-test
      And I click on appearing button "${g.btnG}"
     Then I expect that element "a[href='https://cucumber.io/']" becomes visible
 
-@__non_mobile @__internetexplorer
+@__non_mobile @__ie
 Scenario: Search cucumber-test
     When I set "${g.search} firefox" to the inputfield "${g.q}"
      And I press "Return" to the inputfield "${g.q}"
