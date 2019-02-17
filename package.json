@@ -1,6 +1,6 @@
 {
     "name": "cucumber-test",
-    "version": "1.2.63",
+    "version": "1.2.64",
     "main": "src/cct.js",
     "description": "Project to run WebdriverIO tests with Cucumber",
     "homepage": "https://github.com/cucumber-test/cucumber-test",
@@ -38,7 +38,7 @@
     ],
     "license": "MIT",
     "dependencies": {
-        "appium": "^1.8.1",
+        "appium": "^1.11.0",
         "babel-preset-env": "^1.7.0",
         "babel-register": "~6.26.0",
         "chai": "~4.1.2",
@@ -47,8 +47,8 @@
         "chromedriver": "^2.40.0",
         "faker": "^4.1.0",
         "fs-extra": "^6.0.1",
-        "lodash": "^4.17.10",
-        "selenium-standalone": "^6.14.0",
+        "lodash": "^4.17.11",
+        "selenium-standalone": "^6.15.4",
         "wdio-appium-service": "^0.2.3",
         "wdio-browserstack-service": "^0.1.16",
         "wdio-chromedriver-service": "^0.1.3",
@@ -62,5 +62,8 @@
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "commander": "^2.14.1"
+    },
+    "engines": {
+        "node": ">=v8.1.1 <v8.15.1"
     }
 }
